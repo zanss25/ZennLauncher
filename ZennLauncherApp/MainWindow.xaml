@@ -1,0 +1,367 @@
+﻿<Window x:Class="ZennLauncherApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZennLauncherApp"
+        mc:Ignorable="d"
+        Title="Zenn Launcher"
+        MinWidth="1115" MinHeight="668"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="False">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" 
+                      GlassFrameThickness="-1"
+                      CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CustomResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <LinearGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="-41.82" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform X="0.3" Y="0.3"/>
+                </TransformGroup>
+            </LinearGradientBrush.RelativeTransform>
+            <GradientStop Color="#FF221E2D"/>
+            <GradientStop Color="#FF251E39" Offset="0.898"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Border BorderThickness="2, 40, 2, 10">
+        <Border.BorderBrush>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                        <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.RelativeTransform>
+                <GradientStop Color="#FF2A243B"/>
+                <GradientStop Color="#FF2E2741" Offset="0.5"/>
+                <GradientStop Color="#FF2A243B" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="212"/>
+                <ColumnDefinition Width="427*"/>
+                <ColumnDefinition Width="13*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.LayoutTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                        Margin="0,-39,5,1" Style="{StaticResource WindowControlButtonAreaStyle}">
+
+                <Button Content="—" Click="BtnMinimize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Content="☐" Click="BtnMaximize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0"
+                        Margin="10,-40,0,0" WindowChrome.IsHitTestVisibleInChrome="False" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"
+                        MinWidth="55" MinHeight="40">
+
+                <TextBlock Text="ZENN" FontWeight="Bold" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                           FontSize="17" Margin="0,0,0,5">
+                    
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#A89083B3"/>
+                            <GradientStop Color="#A8B6A0ED" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">
+
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF1A1820"/>
+                        <GradientStop Color="#FF18161F" Offset="1"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+
+                <ListBox x:Name="SidebarNavList"
+                         SelectionChanged="SidebarNavList_SelectionChanged" 
+                         Width="200" Background="Transparent" Foreground="#B2FFFFFF" 
+                         FontFamily="Bahnschrift Light SemiCondensed" FontSize="17" 
+                         BorderBrush="#00ABADB3" Margin="18,25,18,0" FontWeight="Bold">
+
+                    <ListBoxItem Tag="games" Content="Games" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="tools" Content="Tools" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="categories" Content="Categories" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="relics" Content="Relics" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+
+                </ListBox>
+
+            </StackPanel>
+
+            <ContentControl x:Name="ContentSlot" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+
+            <Border Grid.Row="2" Grid.ColumnSpan="4" 
+                    BorderThickness="0,0.9,0,0"
+                    Margin="0,0,0,0">
+
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF332C48"/>
+                        <GradientStop Color="#FF594D79" Offset="0.5"/>
+                        <GradientStop Color="#FF332C48" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+
+                <DockPanel VerticalAlignment="Center" MinHeight="50" LastChildFill="False">
+                    <DockPanel.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF2A243B"/>
+                            <GradientStop Color="#FF2A243B" Offset="1"/>
+                            <GradientStop Color="#FF2E2741" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </DockPanel.Background>
+
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="15,0,0,0">
+                        <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle}" Content="Add New Game" 
+                                Click="BtnAddNewGame_Click" Margin="5,10,5,10" Background="#FF221E2F"
+                                FontFamily="Global User Interface" FontSize="13" 
+                                BorderThickness="0,0,0,0" Padding="10,1,10,1"/>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                        <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle}" Content="Add New Tool" 
+                                Click="BtnAddNewTool_Click" Margin="5,10,10,10" Background="#FF221E2F" 
+                                FontFamily="Global User Interface" FontSize="13" 
+                                BorderThickness="0,0,0,0" Padding="10,1,10,1"/>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,10,15,10">
+                        <Border x:Name="ProfileAvatar" 
+                                BorderBrush="#70594D7B" 
+                                BorderThickness="1.5" CornerRadius="3"
+                                MinHeight="30" MinWidth="30" Margin="0,0,5,0">
+                            <Border.Background>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <Binding Path="ProfileId"  
+                                                 Converter="{StaticResource ProfileImgConv}">
+                                            <Binding.TargetNullValue>
+                                                <BitmapImage UriSource="/default_avatar.jpg" />
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Border.Background>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,0,0,0">
+                        <Grid HorizontalAlignment="Right">
+
+                            <ToggleButton x:Name="BtnProfileMenu" Style="{StaticResource ToggleButtonStyle}" 
+                                          Content="{Binding ProfileName}" 
+                                          Margin="5,10,0,10" 
+                                          FontFamily="Global User Interface" FontSize="13" 
+                                          BorderThickness="0,0,0,0" Padding="10,1,10,1">
+
+                            </ToggleButton>
+
+                            <Popup IsOpen="{Binding IsChecked, ElementName=BtnProfileMenu}" 
+                                   PlacementTarget="{Binding ElementName=BtnProfileMenu}"
+                                   Placement="Top"
+                                   StaysOpen="False"
+                                   AllowsTransparency="True"
+                                   PopupAnimation="Fade"
+                                   HorizontalOffset="0"
+                                   VerticalOffset="-5">
+
+                                <Border Background="#F22B2245" 
+                                        CornerRadius="5" 
+                                        BorderBrush="#FF594D7B"
+                                        BorderThickness="1"
+                                        Width="300" Height="Auto"
+                                        Margin="0,0,0,10">
+
+                                    <DockPanel Margin="10" HorizontalAlignment="Stretch">
+                                        <Grid>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+
+                                            <StackPanel Grid.Row="0" Margin="10,5">
+                                                <TextBlock Text="{Binding ProfileName}"
+                                                           Foreground="White"
+                                                           FontSize="17"
+                                                           FontWeight="Bold"/>
+                                                <TextBlock Text=""
+                                                           Foreground="WhiteSmoke"
+                                                           Margin="0,5,0,5"
+                                                           FontSize="11"
+                                                           VerticalAlignment="Bottom">
+                                            
+                                                <Hyperlink Click="LinkProfileInfo_Click"
+                                                           Style="{StaticResource HyperlinkStyle}">
+
+                                                           View Profile Info..
+                                                </Hyperlink>
+
+                                                </TextBlock>
+
+                                            </StackPanel>
+
+                                            <Border x:Name="ProfileMenuAvatar" 
+                                                    Width="80" 
+                                                    Height="80" 
+                                                    BorderBrush="#70594D7B" 
+                                                    BorderThickness="2"
+                                                    Grid.Row="0"
+                                                    Margin="5,0"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top">
+                                                <Border.Background>
+                                                    <ImageBrush>
+                                                        <ImageBrush.ImageSource>
+                                                            <Binding Path="ProfileId"  
+                                                                     Converter="{StaticResource ProfileImgConv}">
+                                                                <Binding.TargetNullValue>
+                                                                    <BitmapImage UriSource="/default_avatar.jpg" />
+                                                                </Binding.TargetNullValue>
+                                                            </Binding>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+
+
+                                            <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                                                <Separator VerticalAlignment="Bottom"
+                                                           Margin="0,5,0,10"
+                                                           Background="#55594D7B"/>
+                                                <Button x:Name="BtnProfileSettings"
+                                                        Style="{StaticResource MenuButtonStyleB}"
+                                                        Content="Profile Settings"
+                                                        Click="BtnProfileSettings_Click"
+                                                        MinHeight="35"/>
+                                                <Button x:Name="BtnLogOut"
+                                                        Style="{StaticResource MenuButtonStyleB}"
+                                                        Content="Log Out"
+                                                        Click="BtnLogOut_Click"
+                                                        MinHeight="35"/>
+                                            </StackPanel>
+
+                                        </Grid>
+
+
+                                    </DockPanel>
+
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,0,0,0">
+                        <Button x:Name="BtnSettings" Style="{StaticResource MenuButtonStyle}" 
+                                Click="BtnSettings_Click" Margin="10,10,5,10"
+                                FontFamily="Global User Interface" FontSize="13"
+                                BorderThickness="0,0,0,0" Padding="10,1,10,1">
+
+                            <Button.Content>
+                                <Image Source="/Settings.png" 
+                                       Width="18" Height="18" Margin="0"/>
+                            </Button.Content>
+
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            
+
+            <Border Grid.Row="1" Grid.Column="1" Panel.ZIndex="99"
+                    BorderThickness="3" MaxWidth="25" Margin="0,-3,-193,0">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="270" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#25000000" Offset="1"/>
+                        <GradientStop Color="#00000000" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <Border Grid.Row="2" Grid.ColumnSpan="4" Panel.ZIndex="99"
+                    BorderThickness="3" MaxHeight="25" Margin="0,-68,-2,0">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#35000000" Offset="1"/>
+                        <GradientStop Color="#00000000" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

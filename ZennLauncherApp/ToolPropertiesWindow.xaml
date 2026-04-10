@@ -1,0 +1,245 @@
+﻿<Window x:Class="ZennLauncherApp.ToolPropertiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZennLauncherApp"
+        mc:Ignorable="d"
+        Title="Tool Properties" 
+        Height="490" Width="667" 
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" 
+                      GlassFrameThickness="5" 
+                      CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CustomResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF1A1820"/>
+            <GradientStop Color="#FF18161F" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Border BorderThickness="2,40,2,2">
+        <Border.BorderBrush>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                        <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.RelativeTransform>
+                <GradientStop Color="#FF2A243B"/>
+                <GradientStop Color="#FF2E2741" Offset="0.5"/>
+                <GradientStop Color="#FF2A243B" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid Margin="5,0,5,0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="370"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="2"
+                    Style="{StaticResource WindowControlButtonAreaStyle}">
+
+                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" 
+                        VerticalAlignment="Center"/>
+
+        </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0"
+                        Margin="20,-40,0,0" WindowChrome.IsHitTestVisibleInChrome="False" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"
+                        MinWidth="55" MinHeight="40">
+
+                <TextBlock Text="TOOL PROPERTIES" Style='{StaticResource HeaderTitleStyle}'/>
+
+        </StackPanel>
+
+        <StackPanel Margin="10,10,10,0" Grid.Row="0">
+            <TextBlock Text="TITLE/DESCRIPTION" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <TextBox Name="InputToolTitle" Margin="10,5,10,5" VerticalContentAlignment="Center"
+                     Style="{StaticResource TextBoxStyleB}"
+                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
+                     Height="30" Padding="5,0,0,0"/>
+            <TextBox Name="InputToolDesc" Margin="10" VerticalContentAlignment="Center"
+                     Style="{StaticResource TextBoxStyleB}"
+                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
+                     Height="30" Padding="5,0,0,0"/>
+        </StackPanel>
+
+        <StackPanel Margin="10,0,10,0" Grid.Row="1">
+            <TextBlock Text="TARGET" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+
+            <Grid Margin="10,5,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Name="InputToolTarget" 
+                         Grid.Column="0"
+                         Style="{StaticResource TextBoxStyleB}"
+                         Background="#FF272237" 
+                         BorderBrush="#70594D7B" 
+                         Foreground="#99FFFFFF" 
+                         Height="30"
+                         VerticalContentAlignment="Center"
+                         Padding="5,0,0,0"/>
+
+                <Button x:Name="BtnBrowseTarget" 
+                        Grid.Column="1"
+                        Content="Browse"
+                        FontSize="13"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="BtnBrowseTarget_Click" 
+                        Margin="6,0,0,0" 
+                        Padding="15,0,15,0" 
+                        Height="30"
+                        Background="#FF271F3D"
+                        BorderBrush="#FF292439" 
+                        BorderThickness="1"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Margin="10,0,10,0" Grid.Row="2">
+            <TextBlock Text="START IN" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <Grid Margin="10,5,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Name="InputToolStartIn" 
+                         Grid.Column="0"
+                         Style="{StaticResource TextBoxStyleB}"
+                         Background="#FF272237" 
+                         BorderBrush="#70594D7B" 
+                         Foreground="#99FFFFFF" 
+                         Height="30"
+                         VerticalContentAlignment="Center"
+                         Padding="5,0,0,0"/>
+
+                <Button x:Name="BtnBrowseStartIn" 
+                        Grid.Column="1"
+                        Content="Browse" 
+                        FontSize="13"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="BtnBrowseStartIn_Click" 
+                        Margin="6,0,0,0" 
+                        Padding="15,0,15,0" 
+                        Height="30"
+                        Background="#FF271F3D"
+                        BorderBrush="#FF292439" 
+                        BorderThickness="1"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Margin="10,0,10,0" Grid.Row="3">
+            <TextBlock Text="LAUNCH OPTIONS" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <TextBox Name="InputToolLaunchOptions" Margin="10,5,10,5" VerticalContentAlignment="Center"
+                     Style="{StaticResource TextBoxStyleB}"
+                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
+                     Height="30" Padding="5,0,0,0"/>
+        </StackPanel>
+
+            <DockPanel Margin="10,10,10,0" Grid.Row="4">
+                <Button x:Name="BtnSaveToolInfo" Content="Save" Click="BtnSaveToolInfo_Click" 
+                        Style="{StaticResource MenuButtonStyle}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                        Margin="10,10,10,25" Padding="15,8,15,8" MinWidth="125" Background="#51A896DD"
+                        FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B" 
+                        BorderThickness="0,0,0,0" VerticalAlignment="Bottom"
+                        IsDefault="True"/>
+            </DockPanel>
+
+            <DockPanel Margin="0,10,20,0" Grid.RowSpan="4" Grid.Column="1">
+                <StackPanel HorizontalAlignment="Left">
+
+                    <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                    <Border x:Name="PreviewIcon" 
+                        Width="80" 
+                        Height="80" 
+                        BorderBrush="#70594D7B" 
+                        BorderThickness="2">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                        <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FF342C49"/>
+                                <GradientStop Color="#FF342C49" Offset="1"/>
+                                <GradientStop Color="#FF403659" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+
+                    <Button x:Name="BtnChangeIcon" Content="Change" Click="BtnChangeIcon_Click" 
+                        Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,10" Padding="8" Background="#FF271F3D" 
+                        Foreground="#CCF5F5F5" FontFamily="Global Sans Serif" FontSize="13" BorderBrush="#FF292439" 
+                        BorderThickness="0,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right">
+
+                    <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                    <Border x:Name="PreviewCover" 
+                        Width="150" 
+                        Height="225" 
+                        BorderBrush="#70594D7B" 
+                        BorderThickness="2">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF342C49"/>
+                                <GradientStop Color="#FF342C49" Offset="1"/>
+                                <GradientStop Color="#FF403659" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    
+                    <UniformGrid Columns="2">
+                        <Button x:Name="BtnChangeCover" Content="Change" Click="BtnChangeCover_Click" 
+                                Style="{StaticResource MenuButtonStyle}" Margin="0,10,3,10" Padding="8" Background="#FF271F3D" 
+                                FontFamily="Global Sans Serif" FontSize="13" BorderBrush="#FF292439" 
+                                BorderThickness="0,0,0,0"/>
+                        <Button x:Name="BtnResetCover" Content="Reset" Click="BtnResetCover_Click" 
+                                Style="{StaticResource MenuButtonStyle}" Margin="3,10,0,10" Padding="8" Background="#FF271F3D" 
+                                FontFamily="Global Sans Serif" FontSize="13" BorderBrush="#FF292439" 
+                                BorderThickness="0,0,0,0"/>
+                    </UniformGrid>
+
+                </StackPanel>
+            </DockPanel>
+
+        </Grid>
+    </Border>
+</Window>

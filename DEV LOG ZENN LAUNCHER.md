@@ -245,8 +245,8 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 * **Default Starting Tab		:** Choose which tab is displayed when the launcher starts (Default: Tab paling atas (Tab '0')
-* **Preferred Game Sort Order	:** Set the default sorting method (e.g., A-Z, Last Played, or Date Added) for your games library
-* **Preferred Tools Sort Order	:** Set the default sorting method (e.g., A-Z, Last Launched, or Date Added) for your tools library
+* **Default Games Sort By	:** Set the default sorting method (e.g., A-Z, Last Played, or Date Added) for your games
+* **Default Tools Sort By	:** Set the default sorting method (e.g., A-Z, Last Launched, or Date Added) for your tools
 * **Games Post-Launch Action	:** Set the launcher’s visibility once a game is running (Keep launcher open, Hide to background, Close the launcher)
 * **Tools Post-Launch Action	:** Set the launcher’s visibility once a tool is running (Keep launcher open, Hide to background, Close the launcher)
 * **Startup on Windows Login	:** Automatically start the launcher at Windows login

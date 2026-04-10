@@ -1,0 +1,160 @@
+﻿<Window x:Class="ZennLauncherApp.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZennLauncherApp"
+        mc:Ignorable="d"
+        Title="Settings"
+        MinHeight="655" MinWidth="900"
+        WindowStartupLocation="CenterScreen">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" 
+              GlassFrameThickness="5"
+              CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CustomResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF1A1820"/>
+            <GradientStop Color="#FF18161F" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Border BorderThickness="2, 40, 2, 2">
+        <Border.BorderBrush>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                        <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.RelativeTransform>
+                <GradientStop Color="#FF2A243B"/>
+                <GradientStop Color="#FF2E2741" Offset="0.5"/>
+                <GradientStop Color="#FF2A243B" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+
+        <Grid Margin="5,0,5,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="100" MaxWidth="212"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="1" 
+                        Style="{StaticResource WindowControlButtonAreaStyle}">
+
+                <Button Content="—" Click="BtnMinimize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Content="☐" Click="BtnMaximize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
+                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                        MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0"
+                        Margin="20,-40,0,0" WindowChrome.IsHitTestVisibleInChrome="False" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"
+                        MinWidth="55" MinHeight="40">
+
+                <TextBlock Text="SETTINGS" Style='{StaticResource HeaderTitleStyle}'/>
+
+            </StackPanel>
+
+            <StackPanel Margin="10,10,10,0" Grid.Row="0">
+                <TextBlock Text="ZENN LAUNCHER" Padding="5,5,10,0" FontSize="22" FontWeight="Bold">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#B29083B3"/>
+                            <GradientStop Color="#B2B6A0ED" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <TextBlock x:Name="TextVersionDisplay" Text="Version" Padding="5,0,10,0" Foreground="#A89A8FB9" 
+                           FontWeight="SemiBold"/>
+            </StackPanel>
+
+            <Grid Margin="10,0,10,0" Grid.Row="1" Grid.Column="0">
+
+                <ListBox x:Name="SidebarSettingsList" 
+                         SelectionChanged="SidebarSettingsList_SelectionChanged"
+                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                         Background="Transparent" FontFamily="Segoe UI" FontSize="13" 
+                         BorderBrush="#66C9B5FF" Margin="0,15" FontWeight="Regular">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Height" Value="44"/>
+                            <Setter Property="Padding" Value="10,0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBoxItem Tag="general" Content="General"
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="myprofile" Content="Profile"
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="interface" Content="Appearance" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="categories" Content="Categories" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="folders" Content="Folders" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBoxItem Tag="advanced" Content="Advanced" 
+                                 Style="{StaticResource ListBoxItemStyle}"/>
+                </ListBox>
+
+            </Grid>
+
+            <StackPanel Margin="10,0" Grid.Column="0" Grid.Row="2">
+
+                <DockPanel Margin="0,0,0,25">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Button x:Name="BtnApply" Content="Apply" Grid.Row="1"
+                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle}" 
+                                HorizontalContentAlignment="Left" 
+                                Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
+                                FontFamily="Global Sans Serif" FontSize="12" 
+                                Background="#51A896DD" BorderBrush="#FF594D7B" 
+                                BorderThickness="0,0,0,0" VerticalAlignment="Bottom"
+                                Visibility="Collapsed"/>
+
+                    </Grid>
+
+                </DockPanel>
+            </StackPanel>
+
+            <ContentControl x:Name="ContentSlot" Grid.RowSpan="2" Grid.Column="1" Margin="2,0,0,0"/>
+            
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="ZennLauncherApp.MyProfileSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ZennLauncherApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CustomResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" MinHeight="60">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="ProfileAvatar" 
+                    Width="100" 
+                    Height="100" 
+                    BorderBrush="#70594D7B" 
+                    BorderThickness="2"
+                    Grid.Column="0" Grid.RowSpan="2"
+                    Margin="20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush>
+                        <ImageBrush.ImageSource>
+                            <Binding Path="ProfileId"  
+                                     Converter="{StaticResource ProfileImgConv}">
+                                <Binding.TargetNullValue>
+                                    <BitmapImage UriSource="/default_avatar.jpg" />
+                                </Binding.TargetNullValue>
+                            </Binding>
+                        </ImageBrush.ImageSource>
+                    </ImageBrush>
+                </Border.Background>
+            </Border>
+
+            <TextBlock Text="{Binding ProfileName}"
+                       Grid.Column="1" Grid.RowSpan="2"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Foreground="WhiteSmoke"
+                       FontSize="22"
+                       FontWeight="Bold"/>
+
+            <Button x:Name="BtnEditProfile"
+                    Margin="20,0" MinHeight="25" MaxHeight="35" Padding="10"
+                    Grid.Column="2" Grid.RowSpan="2"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Content="Edit Profile"
+                    Click="BtnEditProfile_Click" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"/>
+
+            <TextBlock Text=""
+                       Foreground="WhiteSmoke"
+                       Margin="10"
+                       FontSize="11"
+                       Grid.Column="2" Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top">
+
+            </TextBlock>
+
+        </Grid>
+
+        <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch"
+                      VerticalScrollBarVisibility="Hidden">
+            <StackPanel Margin="20,5">
+
+                <ItemsControl x:Name="ContainerMyProfileSettings">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                        
+                    </ItemsControl.ItemsPanel>
+                    
+                        <Border x:Name="ResetPasswordBorder" BorderBrush="#22FFFFFF" 
+                                BorderThickness="0,1,0,0" Padding="0,13" Visibility="Visible">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Reset Password" Grid.Column="0" 
+                                           VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                                <TextBlock Text="Reset or change your current password" Grid.Column="1"
+                                           HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                           Margin="15,0" Foreground="#55FFFFFF"/>
+
+                                <Button x:Name="BtnResetPass" Content="Reset Password" 
+                                        Click="BtnResetPass_Click" Grid.Column="2"
+                                        MinHeight="25" MaxHeight="35" Padding="10,8"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Background="#31A896DD" BorderBrush="#FF594D7B" 
+                                        HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                    <Border x:Name="AddPasswordBorder" BorderBrush="#22FFFFFF" 
+                            BorderThickness="0,1,0,0" Padding="0,13" Visibility="Collapsed">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Add New Password" Grid.Column="0" 
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Add a password to your profile" Grid.Column="1"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Foreground="#55FFFFFF"/>
+
+                            <Button x:Name="BtnAddPass" Content="Add Password" 
+                                    Click="BtnAddPass_Click" Grid.Column="2"
+                                    MinHeight="25" MaxHeight="35" Padding="10,8"
+                                    Style="{StaticResource MenuButtonStyle}"
+                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
+                                    HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                            <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Backup Profile" Grid.Column="0" 
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Backup current profile as .zip file" Grid.Column="1"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Foreground="#55FFFFFF"/>
+
+                            <Button x:Name="BtnExportBackup" Content="Backup Profile" 
+                                    Click="BtnExportBackup_Click" Grid.Column="2"
+                                    MinHeight="25" MaxHeight="35" Padding="10,8"
+                                    Style="{StaticResource MenuButtonStyle}"
+                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
+                                    HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Delete Profile" Grid.Column="0" 
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Delete current profile" Grid.Column="1"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Foreground="#55FFFFFF"/>
+
+                            <Button x:Name="BtnDeleteProfile" Content="Delete Profile" 
+                                    Click="BtnDeleteProfile_Click" Grid.Column="2"
+                                    MinHeight="25" MaxHeight="35" Padding="10,8"
+                                    Style="{StaticResource MenuButtonStyle}"
+                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
+                                    HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>
+
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ZennLauncherApp
+{
+    public class ToolModel
+    {
+        public int ToolId { get; set; }
+        public string ToolTitle { get; set; }
+        public string ToolDesc { get; set; }
+        public string ToolFirstLaunched { get; set; }
+        public string ToolLastLaunched { get; set; }
+        public int ToolLaunchTimes { get; set; }
+        public string ToolTarget { get; set; }
+        public string ToolLaunchOptions { get; set; }
+        public string ToolIconPath { get; set; }
+        public string ToolCoverPath { get; set; }
+    }
+}
