@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37012.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZennLauncherApp", "ZennLauncherApp\ZennLauncherApp.csproj", "{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{0EBF100A-E660-4DD3-8C83-36646D436092}"
+	ProjectSection(SolutionItems) = preProject
+		ZennLauncherApp\Assets\Images\default_avatar.jpg = ZennLauncherApp\Assets\Images\default_avatar.jpg
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{5FAB02AB-5D35-455B-B42C-BA92C5698123}"
+	ProjectSection(SolutionItems) = preProject
+		ZennLauncherApp\Assets\Icons\Interface\Search_Magnifying_Glass.png = ZennLauncherApp\Assets\Icons\Interface\Search_Magnifying_Glass.png
+		ZennLauncherApp\Assets\Icons\Interface\Settings.png = ZennLauncherApp\Assets\Icons\Interface\Settings.png
+		ZennLauncherApp\Assets\Icons\Interface\Slider_02.png = ZennLauncherApp\Assets\Icons\Interface\Slider_02.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Elements", "UI Elements", "{87E2B9CC-420D-4D2C-87CF-49CF790FC774}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Debug|x64.ActiveCfg = Debug|x64
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Debug|x64.Build.0 = Debug|x64
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Release|x64.ActiveCfg = Release|x64
+		{3FA68DFE-1A70-4DEF-9A02-B94B6A859947}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EBF100A-E660-4DD3-8C83-36646D436092} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5FAB02AB-5D35-455B-B42C-BA92C5698123} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{87E2B9CC-420D-4D2C-87CF-49CF790FC774} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBB27E03-19A4-4707-9D57-C8E2B6252449}
+	EndGlobalSection
+EndGlobal
