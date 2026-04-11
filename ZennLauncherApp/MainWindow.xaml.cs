@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -37,29 +36,37 @@ namespace ZennLauncherApp
             InitializeComponent();
 
             LoadProfileData();
+            SidebarNavList.ItemsSource = func.SidebarTabs;
+            LoadDefaultStartingTab();
 
-            string defaultTab = ((App)System.Windows.Application.Current).CurrentProfileCfg.General.StartingTab;
-
-            if (!String.IsNullOrEmpty(defaultTab))
-            {
-                var targetItem = SidebarNavList.Items.OfType<ListBoxItem>()
-                 .FirstOrDefault(item => item.Tag?.ToString() == defaultTab);
-
-                SidebarNavList.SelectedItem = targetItem;
-            }
-            else
-            {
-                var targetItem = SidebarNavList.Items.OfType<ListBoxItem>()
-                 .FirstOrDefault(item => item.Tag?.ToString() == "games");
-
-                SidebarNavList.SelectedItem = targetItem;
-            }
         }
 
         public void LoadProfileData()
         {
             db.profileData = db.GetProfileData();
             this.DataContext = db.profileData;
+        }
+
+        public void LoadDefaultStartingTab()
+        {
+            string defaultStartingTab = ((App)Application.Current).CurrentProfileCfg.General.StartingTab;
+
+            if (string.IsNullOrEmpty(defaultStartingTab))
+            {
+                defaultStartingTab = "games";
+            }
+
+            var targetTabObject = func.SidebarTabs
+                                   .FirstOrDefault(s => s.ItemTag == defaultStartingTab);
+
+            if (targetTabObject != null)
+            {
+                SidebarNavList.SelectedItem = targetTabObject;
+            }
+            else
+            {
+                SidebarNavList.SelectedIndex = 0;
+            }
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -117,7 +124,7 @@ namespace ZennLauncherApp
 
         private void BtnProfileSettings_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settings = new SettingsWindow();
+            SettingsWindow settings = new SettingsWindow("myprofile");
 
             settings.ShowDialog();
         }
@@ -161,13 +168,19 @@ namespace ZennLauncherApp
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
+            int selectedTab = SidebarNavList.SelectedIndex;
+
             SettingsWindow settings = new SettingsWindow();
+            settings.OnSettingsApplied = () => {
+                RefreshCurrentTab();
+            };
+
             settings.ShowDialog();
         }
 
         private void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFileDialog.Title = "Select Game Executable";
 
@@ -192,14 +205,14 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList();
+                        gview.LoadGamesList(((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption);
                     }
                 }
                 else
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList();
+                        gview.LoadGamesList(((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption);
                     }
                 }
             }
@@ -207,7 +220,7 @@ namespace ZennLauncherApp
 
         private void BtnAddNewTool_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFileDialog.Title = "Select Tool Executable";
 
@@ -245,36 +258,34 @@ namespace ZennLauncherApp
             }
         }
 
+        private void OnTabChanged(TabModel selectedTab)
+        {
+            if (selectedTab.TargetView != null)
+            {
+                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+
+                ContentSlot.Content = view;
+            }
+        }
+
+        private void RefreshCurrentTab()
+        {
+            var selected = SidebarNavList.SelectedItem as TabModel;
+
+            if (selected != null)
+            {
+                var newView = Activator.CreateInstance(selected.TargetView) as UserControl;
+                ContentSlot.Content = newView;
+            }
+        }
+
         private void SidebarNavList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SidebarNavList.SelectedItem is FrameworkElement element)
+            var selected = SidebarNavList.SelectedItem as TabModel;
+
+            if (selected != null)
             {
-                if (element.Tag == null)
-                {
-                    Debug.WriteLine("!! Error: tag is NULL bruh");
-                    return;
-                }
-
-                string tag = element.Tag.ToString();
-
-                switch (tag)
-                {
-                    case "games":
-                        ContentSlot.Content = new GamesView();
-                        break;
-                    case "tools":
-                        ContentSlot.Content = new ToolsView();
-                        break;
-                    case "categories":
-                        ContentSlot.Content = new CategoriesView();
-                        break;
-                    case "relics":
-                        ContentSlot.Content = new RelicsHistoryView();
-                        break;
-                    default:
-                        System.Windows.MessageBox.Show($"Error: Tag '{tag}' is not listed in the switch-case");
-                        break;
-                }
+                OnTabChanged(selected);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -22,11 +23,13 @@ namespace ZennLauncherApp
     /// <summary>
     /// Interaction logic for GeneralSettings.xaml
     /// </summary>
-    public partial class GeneralSettingsView : UserControl
+    public partial class GeneralSettingsView : UserControl, ISettingsTab
     {
         GlobalFunctions func = new GlobalFunctions();
         DBHandler db = new DBHandler();
         ConfigHandler cfg = new ConfigHandler();
+
+        public Action OnSettingChanged { get; set; }
 
         public GeneralSettingsView()
         {
@@ -37,63 +40,26 @@ namespace ZennLauncherApp
 
         private void LoadCfgToUI()
         {
-            //Starting Tab
-            if (((App)Application.Current).CurrentProfileCfg.General.StartingTab == "games")
-            {
-                ComboDefaultStartView.SelectedIndex = 0;
-            }
-            if (((App)Application.Current).CurrentProfileCfg.General.StartingTab == "tools")
-            {
-                ComboDefaultStartView.SelectedIndex = 1;
-            }
+            // Default Starting Tab
+            ComboDefaultStartingTab.ItemsSource = func.SidebarTabs;
+            ComboDefaultStartingTab.DisplayMemberPath = "DisplayName";
+            ComboDefaultStartingTab.SelectedValuePath = "ItemTag";
+
+            ComboDefaultStartingTab.SelectedValue = ((App)Application.Current).CurrentProfileCfg.General.StartingTab;
 
             // Games Sort Option
             ComboGamesSortOption.ItemsSource = func.SortOptions;
             ComboGamesSortOption.DisplayMemberPath = "DisplayName";
-            ComboGamesSortOption.SelectedIndex = 0;
+            ComboGamesSortOption.SelectedValuePath = "SortByTag";
 
-            string defaultGamesSortOption = ((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption;
-
-            if (string.IsNullOrEmpty(defaultGamesSortOption))
-            {
-                defaultGamesSortOption = "title";
-            }
-
-            var targetGamesSortObject = func.SortOptions
-                                   .FirstOrDefault(s => s.SortBy == defaultGamesSortOption);
-
-            if (targetGamesSortObject != null)
-            {
-                ComboGamesSortOption.SelectedItem = targetGamesSortObject;
-            }
-            else
-            {
-                ComboGamesSortOption.SelectedIndex = 0;
-            }
+            ComboGamesSortOption.SelectedValue = ((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption;
 
             // Tools Sort Option
             ComboToolsSortOption.ItemsSource = func.SortOptions;
             ComboToolsSortOption.DisplayMemberPath = "DisplayName";
-            ComboToolsSortOption.SelectedIndex = 0;
+            ComboToolsSortOption.SelectedValuePath = "SortByTag";
 
-            string defaultToolsSortOption = ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption;
-
-            if (string.IsNullOrEmpty(defaultToolsSortOption))
-            {
-                defaultToolsSortOption = "title";
-            }
-
-            var targetToolsSortObject = func.SortOptions
-                                   .FirstOrDefault(s => s.SortBy == defaultToolsSortOption);
-
-            if (targetToolsSortObject != null)
-            {
-                ComboToolsSortOption.SelectedItem = targetToolsSortObject;
-            }
-            else
-            {
-                ComboToolsSortOption.SelectedIndex = 0;
-            }
+            ComboToolsSortOption.SelectedValue = ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption;
 
             // Games Launch Action
             if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction == ProfileGeneralSettings.LaunchAction.HideLauncher)
@@ -124,7 +90,7 @@ namespace ZennLauncherApp
             }
 
             // Start on Windows Login
-            if (((App)Application.Current).CurrentProfileCfg.General.StartOnWindows == 1)
+            if (((App)Application.Current).CurrentProfileCfg.General.StartOnWindows == true)
             {
                 CheckBoxStartupOnWindows.IsChecked = true;
             }
@@ -134,20 +100,103 @@ namespace ZennLauncherApp
             }
         }
 
-        public void ComboDefaultStartView_Changed(object sender, EventArgs e)
+        public void ComboDefaultStartingTab_Changed(object sender, EventArgs e)
         {
+            var selectedItem = ComboDefaultStartingTab.SelectedItem as TabModel;
 
+            if (selectedItem != null)
+            {
+                string selectedOption = Convert.ToString(selectedItem.ItemTag);
+
+                ((App)Application.Current).CurrentProfileCfg.General.StartingTab = selectedOption;
+
+                Debug.WriteLine("StartingTab: " + 
+                                ((App)Application.Current).CurrentProfileCfg.General.StartingTab);
+                OnSettingChanged?.Invoke();
+            }
         }
 
-        public void ComboSortOption_Changed(object sender, EventArgs e)
+        public void ComboGamesSortOption_Changed(object sender, EventArgs e)
         {
+            var selectedItem = ComboGamesSortOption.SelectedItem as SortCriterion;
 
+            if (selectedItem != null)
+            {
+                string selectedOption = Convert.ToString(selectedItem.SortByTag);
+
+                ((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption = selectedOption;
+
+                Debug.WriteLine("GamesDefaultSortOption: " + 
+                                ((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption);
+                OnSettingChanged?.Invoke();
+            }
         }
 
-        public void ComboLaunch_Changed(object sender, EventArgs e)
+        public void ComboToolsSortOption_Changed(object sender, EventArgs e)
         {
+            var selectedItem = ComboToolsSortOption.SelectedItem as SortCriterion;
 
+            if (selectedItem != null)
+            {
+                string selectedOption = Convert.ToString(selectedItem.SortByTag);
+
+                ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption = selectedOption;
+
+                Debug.WriteLine("ToolsDefaultSortOption: " + 
+                                ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption);
+                OnSettingChanged?.Invoke();
+            }
         }
 
+        public void ComboGamesLaunch_Changed(object sender, EventArgs e)
+        {
+            var selectedItem = ComboGamesLaunch.SelectedItem as ComboBoxItem;
+
+            if (selectedItem != null)
+            {
+                string selectedOption = Convert.ToString(selectedItem.Tag);
+
+                var action = (ProfileGeneralSettings.LaunchAction)Enum.Parse(typeof(ProfileGeneralSettings.LaunchAction), selectedOption);
+                ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction = action;
+
+                Debug.WriteLine("GamesLaunchAction: " + 
+                                ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction);
+                OnSettingChanged?.Invoke();
+            }
+        }
+
+        public void ComboToolsLaunch_Changed(object sender, EventArgs e)
+        {
+            var selectedItem = ComboToolsLaunch.SelectedItem as ComboBoxItem;
+
+            if (selectedItem != null)
+            {
+                string selectedOption = Convert.ToString(selectedItem.Tag);
+
+                var action = (ProfileGeneralSettings.LaunchAction)Enum.Parse(typeof(ProfileGeneralSettings.LaunchAction), selectedOption);
+                ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction = action;
+
+                Debug.WriteLine("ToolsLaunchAction: " + 
+                                ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction);
+                OnSettingChanged?.Invoke();
+            }
+        }
+
+        public void CheckBoxStartupOnWindows_Click(object sender, EventArgs e)
+        {
+            if (CheckBoxStartupOnWindows.IsChecked == true)
+            {
+                ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows = true;
+                
+            }
+            if (CheckBoxStartupOnWindows.IsChecked != true)
+            {
+                ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows = false;
+            }
+
+            Debug.WriteLine("StartOnWIndows: " + 
+                            ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows);
+            OnSettingChanged?.Invoke();
+        }
     }
 }

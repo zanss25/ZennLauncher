@@ -53,7 +53,7 @@ namespace ZennLauncherApp
             }
 
             var targetSortObject = func.SortOptions
-                                   .FirstOrDefault(s => s.SortBy == defaultSortOption);
+                                   .FirstOrDefault(s => s.SortByTag == defaultSortOption);
 
             if (targetSortObject != null)
             {
@@ -145,10 +145,7 @@ namespace ZennLauncherApp
             GamePropertiesWindow edit = new GamePropertiesWindow(selectedGame);
             if (edit.ShowDialog() == true)
             {
-                LoadGamesList();
-            } else
-            {
-                LoadGamesList();
+                ComboSortByGames_Changed(ComboSortByGames, null);
             }
         }
 
@@ -205,7 +202,8 @@ namespace ZennLauncherApp
                 {
                     DBHandler db = new DBHandler();
                     db.DeleteGame(selectedGame.GameId);
-                    LoadGamesList(); 
+                    LoadGamesList();
+                    LoadDefaultSortOptions();
                 }
             }
         }
@@ -233,7 +231,7 @@ namespace ZennLauncherApp
             if (db == null || ComboSortByGames.SelectedItem == null) return;
 
             var selectedItem = (SortCriterion)ComboSortByGames.SelectedItem;
-            string sortBy = selectedItem.SortBy.ToString();
+            string sortBy = selectedItem.SortByTag.ToString();
             bool asc = true;
 
             if (sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times")

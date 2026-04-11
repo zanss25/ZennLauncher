@@ -8,7 +8,7 @@ namespace ZennLauncherApp
 {
     public class SortCriterion
     {
-        public string SortBy { get; set; } = string.Empty;
+        public string SortByTag { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
     }
 }

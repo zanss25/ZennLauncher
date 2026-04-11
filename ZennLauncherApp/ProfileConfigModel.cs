@@ -31,7 +31,7 @@ namespace ZennLauncherApp
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LaunchAction ToolsLaunchAction { get; set; } = LaunchAction.DoNothing;
 
-        public int StartOnWindows { get; set; } = 0;
+        public bool StartOnWindows { get; set; } = false;
 
     }
 }

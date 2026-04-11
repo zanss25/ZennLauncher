@@ -180,7 +180,7 @@
 
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
-                            <Setter Property="Tag" Value="{Binding SortBy}"/>
+                            <Setter Property="Tag" Value="{Binding SortByTag}"/>
                         </Style>
                     </ComboBox.ItemContainerStyle>
 

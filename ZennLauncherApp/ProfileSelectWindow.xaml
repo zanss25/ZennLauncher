@@ -65,14 +65,11 @@
             <StackPanel Grid.Row="0" Grid.Column="2"
                         Style="{StaticResource WindowControlButtonAreaStyle}">
 
-                <Button Content="—" Click="BtnMinimize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="—" Click="BtnMinimize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="☐" Click="BtnMaximize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="☐" Click="BtnMaximize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="✕" Click="BtnClose_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
 
             </StackPanel>
@@ -153,11 +150,9 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnCreateNewProfile" Content="Create New Profile" Grid.Row="0"
-                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle}"
-                                HorizontalContentAlignment="Left" Margin="0,5" Padding="15,8,15,8"
-                                MinWidth="125" Background="#51A896DD"
-                                FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B"
-                                BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
+                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyleC}"
+                                Margin="0,5" Padding="15,8,15,8" MinWidth="125" FontFamily="Global Sans Serif" 
+                                FontSize="12" BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
 
                     </Grid>
                     

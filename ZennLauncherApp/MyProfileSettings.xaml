@@ -123,7 +123,7 @@
                                 <Button x:Name="BtnResetPass" Content="Reset Password" 
                                         Click="BtnResetPass_Click" Grid.Column="2"
                                         MinHeight="25" MaxHeight="35" Padding="10,8"
-                                        Style="{StaticResource MenuButtonStyle}"
+                                        Style="{StaticResource MenuButtonStyleD}"
                                         Background="#31A896DD" BorderBrush="#FF594D7B" 
                                         HorizontalAlignment="Right"/>
                             </Grid>
@@ -148,7 +148,7 @@
                             <Button x:Name="BtnAddPass" Content="Add Password" 
                                     Click="BtnAddPass_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyle}"
+                                    Style="{StaticResource MenuButtonStyleD}"
                                     Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>
@@ -172,7 +172,7 @@
                             <Button x:Name="BtnExportBackup" Content="Backup Profile" 
                                     Click="BtnExportBackup_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyle}"
+                                    Style="{StaticResource MenuButtonStyleD}"
                                     Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>
@@ -196,7 +196,7 @@
                             <Button x:Name="BtnDeleteProfile" Content="Delete Profile" 
                                     Click="BtnDeleteProfile_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyle}"
+                                    Style="{StaticResource MenuButtonStyleD}"
                                     Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>

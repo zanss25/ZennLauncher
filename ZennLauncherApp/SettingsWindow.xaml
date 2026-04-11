@@ -64,14 +64,11 @@
             <StackPanel Grid.Row="0" Grid.Column="1" 
                         Style="{StaticResource WindowControlButtonAreaStyle}">
 
-                <Button Content="—" Click="BtnMinimize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="—" Click="BtnMinimize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="☐" Click="BtnMaximize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="☐" Click="BtnMaximize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
-                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="✕" Click="BtnClose_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
 
             </StackPanel>
@@ -106,25 +103,15 @@
                          Background="Transparent" FontFamily="Segoe UI" FontSize="13" 
                          BorderBrush="#66C9B5FF" Margin="0,15" FontWeight="Regular">
                     <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Height" Value="44"/>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleB}">
+                            <Setter Property="Height" Value="35"/>
                             <Setter Property="Padding" Value="10,0"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Content" Value="{Binding DisplayName}"/>
+                            <Setter Property="Tag" Value="{Binding ItemTag}"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
 
-                    <ListBoxItem Tag="general" Content="General"
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="myprofile" Content="Profile"
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="interface" Content="Appearance" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="categories" Content="Categories" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="folders" Content="Folders" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="advanced" Content="Advanced" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
                 </ListBox>
 
             </Grid>
@@ -140,13 +127,11 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnApply" Content="Apply" Grid.Row="1"
-                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle}" 
-                                HorizontalContentAlignment="Left" 
+                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyleC}" 
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
                                 FontFamily="Global Sans Serif" FontSize="12" 
-                                Background="#51A896DD" BorderBrush="#FF594D7B" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Bottom"
-                                Visibility="Collapsed"/>
+                                IsEnabled="False"/>
 
                     </Grid>
 

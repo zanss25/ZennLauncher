@@ -25,25 +25,35 @@ namespace ZennLauncherApp
         DBHandler db = new DBHandler();
         ConfigHandler cfg = new ConfigHandler();
 
-        public SettingsWindow()
+        public Action OnSettingsApplied { get; set; }
+
+        private readonly string _targetTabTag;
+
+        public SettingsWindow(string targetTab = "general")
         {
             InitializeComponent();
 
             TextVersionDisplay.Text = $"Version {func.version}";
-            SidebarSettingsList.SelectedIndex = 0;
+            SidebarSettingsList.ItemsSource = func.SettingsTabs;
+            
+            _targetTabTag = targetTab;
+            this.Loaded += LoadTargetTab;
+        }
+
+        private void LoadTargetTab(object sender, RoutedEventArgs e)
+        {
+            var target = SidebarSettingsList.Items.Cast<TabModel>()
+                            .FirstOrDefault(x => x.ItemTag == _targetTabTag);
+
+            if (target != null)
+            {
+                SidebarSettingsList.SelectedItem = target;
+            }
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                cfg.SaveProfileConfig(((App)Application.Current).CurrentProfileCfg);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Error saving config", MessageBoxButton Yes, MessageBoxImage Error);
-            }
-
+            ((App)Application.Current).CurrentProfileCfg = cfg.LoadProfileConfig();
             this.Close();
         }
 
@@ -60,47 +70,60 @@ namespace ZennLauncherApp
             this.WindowState = WindowState.Minimized;
         }
 
+        private void OnTabChanged(TabModel selectedTab)
+        {
+            if (selectedTab.TargetView != null)
+            {
+                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+
+                if (view is ISettingsTab tab)
+                {
+                    tab.OnSettingChanged = CheckSettingsChanged;
+                }
+
+                ContentSlot.Content = view;
+            }
+        }
+
         private void SidebarSettingsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SidebarSettingsList.SelectedItem is FrameworkElement element)
+            var selected = SidebarSettingsList.SelectedItem as TabModel;
+
+            if (selected != null)
             {
-                if (element.Tag == null)
-                {
-                    Debug.WriteLine("!! Error: tag is NULL bruh");
-                    return;
-                }
-
-                string tag = element.Tag.ToString();
-
-                switch (tag)
-                {
-                    case "general":
-                        ContentSlot.Content = new GeneralSettingsView();
-                        break;
-                    case "myprofile":
-                        ContentSlot.Content = new MyProfileSettingsView();
-                        break;
-                    case "interface":
-                        ContentSlot.Content = new InterfaceSettingsView();
-                        break;
-                    case "categories":
-                        ContentSlot.Content = new CategoriesSettings();
-                        break;
-                    case "folders":
-                        ContentSlot.Content = new FoldersSettingsView();
-                        break;
-                    case "advanced":
-                        ContentSlot.Content = new AdvancedSettingsView();
-                        break;
-                    default:
-                        MessageBox.Show($"Error: Tag '{tag}' is not listed in the switch-case");
-                        break;
-                }
+                OnTabChanged(selected);
             }
+        }
+
+        public void CheckSettingsChanged()
+        {
+            bool isDifferent = false;
+
+            var jsonProfileConfig = cfg.LoadProfileConfig();
+            if (((App)Application.Current).CurrentProfileCfg != jsonProfileConfig)
+            {
+                isDifferent = true;
+            }
+
+            BtnApply.IsEnabled = isDifferent;
         }
 
         private void BtnApply_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                cfg.SaveProfileConfig(((App)Application.Current).CurrentProfileCfg);
+                ((App)Application.Current).CurrentProfileCfg = cfg.LoadProfileConfig();
+
+                OnSettingsApplied?.Invoke();
+                BtnApply.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error Saving Config", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
         }
     }

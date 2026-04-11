@@ -66,8 +66,7 @@
             <StackPanel Grid.Row="0" Grid.Column="2"
                         Style="{StaticResource WindowControlButtonAreaStyle}">
 
-                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="✕" Click="BtnClose_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right" 
                         VerticalAlignment="Center"/>
 
@@ -122,8 +121,6 @@
                         Margin="6,0,0,0" 
                         Padding="15,0,15,0" 
                         Height="30"
-                        Background="#FF271F3D"
-                        BorderBrush="#FF292439" 
                         BorderThickness="1"/>
                 </Grid>
             </StackPanel>
@@ -155,8 +152,6 @@
                         Margin="6,0,0,0" 
                         Padding="15,0,15,0" 
                         Height="30"
-                        Background="#FF271F3D"
-                        BorderBrush="#FF292439" 
                         BorderThickness="1"/>
                 </Grid>
             </StackPanel>
@@ -200,9 +195,8 @@
                     </Border>
 
                     <Button x:Name="BtnChangeIcon" Content="Change" Click="BtnChangeIcon_Click" 
-                        Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,10" Padding="8" Background="#FF271F3D" 
-                        Foreground="#CCF5F5F5" FontFamily="Global Sans Serif" FontSize="13" BorderBrush="#FF292439" 
-                        BorderThickness="0,0,0,0"/>
+                        Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,10" Padding="8"
+                        BorderThickness="0,0,0,0" FontFamily="Global Sans Serif" FontSize="13" />
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
@@ -225,12 +219,10 @@
                     <UniformGrid Columns="2">
                         <Button x:Name="BtnChangeCover" Content="Change" Click="BtnChangeCover_Click" 
                                 Style="{StaticResource MenuButtonStyle}" Margin="0,10,3,10" Padding="8" 
-                                Background="#FF271F3D" BorderBrush="#FF292439"
                                 FontFamily="Global Sans Serif" FontSize="13"  
                                 BorderThickness="0,0,0,0"/>
                         <Button x:Name="BtnResetCover" Content="Reset" Click="BtnResetCover_Click" 
                                 Style="{StaticResource MenuButtonStyle}" Margin="3,10,0,10" Padding="8" 
-                                Background="#FF271F3D" BorderBrush="#FF292439"
                                 FontFamily="Global Sans Serif" FontSize="13"  
                                 BorderThickness="0,0,0,0"/>
                     </UniformGrid>
@@ -255,10 +247,9 @@
                            Margin="20,15" Foreground="#44FFFFFF"/>
 
                 <Button x:Name="BtnSaveGameInfo" Content="Save" Click="BtnSaveGameInfo_Click" Grid.Column="0"
-                        Style="{StaticResource MenuButtonStyle}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-                        Margin="20,10,10,25" Padding="15,8,15,8" MinWidth="125" Background="#51A896DD"
-                        FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B" 
-                        BorderThickness="0,0,0,0" VerticalAlignment="Bottom"
+                        Style="{StaticResource MenuButtonStyleC}" HorizontalAlignment="Left" 
+                        Margin="20,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
+                        FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"
                         IsDefault="True"/>
                 
             </Grid>

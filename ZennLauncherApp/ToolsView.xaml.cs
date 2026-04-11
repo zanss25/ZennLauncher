@@ -52,7 +52,7 @@ namespace ZennLauncherApp
             }
 
             var targetSortObject = func.SortOptions
-                                   .FirstOrDefault(s => s.SortBy == defaultSortOption);
+                                   .FirstOrDefault(s => s.SortByTag == defaultSortOption);
 
             if (targetSortObject != null)
             {
@@ -228,7 +228,7 @@ namespace ZennLauncherApp
             if (db == null || ComboSortByTools.SelectedItem == null) return;
 
             var selectedItem = (SortCriterion)ComboSortByTools.SelectedItem;
-            string sortBy = selectedItem.SortBy.ToString();
+            string sortBy = selectedItem.SortByTag.ToString();
             bool asc = true;
 
             if (sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times")

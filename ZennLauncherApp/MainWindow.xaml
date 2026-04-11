@@ -83,14 +83,11 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                         Margin="0,-39,5,1" Style="{StaticResource WindowControlButtonAreaStyle}">
 
-                <Button Content="—" Click="BtnMinimize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="—" Click="BtnMinimize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="☐" Click="BtnMaximize_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="☐" Click="BtnMaximize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
-                <Button Content="✕" Click="BtnClose_Click" Background="#00221E2F" Foreground="#D8E1E1E1"
-                        BorderBrush="#00000000" Style="{StaticResource MenuButtonStyle}"
+                <Button Content="✕" Click="BtnClose_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
 
             </StackPanel>
@@ -129,14 +126,12 @@
                          FontFamily="Bahnschrift Light SemiCondensed" FontSize="17" 
                          BorderBrush="#00ABADB3" Margin="18,25,18,0" FontWeight="Bold">
 
-                    <ListBoxItem Tag="games" Content="Games" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="tools" Content="Tools" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="categories" Content="Categories" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
-                    <ListBoxItem Tag="relics" Content="Relics" 
-                                 Style="{StaticResource ListBoxItemStyle}"/>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle}">
+                            <Setter Property="Content" Value="{Binding DisplayName}"/>
+                            <Setter Property="Tag" Value="{Binding ItemTag}"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
 
                 </ListBox>
 

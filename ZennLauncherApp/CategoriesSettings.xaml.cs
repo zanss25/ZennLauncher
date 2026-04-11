@@ -18,9 +18,9 @@ namespace ZennLauncherApp
     /// <summary>
     /// Interaction logic for CategoriesSettings.xaml
     /// </summary>
-    public partial class CategoriesSettings : UserControl
+    public partial class CategoriesSettingsView : UserControl
     {
-        public CategoriesSettings()
+        public CategoriesSettingsView()
         {
             InitializeComponent();
         }

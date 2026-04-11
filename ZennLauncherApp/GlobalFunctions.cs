@@ -94,30 +94,106 @@ namespace ZennLauncherApp
             }
         }
 
+        public List<TabModel> SidebarTabs = new List<TabModel>
+        {
+            new TabModel
+            {
+                ItemTag = "games",
+                DisplayName = "Games",
+                TargetView = typeof(GamesView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "tools",
+                DisplayName = "Tools",
+                TargetView = typeof(ToolsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "categories",
+                DisplayName = "Categories",
+                TargetView = typeof(CategoriesView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "relics",
+                DisplayName = "Relics",
+                TargetView = typeof(RelicsHistoryView)
+            }
+        };
+
         public List<SortCriterion> SortOptions = new List<SortCriterion>
         {
             new SortCriterion
             {
-                SortBy = "title",
+                SortByTag = "title",
                 DisplayName = "Alphabetical"
             },
 
             new SortCriterion
             {
-                SortBy = "launch_times",
+                SortByTag = "launch_times",
                 DisplayName = "Most Launched"
             },
 
             new SortCriterion
             {
-                SortBy = "last_launched",
+                SortByTag = "last_launched",
                 DisplayName = "Last Launched"
             },
 
             new SortCriterion
             {
-                SortBy = "id",
+                SortByTag = "id",
                 DisplayName = "Last Added"
+            }
+        };
+
+        public List<TabModel> SettingsTabs = new List<TabModel>
+        {
+            new TabModel
+            {
+                ItemTag = "general",
+                DisplayName = "General",
+                TargetView = typeof(GeneralSettingsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "myprofile",
+                DisplayName = "Profile",
+                TargetView = typeof(MyProfileSettingsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "interface",
+                DisplayName = "Appearance",
+                TargetView = typeof(InterfaceSettingsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "categories",
+                DisplayName = "Categories",
+                TargetView = typeof(CategoriesSettingsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "folders",
+                DisplayName = "Folders",
+                TargetView = typeof(FoldersSettingsView)
+            },
+
+            new TabModel
+            {
+                ItemTag = "advanced",
+                DisplayName = "Advanced",
+                TargetView = typeof(AdvancedSettingsView)
             }
         };
 
