@@ -8,7 +8,7 @@ namespace ZennLauncherApp
 {
     public class ProfileImageConverter : IValueConverter
     {
-        GlobalFunctions func = new GlobalFunctions();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // 'value' adalah ID dari binding
@@ -53,5 +53,6 @@ namespace ZennLauncherApp
         {
             throw new NotImplementedException();
         }
+
     }
 }

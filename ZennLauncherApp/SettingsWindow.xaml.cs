@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -21,9 +22,9 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public Action OnSettingsApplied { get; set; }
 
@@ -126,5 +127,28 @@ namespace ZennLauncherApp
             }
 
         }
+
+        public void EnableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blur)
+            {
+                blur.Radius = 20;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+            }
+        }
+
+        public void DisableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blurAfter)
+            {
+                blurAfter.Radius = 0;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+            }
+        }
+
     }
 }

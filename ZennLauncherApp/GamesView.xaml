@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden">
-            <StackPanel Margin="80,85,80,68">
+            <StackPanel Margin="80,90,80,68">
                 <ItemsControl x:Name="ContainerBtnGames">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -90,6 +90,8 @@
                                             <TextBlock Text="{Binding GameTitle}"
                                                        FontSize="12"
                                                        Margin="10"
+                                                       TextWrapping="Wrap"
+                                                       TextAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        Foreground="WhiteSmoke" />
@@ -125,67 +127,71 @@
 
         </DockPanel>
 
-        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="35" 
-           MaxHeight="100" Background="#BF372D51" Margin="32,15,32,10">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="41" 
+           MaxHeight="100" Margin="32,15,32,10" CornerRadius="3" Background="#BF372D51">
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" MinHeight="30">
-                <Grid>
-                    <TextBox  x:Name="SearchBarGames" 
-                              TextChanged="SearchBarGames_Changed" 
-                              MinWidth="280"
-                              MaxWidth="280"
-                              VerticalContentAlignment="Center" 
-                              Height="25" 
-                              Margin="10,7,10,7" 
-                              Padding="5,0,0,0"
-                              Style="{StaticResource TextBoxStyle}"/>
-                    
-                    <TextBlock IsHitTestVisible="False" 
-                               Text="Search games..." 
-                               VerticalAlignment="Center" 
-                               HorizontalAlignment="Left" 
-                               Margin="20,0,0,0" 
-                               Foreground="#50FFFFFF">
-                        
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBarGames}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
+            <DockPanel>
+
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" MinHeight="30" Margin="0,0.3">
+                    <Grid>
+                        <TextBox  x:Name="SearchBarGames" 
+                                  TextChanged="SearchBarGames_Changed" 
+                                  MinWidth="280"
+                                  MaxWidth="280"
+                                  VerticalContentAlignment="Center" 
+                                  MinHeight="25"
+                                  Margin="10,7,10,7" 
+                                  Padding="5,0,0,0"
+                                  Style="{StaticResource TextBoxStyle}"/>
+
+                        <TextBlock IsHitTestVisible="False" 
+                                   Text="Search games..." 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="20,0,0,0" 
+                                   Foreground="#50FFFFFF">
+
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=SearchBarGames}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+
+                    <TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                    <ComboBox x:Name="ComboSortByGames" 
+                              Width="125" Margin="10,7,10,7" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              SelectionChanged="ComboSortByGames_Changed"
+                              SelectedIndex="0" MinHeight="25">
+
+                        <ComboBox.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
+                        </ComboBox.Resources>
+
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
+                                <Setter Property="Tag" Value="{Binding SortByTag}"/>
                             </Style>
-                        </TextBlock.Style>
-                        
-                    </TextBlock>
-                </Grid>
-            </StackPanel>
-            
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                
-                <TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF" 
-                           HorizontalAlignment="Center" VerticalAlignment="Center" />
-                
-                <ComboBox x:Name="ComboSortByGames" 
-                          Width="125" Margin="10,7,10,7" 
-                          Style="{StaticResource ComboBoxStyle}"
-                          SelectionChanged="ComboSortByGames_Changed"
-                          SelectedIndex="0" MinHeight="25">
+                        </ComboBox.ItemContainerStyle>
 
-                    <ComboBox.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
-                    </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
 
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
-                            <Setter Property="Tag" Value="{Binding SortByTag}"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-
-                </ComboBox>
-            </StackPanel>
-        </DockPanel>
+            </DockPanel>
+        </Border>
     </Grid>
 </UserControl>

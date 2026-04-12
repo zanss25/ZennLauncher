@@ -24,27 +24,37 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class ToolsView : UserControl
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
+
+        private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
 
         List<ToolModel> allToolsList = new List<ToolModel>();
         public ToolsView()
         {
             InitializeComponent();
-            LoadToolsList();
 
+            LoadToolsList();
             ComboSortByTools.ItemsSource = func.SortOptions;
             ComboSortByTools.DisplayMemberPath = "DisplayName";
             ComboSortByTools.SelectedIndex = 0;
-
             LoadDefaultSortOptions();
         }
 
         private void LoadDefaultSortOptions()
         {
-            string defaultSortOption = ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex, "ToolsView Load Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            string defaultSortOption = ((App)Application.Current).CurrentProfileCfg?.General?.ToolsDefaultSortOption;
 
             if (string.IsNullOrEmpty(defaultSortOption))
             {
@@ -136,15 +146,19 @@ namespace ZennLauncherApp
             var menuItem = sender as MenuItem;
             var selectedTool = menuItem.Tag as ToolModel;
 
+            Main.EnableBlurAndOverlay();
             ToolPropertiesWindow edit = new ToolPropertiesWindow(selectedTool);
             if (edit.ShowDialog() == true)
             {
                 LoadToolsList();
+                ComboSortByTools_Changed(ComboSortByTools, null);
             }
             else
             {
                 LoadToolsList();
+                ComboSortByTools_Changed(ComboSortByTools, null);
             }
+            Main.DisableBlurAndOverlay();
         }
 
         private void MenuOpenDir_Click(object sender, RoutedEventArgs e)
@@ -188,21 +202,26 @@ namespace ZennLauncherApp
         {
             var menuItem = sender as MenuItem;
             var selectedTool = menuItem.Tag as ToolModel;
-
+            
+            Main.EnableBlurAndOverlay();
             if (selectedTool != null)
             {
-                var result = MessageBox.Show($"Are you sure you want to remove '{selectedTool.ToolTitle}'?",
-                                                "Confirm Delete",
-                                                MessageBoxButton.YesNo,
-                                                MessageBoxImage.Warning);
+                PopupWindow popup = new PopupWindow("Confirm Delete",
+                                                     $"Are you sure you want to remove \"{selectedTool.ToolTitle}\"?",
+                                                     "Delete Tool", true);
 
-                if (result == MessageBoxResult.Yes)
+                popup.ShowDialog();
+                if (popup.DialogResult == true)
                 {
-                    DBHandler db = new DBHandler();
+                    DBHandler db = DBHandler.Instance;
                     db.DeleteTool(selectedTool.ToolId);
+                    
                     LoadToolsList();
+                    ComboSortByTools_Changed(ComboSortByTools, null);
                 }
             }
+
+            Main.DisableBlurAndOverlay();
         }
 
         private void SearchBarTools_Changed(object sender, TextChangedEventArgs e)
@@ -223,7 +242,7 @@ namespace ZennLauncherApp
             ContainerBtnTools.ItemsSource = filteredList;
         }
 
-        private void ComboSortByTools_Changed(object sender, SelectionChangedEventArgs e)
+        public void ComboSortByTools_Changed(object sender, SelectionChangedEventArgs e)
         {
             if (db == null || ComboSortByTools.SelectedItem == null) return;
 
@@ -238,5 +257,6 @@ namespace ZennLauncherApp
 
             ContainerBtnTools.ItemsSource = db.GetAllTools(sortBy, asc);
         }
+
     }
 }

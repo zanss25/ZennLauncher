@@ -206,6 +206,9 @@
       <DependentUpon>NewPasswordPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="PathToImageConverter.cs" />
+    <Compile Include="PopupWindow.xaml.cs">
+      <DependentUpon>PopupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProfileConfigModel.cs" />
     <Compile Include="ProfileCreateWindow.xaml.cs">
       <DependentUpon>ProfileCreateWindow.xaml</DependentUpon>
@@ -268,6 +271,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewPasswordPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

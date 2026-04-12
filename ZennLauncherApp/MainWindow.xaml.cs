@@ -15,9 +15,12 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZennLauncherApp.Properties;
+using static System.Resources.ResXFileRef;
 
 namespace ZennLauncherApp
 {
@@ -26,10 +29,9 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        UpdateHandler up = new UpdateHandler();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public MainWindow()
         {
@@ -49,23 +51,32 @@ namespace ZennLauncherApp
 
         public void LoadDefaultStartingTab()
         {
-            string defaultStartingTab = ((App)Application.Current).CurrentProfileCfg.General.StartingTab;
-
-            if (string.IsNullOrEmpty(defaultStartingTab))
+            try
             {
-                defaultStartingTab = "games";
+                string defaultStartingTab = ((App)Application.Current)?.CurrentProfileCfg?.General?.StartingTab;
+
+                if (string.IsNullOrEmpty(defaultStartingTab))
+                {
+                    defaultStartingTab = "games";
+                }
+
+                var targetTabObject = func.SidebarTabs
+                                       .FirstOrDefault(s => s.ItemTag == defaultStartingTab);
+
+                if (targetTabObject != null)
+                {
+                    SidebarNavList.SelectedItem = targetTabObject;
+                }
+                else
+                {
+                    SidebarNavList.SelectedIndex = 0;
+                }
             }
-
-            var targetTabObject = func.SidebarTabs
-                                   .FirstOrDefault(s => s.ItemTag == defaultStartingTab);
-
-            if (targetTabObject != null)
+            catch (Exception ex)
             {
-                SidebarNavList.SelectedItem = targetTabObject;
-            }
-            else
-            {
-                SidebarNavList.SelectedIndex = 0;
+                MessageBox.Show("Error: " + ex, "MainWindow Load Error", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
             }
         }
 
@@ -126,7 +137,9 @@ namespace ZennLauncherApp
         {
             SettingsWindow settings = new SettingsWindow("myprofile");
 
+            EnableBlurAndOverlay();
             settings.ShowDialog();
+            DisableBlurAndOverlay();
         }
 
         private void BtnSwitchProfile_Click(object sender, RoutedEventArgs e)
@@ -175,11 +188,14 @@ namespace ZennLauncherApp
                 RefreshCurrentTab();
             };
 
+            EnableBlurAndOverlay();
             settings.ShowDialog();
+            DisableBlurAndOverlay();
         }
 
         private void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
         {
+            EnableBlurAndOverlay();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFileDialog.Title = "Select Game Executable";
@@ -205,21 +221,24 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList(((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption);
+                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
                     }
                 }
                 else
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList(((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption);
+                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
                     }
                 }
             }
+
+            DisableBlurAndOverlay();
         }
 
         private void BtnAddNewTool_Click(object sender, RoutedEventArgs e)
         {
+            EnableBlurAndOverlay();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFileDialog.Title = "Select Tool Executable";
@@ -245,17 +264,19 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is ToolsView gview)
                     {
-                        gview.LoadToolsList();
+                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
                     }
                 }
                 else
                 {
                     if (ContentSlot.Content is ToolsView gview)
                     {
-                        gview.LoadToolsList();
+                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
                     }
                 }
             }
+
+            DisableBlurAndOverlay();
         }
 
         private void OnTabChanged(TabModel selectedTab)
@@ -288,5 +309,28 @@ namespace ZennLauncherApp
                 OnTabChanged(selected);
             }
         }
+
+        public void EnableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blur)
+            {
+                blur.Radius = 20;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+            }
+        }
+
+        public void DisableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blurAfter)
+            {
+                blurAfter.Radius = 0;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+            }
+        }
+
     }
 }

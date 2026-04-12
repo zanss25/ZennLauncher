@@ -20,16 +20,16 @@ namespace ZennLauncherApp
     public partial class InputBoxPopup : Window
     {
         public string ResultText { get; private set; }
-        private bool _isPasswordMode;
+        private readonly bool _isPasswordMode;
 
         public InputBoxPopup(string title = "InputBoxPopup", string subtext = "InputTextBox", 
                              string btn = "Ok", bool isPassword = false, bool enableBtnClose = true)
         {
             InitializeComponent();
 
-            this.Title = title;
-            TitleTextBlock.Text = this.Title.ToUpper();
-            InputTextBlock.Text = subtext;
+            Title = title;
+            TitleTextBlock.Text = Title.ToUpper();
+            InputTextBlock.Text = subtext.ToUpper();
             BtnOk.Content = btn;
             _isPasswordMode = isPassword;
 
@@ -54,7 +54,7 @@ namespace ZennLauncherApp
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            DialogResult = false;
             Close();
         }
 
@@ -64,18 +64,26 @@ namespace ZennLauncherApp
 
             if (_isPasswordMode && String.IsNullOrEmpty(ResultText))
             {
-                MessageBox.Show("The password cannot be empty");
+                PopupWindow popup = new PopupWindow("Password Empty",
+                                                    $"The password cannot be blank",
+                                                    "Ok", false);
+
+                popup.ShowDialog();
                 return;
             }
 
             if (!_isPasswordMode && String.IsNullOrEmpty(ResultText))
             {
-                MessageBox.Show("The text input cannot be empty");
+                PopupWindow popup = new PopupWindow("Input Empty",
+                                                    $"The text input cannot be blank",
+                                                    "Ok", false);
+
+                popup.ShowDialog();
                 return;
             }
 
-            this.DialogResult = true;
-            this.Close();
+            DialogResult = true;
+            Close();
         }
     }
 }

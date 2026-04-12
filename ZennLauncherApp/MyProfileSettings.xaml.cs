@@ -24,13 +24,13 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class MyProfileSettingsView : UserControl
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = new DBHandler();
+        private SettingsWindow Settings => Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault();
 
         public MyProfileSettingsView()
         {
-            InitializeComponent();
-
+            InitializeComponent();            
             LoadProfileData();
 
             if (string.IsNullOrEmpty(db.profileData.ProfileHash))
@@ -50,7 +50,10 @@ namespace ZennLauncherApp
         private void BtnEditProfile_Click(object sender, RoutedEventArgs e)
         {
             ProfileCreateWindow create = new ProfileCreateWindow(db.profileData);
+
+            Settings.EnableBlurAndOverlay();
             create.ShowDialog();
+            Settings.DisableBlurAndOverlay();
         }
 
         private void BtnResetPass_Click(object sender, RoutedEventArgs e)
@@ -62,9 +65,11 @@ namespace ZennLauncherApp
             string passwordInput;
 
             bool isPasswordCorrect = false;
+
+            Settings.EnableBlurAndOverlay();
             while (!isPasswordCorrect)
             {
-                InputBoxPopup currentpass = new InputBoxPopup("RESET PASSWORD", "CONFIRM YOUR CURRENT PASSWORD",
+                InputBoxPopup currentpass = new InputBoxPopup("Reset Password", "Enter Your Current Password",
                                                                 "Confirm", true, true);
 
                 if (currentpass.ShowDialog() == true)
@@ -76,7 +81,11 @@ namespace ZennLauncherApp
 
                     if (!isPasswordCorrect)
                     {
-                        MessageBox.Show("Password incorrect");
+                        PopupWindow popup = new PopupWindow("Password Incorrect",
+                                                            $"The password you typed is incorrect",
+                                                            "Ok", false);
+
+                        popup.ShowDialog();
                     }
                     else
                     {
@@ -114,22 +123,34 @@ namespace ZennLauncherApp
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Error: " + ex.Message, "Reset Password Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show("Error: " + ex.Message, "Reset Password Error", 
+                                                MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
                             }
 
-                            MessageBox.Show("Your password has been changed");
+                            PopupWindow popup = new PopupWindow("Add New Password",
+                                                                $"Your password has been changed successfully",
+                                                                "Ok", false);
+
+                            popup.ShowDialog();
 
                             ProfileSelectWindow profiles = new ProfileSelectWindow();
                             profiles.Show();
                             main.Close();
                             var settings = Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault();
+                            Settings.DisableBlurAndOverlay();
                             settings?.Close();
                         }
+                        else
+                        {
+                            Settings.DisableBlurAndOverlay();
+                            break;
+                        }    
                     }
                 }
                 else
                 {
+                    Settings.DisableBlurAndOverlay();
                     break;
                 }
 
@@ -146,6 +167,7 @@ namespace ZennLauncherApp
 
             bool isPasswordAdded = false;
 
+            Settings.EnableBlurAndOverlay();
             NewPasswordPopup newpass = new NewPasswordPopup("Add New Password", "Enter Your New Password",
                                                             "Confirm New Password", "Confirm", false, true);
             if (newpass.ShowDialog() == true)
@@ -180,23 +202,30 @@ namespace ZennLauncherApp
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, " Add Password Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error: " + ex.Message, " Add Password Error", 
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
 
             if (isPasswordAdded)
             {
-                MessageBox.Show("The new password has been added");
+                PopupWindow popup = new PopupWindow("Add New Password",
+                                                    $"The new password has been added successfully",
+                                                    "Ok", false);
+
+                popup.ShowDialog();
 
                 ProfileSelectWindow profiles = new ProfileSelectWindow();
                 profiles.Show();
                 main.Close();
                 var settings = Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault();
+                Settings.DisableBlurAndOverlay();
                 settings?.Close();
             }
             else
             {
+                Settings.DisableBlurAndOverlay();
                 return;
             }
         }
@@ -210,17 +239,21 @@ namespace ZennLauncherApp
             string backupPath = System.IO.Path.Combine(func.dataPath, "BACKUP", $"{currentProfile.ProfileId.ToString()}_{currentProfile.ProfileName}_bak.zip");
 
             if (File.Exists(backupPath)) File.Delete(backupPath);
-
             try
             {
                 db.CloseAllConnections();
 
                 ZipFile.CreateFromDirectory(profileDataPath, backupPath);
-                MessageBox.Show($"Profile backed up to '{backupPath}'", "Backup Successful");
+                PopupWindow popup = new PopupWindow("Profile Backup",
+                                                    $"Profile successfully backed up to \"{backupPath}\"",
+                                                    "Ok", false);
+
+                popup.ShowDialog();
             } 
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Backup Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex.Message, "Backup Error", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -230,25 +263,34 @@ namespace ZennLauncherApp
 
             if (profile.ProfileId >= 0)
             {
-                var result = MessageBox.Show($"Are you sure you want to remove this profile? Removed profiles cannot be restored",
-                                             "Confirm Delete",
-                                             MessageBoxButton.YesNo,
-                                             MessageBoxImage.Warning);
+                PopupWindow popup = new PopupWindow("Confirm Profile Delete",
+                                                    $"Are you sure you want to remove this profile? Removed profiles cannot be restored",
+                                                    "Delete Profile", true);
 
-                if (result == MessageBoxResult.Yes)
+                popup.ShowDialog();
+                if (popup.DialogResult == true)
                 {
                     DBHandler db = new DBHandler();
                     db.DeleteProfile(profile.ProfileId);
 
                     ProfileSelectWindow profiles = new ProfileSelectWindow();
 
-                    MessageBox.Show("This profile has been deleted");
+                    PopupWindow popupDeleted = new PopupWindow("Delete Profile",
+                                                               $"This profile has been deleted successfully",
+                                                               "Ok", false);
+
+                    popupDeleted.ShowDialog();
 
                     profiles.Show();
                     Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault().Close();
                     Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().Close();
                 }
+                else
+                {
+
+                }
             }
         }
+
     }
 }

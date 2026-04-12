@@ -50,7 +50,7 @@
         </Border.BorderBrush>
 
 
-        <Grid Margin="5,0,5,0">
+        <Grid x:Name="MainGrid" Margin="5,0,5,0">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -61,6 +61,10 @@
                 <ColumnDefinition MinWidth="100" MaxWidth="212"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
+            <Grid.Effect>
+                <BlurEffect Radius="0"/>
+            </Grid.Effect>
 
             <StackPanel Grid.Row="0" Grid.Column="2"
                         Style="{StaticResource WindowControlButtonAreaStyle}">
@@ -287,6 +291,9 @@
                 </Grid>
 
             </Grid>
+
+            <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#00000000"
+                    IsHitTestVisible="False"/>
 
         </Grid>
     </Border>

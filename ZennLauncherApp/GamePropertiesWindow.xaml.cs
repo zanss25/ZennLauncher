@@ -25,14 +25,14 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class GamePropertiesWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
 
         string _gameIconPath;
         string _gameCoverPath;
 
-        private GameModel _existingGame;
-        private bool _isEditMode = false;
+        private readonly GameModel _existingGame;
+        private readonly bool _isEditMode = false;
 
         public GamePropertiesWindow(GameModel game = null)
         {
@@ -118,7 +118,6 @@ namespace ZennLauncherApp
         private void BtnChangeCover_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-
             openFileDialog.Filter = "Supported Image Files (*.png; *.jpg)|*.png; *.jpg|All files (*.*)|*.*";
             openFileDialog.Title = "Choose Image File";
 
@@ -168,20 +167,31 @@ namespace ZennLauncherApp
             string _gameStartIn = InputGameStartIn.Text.Trim();
             string _gameLaunchOptions = InputGameLaunchOptions.Text.Trim();
 
+            string inputEmpty = "Input Empty";
+
             if (string.IsNullOrWhiteSpace(_gameTitle)) {
-                MessageBox.Show("The game title cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The game title cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_gameTarget))
             {
-                MessageBox.Show("The game target directory cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The game target directory cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_gameStartIn))
             {
-                MessageBox.Show("The game starting directory cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The game starting directory cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
@@ -220,7 +230,7 @@ namespace ZennLauncherApp
                     {
                         BitmapSource bitmapSource = exeIcon as BitmapSource;
 
-                        // Jika ternyata exeIcon bukan BitmapSource (misal DrawingImage), kita perlu konversi
+                        // Jika ternyata exeIcon bukan BitmapSource (misal DrawingImage), lakukan konversi
                         if (bitmapSource == null)
                         {
                         }
@@ -258,12 +268,12 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    var result = MessageBox.Show($"Confirm editing '{InputGameTitle.Text}'?",
-                                           "Confirm Edit",
-                                           MessageBoxButton.YesNo,
-                                           MessageBoxImage.Warning);
+                    PopupWindow popup = new PopupWindow("Confirm Edit",
+                                                        $"Confirm editing \"{InputGameTitle.Text}\"?",
+                                                        "Confirm", true);
 
-                    if (result == MessageBoxResult.Yes)
+                    popup.ShowDialog();
+                    if (popup.DialogResult == true)
                     {
                         // Edit Mode
                         query = @"UPDATE games SET 
@@ -286,12 +296,13 @@ namespace ZennLauncherApp
 
                 db.ExecuteQuery(db.ConnectionProfile, query, args);
 
-                this.DialogResult = true;
-                this.Close();
+                DialogResult = true;
+                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error Saving Data", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex.Message, "Error Saving Data", 
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

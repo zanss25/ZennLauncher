@@ -24,9 +24,9 @@ namespace ZennLauncherApp
 {
     public class UpdateHandler
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public void BackupData()
         {

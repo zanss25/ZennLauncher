@@ -29,8 +29,8 @@ namespace ZennLauncherApp
         {
             InitializeComponent();
 
-            this.Title = title;
-            TitleTextBlock.Text = this.Title.ToUpper();
+            Title = title;
+            TitleTextBlock.Text = Title.ToUpper();
             PassTextBlock.Text = passText.ToUpper();
             ConfirmTextBlock.Text = confirmText.ToUpper();
             BtnOk.Content = btn;
@@ -40,7 +40,7 @@ namespace ZennLauncherApp
             if (!enableCheckboxDontUsePass)
             {
                 CheckBoxDontUsePass.Visibility = Visibility.Collapsed;
-                this.Height = 300;
+                Height = 300;
             }
 
             if (!enableBtnClose)
@@ -51,7 +51,7 @@ namespace ZennLauncherApp
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            DialogResult = false;
             Close();
         }
 
@@ -60,7 +60,7 @@ namespace ZennLauncherApp
             if (CheckBoxDontUsePass.IsChecked == true)
             {
                 IsPasswordDisabled = true;
-                this.DialogResult = true;
+                DialogResult = true;
             }
             else
             {
@@ -69,28 +69,37 @@ namespace ZennLauncherApp
 
                 if (String.IsNullOrEmpty(ResultPass))
                 {
-                    MessageBox.Show("The password cannot be empty");
+                    PopupWindow popup = new PopupWindow("Password Empty",
+                                                        $"The password cannot be blank",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
                 if (String.IsNullOrEmpty(ResultConfirm))
                 {
-                    MessageBox.Show("Please retype your password");
+                    PopupWindow popup = new PopupWindow("Confirm Password",
+                                                        $"Please retype your new password",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
                 if (ResultConfirm == ResultPass)
                 {
-                    this.DialogResult = true;
-                    this.Close();
+                    DialogResult = true;
+                    Close();
                 }
                 else
                 {
-                    MessageBox.Show("Password didn't match");
+                    PopupWindow popup = new PopupWindow("Passwords Don't Match",
+                                                        $"The passwords don't match. Please check your password confirmation",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
             }
-
         }
+
     }
 }

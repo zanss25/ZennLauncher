@@ -25,8 +25,8 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class ToolPropertiesWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
+        private readonly GlobalFunctions func = new GlobalFunctions();
+        private readonly DBHandler db = DBHandler.Instance;
 
         string _toolIconPath;
         string _toolCoverPath;
@@ -172,21 +172,32 @@ namespace ZennLauncherApp
             string _toolStartIn = InputToolStartIn.Text.Trim();
             string _toolLaunchOptions = InputToolLaunchOptions.Text.Trim();
 
+            string inputEmpty = "Input Rmpty";
+
             if (string.IsNullOrWhiteSpace(_toolTitle))
             {
-                MessageBox.Show("The tool title cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The tool title cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_toolTarget))
             {
-                MessageBox.Show("The tool target directory cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The game target directory cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_toolStartIn))
             {
-                MessageBox.Show("The tool starting directory cannot be blank");
+                PopupWindow popup = new PopupWindow(inputEmpty,
+                                                    $"The game starting directory cannot be blank",
+                                                    "Ok", false);
+                popup.ShowDialog();
                 return;
             }
 
@@ -224,7 +235,7 @@ namespace ZennLauncherApp
                     {
                         BitmapSource bitmapSource = exeIcon as BitmapSource;
 
-                        // Jika ternyata exeIcon bukan BitmapSource (misal DrawingImage), kita perlu konversi
+                        // Jika ternyata exeIcon bukan BitmapSource (misal DrawingImage), lakukan konversi
                         if (bitmapSource == null)
                         {
                         }
@@ -262,12 +273,12 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    var result = MessageBox.Show($"Confirm editing '{InputToolTitle.Text}'?",
-                                           "Confirm Edit",
-                                           MessageBoxButton.YesNo,
-                                           MessageBoxImage.Warning);
+                    PopupWindow popup = new PopupWindow("Confirm Edit",
+                                                        $"Confirm editing \"{InputToolTitle.Text}\"?",
+                                                        "Confirm", true);
 
-                    if (result == MessageBoxResult.Yes)
+                    popup.ShowDialog();
+                    if (popup.DialogResult == true)
                     {
                         // Edit Mode
                         query = @"UPDATE tools SET 
@@ -275,6 +286,7 @@ namespace ZennLauncherApp
                             start_in=@start_in, launch_options=@launch_options, 
                             cover_path=@cover_path, icon_path=@icon_path 
                             WHERE id=@id";
+
                         args.Add("@id", _existingTool.ToolId);
                     }
                     else
@@ -296,14 +308,14 @@ namespace ZennLauncherApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error Saving Data", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex.Message, "Error Saving Data", 
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-
             openFileDialog.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFileDialog.Title = "Select Tool Executable";
 

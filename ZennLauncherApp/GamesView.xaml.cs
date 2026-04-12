@@ -24,44 +24,52 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class GamesView : UserControl
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
+
+        private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
         List<GameModel> allGamesList = new List<GameModel>();
 
         public GamesView()
-        {
-            
+        {            
             InitializeComponent();
-            LoadGamesList();
 
-            ComboSortByGames.ItemsSource = func.SortOptions;
+            LoadGamesList();
+            ComboSortByGames.ItemsSource = GlobalFunctions.Instance.SortOptions;
             ComboSortByGames.DisplayMemberPath = "DisplayName";
             ComboSortByGames.SelectedIndex = 0;
-
             LoadDefaultSortOptions();
         }
 
         private void LoadDefaultSortOptions()
         {
-            string defaultSortOption = ((App)Application.Current).CurrentProfileCfg.General.GamesDefaultSortOption;
-
-            if (string.IsNullOrEmpty(defaultSortOption))
+            try
             {
-                defaultSortOption = "title";
+                string defaultSortOption = ((App)Application.Current).CurrentProfileCfg?.General?.GamesDefaultSortOption;
+
+                if (string.IsNullOrEmpty(defaultSortOption))
+                {
+                    defaultSortOption = "title";
+                }
+
+                var targetSortObject = func.SortOptions
+                                       .FirstOrDefault(s => s.SortByTag == defaultSortOption);
+
+                if (targetSortObject != null)
+                {
+                    ComboSortByGames.SelectedItem = targetSortObject;
+                }
+                else
+                {
+                    ComboSortByGames.SelectedIndex = 0;
+                }
             }
-
-            var targetSortObject = func.SortOptions
-                                   .FirstOrDefault(s => s.SortByTag == defaultSortOption);
-
-            if (targetSortObject != null)
+            catch (Exception ex)
             {
-                ComboSortByGames.SelectedItem = targetSortObject;
-            }
-            else
-            {
-                ComboSortByGames.SelectedIndex = 0;
+                MessageBox.Show("Error: " +  ex, "GamesView Load Error", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -142,11 +150,15 @@ namespace ZennLauncherApp
             var menuItem = sender as MenuItem;
             var selectedGame = menuItem.Tag as GameModel;
 
+            Main.EnableBlurAndOverlay();
+
             GamePropertiesWindow edit = new GamePropertiesWindow(selectedGame);
             if (edit.ShowDialog() == true)
             {
                 ComboSortByGames_Changed(ComboSortByGames, null);
             }
+
+            Main.DisableBlurAndOverlay();
         }
 
         private void MenuOpenDir_Click(object sender, RoutedEventArgs e)
@@ -181,7 +193,8 @@ namespace ZennLauncherApp
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error: " + ex.Message, "Error", 
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -191,21 +204,25 @@ namespace ZennLauncherApp
             var menuItem = sender as MenuItem;
             var selectedGame = menuItem.Tag as GameModel;
 
+            Main.EnableBlurAndOverlay();
             if (selectedGame != null)
             {
-                var result = MessageBox.Show($"Are you sure you want to remove '{selectedGame.GameTitle}'?",
-                                                "Confirm Delete",
-                                                MessageBoxButton.YesNo, 
-                                                MessageBoxImage.Warning);
+                PopupWindow popup = new PopupWindow("Confirm Delete", 
+                                                     $"Are you sure you want to remove \"{selectedGame.GameTitle}\"?",
+                                                     "Delete Game", true);
 
-                if (result == MessageBoxResult.Yes)
+                popup.ShowDialog();
+                if (popup.DialogResult == true)
                 {
-                    DBHandler db = new DBHandler();
+                    DBHandler db = DBHandler.Instance;
                     db.DeleteGame(selectedGame.GameId);
-                    LoadGamesList();
-                    LoadDefaultSortOptions();
+                    Main.DisableBlurAndOverlay();
+
+                    ComboSortByGames_Changed(ComboSortByGames, null);
                 }
             }
+
+            Main.DisableBlurAndOverlay();
         }
 
         private void SearchBarGames_Changed(object sender, TextChangedEventArgs e)
@@ -226,7 +243,7 @@ namespace ZennLauncherApp
             ContainerBtnGames.ItemsSource = filteredList;
         }
 
-        private void ComboSortByGames_Changed(object sender, SelectionChangedEventArgs e)
+        public void ComboSortByGames_Changed(object sender, SelectionChangedEventArgs e)
         {
             if (db == null || ComboSortByGames.SelectedItem == null) return;
 
@@ -242,5 +259,6 @@ namespace ZennLauncherApp
             ContainerBtnGames.ItemsSource = db.GetAllGames(sortBy, asc);
 
         }
+
     }
 }

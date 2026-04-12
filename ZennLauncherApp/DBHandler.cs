@@ -15,8 +15,10 @@ namespace ZennLauncherApp
 {
     public class DBHandler
     {
-        GlobalFunctions func = new GlobalFunctions();
-        ConfigHandler cfg = new ConfigHandler();
+        public static DBHandler Instance { get; } = new DBHandler();
+
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public ProfileDataModel profileData = new ProfileDataModel();
 

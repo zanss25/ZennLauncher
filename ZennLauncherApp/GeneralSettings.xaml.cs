@@ -25,9 +25,9 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class GeneralSettingsView : UserControl, ISettingsTab
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public Action OnSettingChanged { get; set; }
 
@@ -198,5 +198,6 @@ namespace ZennLauncherApp
                             ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows);
             OnSettingChanged?.Invoke();
         }
+
     }
 }

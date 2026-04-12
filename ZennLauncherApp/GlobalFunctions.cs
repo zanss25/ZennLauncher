@@ -26,6 +26,8 @@ namespace ZennLauncherApp
 {
     public class GlobalFunctions
     {
+        public static GlobalFunctions Instance { get; } = new GlobalFunctions();
+
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 

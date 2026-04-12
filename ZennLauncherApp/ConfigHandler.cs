@@ -7,7 +7,9 @@ namespace ZennLauncherApp
 {
     public class ConfigHandler
     {
-        private readonly GlobalFunctions func = new GlobalFunctions();
+        public static ConfigHandler Instance { get; } = new ConfigHandler();
+
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
 
         public string GlobalConfigPath => System.IO.Path.Combine(func.dataPath, "config.json");
         public string GlobalConfigDefaultPath => System.IO.Path.Combine(func.rootPath, "config_default.json");

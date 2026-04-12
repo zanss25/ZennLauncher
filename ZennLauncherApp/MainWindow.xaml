@@ -61,7 +61,7 @@
             </LinearGradientBrush>
         </Border.BorderBrush>
 
-        <Grid>
+        <Grid x:Name="MainGrid">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -79,6 +79,10 @@
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="1" ScaleY="1" />
             </Grid.LayoutTransform>
+
+            <Grid.Effect>
+                <BlurEffect Radius="0"/>
+            </Grid.Effect>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                         Margin="0,-39,5,1" Style="{StaticResource WindowControlButtonAreaStyle}">
@@ -327,7 +331,23 @@
                 </DockPanel>
             </Border>
 
-            
+            <Border Grid.Row="1" Grid.Column="0" Panel.ZIndex="99"
+                    BorderThickness="3" MaxWidth="25" Margin="-8,-3,0,0">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="270" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#25000000" Offset="0"/>
+                        <GradientStop Color="#00000000" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
 
             <Border Grid.Row="1" Grid.Column="1" Panel.ZIndex="99"
                     BorderThickness="3" MaxWidth="25" Margin="0,-3,-193,0">
@@ -357,6 +377,9 @@
                 </Border.Background>
             </Border>
 
+            <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#00000000"
+                    IsHitTestVisible="False"/>
+            
         </Grid>
     </Border>
 </Window>

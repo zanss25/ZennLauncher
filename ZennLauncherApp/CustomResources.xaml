@@ -44,6 +44,39 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="ControlButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Foreground" Value="#D8E1E1E1"/>
+        <Setter Property="BorderBrush" Value="#00000000"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="MainBorder" 
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="3" 
+                    Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#AA3D3454"/>
+                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#803D3454"/>
+                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MenuButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="#FF221E2F"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
@@ -74,39 +107,6 @@
                             <Setter Property="Foreground" Value="#AAF5F5F5"/>
                         </Trigger>
                         
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ControlButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="#00000000"/>
-        <Setter Property="Foreground" Value="#D8E1E1E1"/>
-        <Setter Property="BorderBrush" Value="#00000000"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="MainBorder" 
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="3" 
-                        Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#AA3D3454"/>
-                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#803D3454"/>
-                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
-                        </Trigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -211,6 +211,8 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="MainBorder" 
                     Background="{TemplateBinding Background}"
+                    BorderBrush="#00000000"
+                    BorderThickness="0.7"
                     CornerRadius="3" 
                     Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -225,7 +227,8 @@
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#48A896DD"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
                             <Setter Property="Foreground" Value="#DDF5F5F5"/>
                         </Trigger>
 
@@ -630,7 +633,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen}"
                                AllowsTransparency="True" 
                                Focusable="False"
-                               PopupAnimation="Slide"
+                               PopupAnimation="Fade"
                                VerticalOffset="3">
 
                             <Grid Name="DropDown"
@@ -744,7 +747,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen}"
                                AllowsTransparency="True" 
                                Focusable="False"
-                               PopupAnimation="Slide"
+                               PopupAnimation="Fade"
                                VerticalOffset="3">
 
                             <Grid Name="DropDown"
@@ -793,14 +796,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border x:Name="MainBorder"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                CornerRadius="3">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
-                          Margin="0"
-                          VerticalAlignment="Center"/>
+                                      Margin="0"
+                                      VerticalAlignment="Center"/>
                     </Border>
 
                     <ControlTemplate.Triggers>

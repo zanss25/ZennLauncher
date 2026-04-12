@@ -26,14 +26,14 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class ProfileCreateWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         string _avatarPath = "";
 
-        private ProfileDataModel activeProfile;
-        private bool _isEditMode = false;
+        private readonly ProfileDataModel activeProfile;
+        private readonly bool _isEditMode = false;
 
         public ProfileCreateWindow(ProfileDataModel profile = null)
         {
@@ -112,7 +112,10 @@ namespace ZennLauncherApp
 
                 if (string.IsNullOrWhiteSpace(_profileName))
                 {
-                    MessageBox.Show("Profile name cannot be blank");
+                    PopupWindow popup = new PopupWindow("Enter Profile Name",
+                                                        $"Your new profile name cannot be blank",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
@@ -128,7 +131,10 @@ namespace ZennLauncherApp
 
                 if (result == _profileName)
                 {
-                    MessageBox.Show("This profile name isn't available. Choose another name for your profile");
+                    PopupWindow popup = new PopupWindow("Profile Name Occupied",
+                                                        $"This profile name isn't available. Choose another name for your new profile",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
@@ -193,7 +199,10 @@ namespace ZennLauncherApp
 
                 if (string.IsNullOrWhiteSpace(_profileName))
                 {
-                    MessageBox.Show("Profile name cannot be blank");
+                    PopupWindow popup = new PopupWindow("Enter Profile Name",
+                                                        $"Your new profile name cannot be blank",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
@@ -208,7 +217,10 @@ namespace ZennLauncherApp
 
                 if (result == _profileName)
                 {
-                    MessageBox.Show("This profile name isn't available. Choose another name for your new profile");
+                    PopupWindow popup = new PopupWindow("Profile Name Occupied",
+                                                        $"This profile name isn't available. Choose another name for your new profile",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     return;
                 }
 
@@ -228,7 +240,8 @@ namespace ZennLauncherApp
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error: " + ex.Message, "Create Profile Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Error: " + ex.Message, "Create Profile Error", 
+                                        MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }
@@ -239,19 +252,28 @@ namespace ZennLauncherApp
 
                     if (string.IsNullOrEmpty(_profilePass))
                     {
-                        MessageBox.Show("Password cannot be blank");
+                        PopupWindow popup = new PopupWindow("Password is Empty",
+                                                            $"The password cannot be blank",
+                                                            "Ok", false);
+                        popup.ShowDialog();
                         return;
                     }
 
                     if (string.IsNullOrEmpty(_confirmPass))
                     {
-                        MessageBox.Show("Please retype your password");
+                        PopupWindow popup = new PopupWindow("Confirm Password",
+                                                            $"Please retype your new password",
+                                                            "Ok", false);
+                        popup.ShowDialog();
                         return;
                     }
 
                     if (_profilePass != _confirmPass)
                     {
-                        MessageBox.Show("Password didn't match");
+                        PopupWindow popup = new PopupWindow("Password Didn't Match",
+                                                            $"The password didn't match. Please check your password confirmation",
+                                                            "Ok", false);
+                        popup.ShowDialog();
                         return;
                     }
 
@@ -272,7 +294,8 @@ namespace ZennLauncherApp
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error: " + ex.Message, "Create Profile Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Error: " + ex.Message, "Create Profile Error", 
+                                        MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }
@@ -303,7 +326,10 @@ namespace ZennLauncherApp
                     var parentWindow = Application.Current.Windows.OfType<ProfileSelectWindow>().FirstOrDefault();
                     if (parentWindow != null) parentWindow.newProfileSaved = true;
 
-                    MessageBox.Show($"Profile {_profileName} created successfully!");
+                    PopupWindow popup = new PopupWindow("Add New Profile",
+                                                        $"Profile {_profileName} created successfully",
+                                                        "Ok", false);
+                    popup.ShowDialog();
                     Close();
                 }
                 catch (Exception ex)
@@ -371,6 +397,7 @@ namespace ZennLauncherApp
                 PreviewAvatar.Background = defaultBgBrush;
             }
         }
+
     }
 }
 

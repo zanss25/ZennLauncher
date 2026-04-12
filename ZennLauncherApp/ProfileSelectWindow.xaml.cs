@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -21,10 +22,10 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class ProfileSelectWindow : Window
     {
-        GlobalFunctions func = new GlobalFunctions();
-        UpdateHandler up = new UpdateHandler();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly UpdateHandler up = new UpdateHandler();
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         List<ProfileDataModel> allProfilesList = new List<ProfileDataModel>();
 
@@ -100,6 +101,7 @@ namespace ZennLauncherApp
 
             try
             {
+                EnableBlurAndOverlay();
                 create.ShowDialog();
 
                 if (newProfileSaved == true)
@@ -107,7 +109,9 @@ namespace ZennLauncherApp
                     LoadProfilesList();
                     newProfileSaved = false;
                 }
-                
+
+                DisableBlurAndOverlay();
+
             } catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -123,7 +127,11 @@ namespace ZennLauncherApp
             {
                 if (!BCrypt.Net.BCrypt.Verify(InputProfilePass.Password, selectedProfileHash))
                 {
-                    MessageBox.Show("Password incorrect");
+                    PopupWindow popup = new PopupWindow("Password Incorrect",
+                                                        $"The password you typed is incorrect",
+                                                        "Ok", false);
+
+                    popup.ShowDialog();
                     return;
                 }
             }
@@ -160,5 +168,28 @@ namespace ZennLauncherApp
                 MessageBox.Show("Error: " + ex.Message, "Log In Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void EnableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blur)
+            {
+                blur.Radius = 20;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+            }
+        }
+
+        private void DisableBlurAndOverlay()
+        {
+            if (MainGrid.Effect is BlurEffect blurAfter)
+            {
+                blurAfter.Radius = 0;
+
+                var converter = new BrushConverter();
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+            }
+        }
+
     }
 }

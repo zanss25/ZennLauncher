@@ -14,16 +14,18 @@ namespace ZennLauncherApp
     /// </summary>
     public partial class App : Application
     {
-        GlobalFunctions func = new GlobalFunctions();
-        UpdateHandler up = new UpdateHandler();
-        DBHandler db = new DBHandler();
-        ConfigHandler cfg = new ConfigHandler();
+        private readonly GlobalFunctions func = GlobalFunctions.Instance;
+        private readonly UpdateHandler up = new UpdateHandler();
+        private readonly DBHandler db = DBHandler.Instance;
+        private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public GlobalConfigModel CurrentGlobalCfg;
         public ProfileConfigModel CurrentProfileCfg;
 
-        public App()
+        protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
             db.GlobalDBInitialize();
             db.ProfileDBInitialize();
             up.VersionChecker();
@@ -32,13 +34,10 @@ namespace ZennLauncherApp
             cfg.CreateDefaultCfg();
             CurrentGlobalCfg = cfg.LoadGlobalConfig();
 
-            bool isKeepLoggedIn = CheckIsKeepLoggedIn();
-
-            if (isKeepLoggedIn)
+            if (CheckIsKeepLoggedIn())
             {
-                LoadProfileData();
+                LoadProfileData(); 
             }
-
         }
 
         public bool CheckIsKeepLoggedIn()
