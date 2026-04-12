@@ -84,6 +84,38 @@ namespace ZennLauncherApp
             }
         }
 
+        private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Title = "Select Game Executable";
+
+            if (openFile.ShowDialog() == true)
+            {
+                InputGameTarget.Text = openFile.FileName;
+                InputGameStartIn.Text = System.IO.Path.GetDirectoryName(openFile.FileName);
+
+                if (string.IsNullOrWhiteSpace(InputGameTitle.Text))
+                {
+                    InputGameTitle.Text = System.IO.Path.GetFileNameWithoutExtension(openFile.FileName);
+                }
+            }
+        }
+
+        private void BtnBrowseStartIn_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog cmnOpenFile = new CommonOpenFileDialog();
+            cmnOpenFile.IsFolderPicker = true;
+            cmnOpenFile.Title = "Select Game Folder";
+
+            Window owner = Window.GetWindow(this);
+
+            if (cmnOpenFile.ShowDialog(owner) == CommonFileDialogResult.Ok)
+            {
+                InputGameStartIn.Text = cmnOpenFile.FileName;
+            }
+        }
+
         private void BtnChangeIcon_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -303,37 +335,6 @@ namespace ZennLauncherApp
             {
                 MessageBox.Show("Error: " + ex.Message, "Error Saving Data", 
                                     MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
-            openFileDialog.Title = "Select Game Executable";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                InputGameTarget.Text = openFileDialog.FileName;
-                InputGameStartIn.Text = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
-
-                if (string.IsNullOrWhiteSpace(InputGameTitle.Text))
-                {
-                    InputGameTitle.Text = System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName);
-                }
-            }
-        }
-
-        private void BtnBrowseStartIn_Click(object sender, RoutedEventArgs e)
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            dialog.Title = "Select Game Folder";
-
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                InputGameStartIn.Text = dialog.FileName;
             }
         }
 

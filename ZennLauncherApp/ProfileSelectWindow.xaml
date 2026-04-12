@@ -275,7 +275,7 @@
 
                         </PasswordBox>
 
-                        <Button x:Name="BtnLogIn" Content="Log in" Grid.Column="1" Grid.Row="0"
+                        <Button x:Name="BtnLogIn" Content="Login" Grid.Column="1" Grid.Row="0"
                                 Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle}" 
                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                                 Margin="5,0,0,0" Padding="15,8,15,8" MinWidth="30"

@@ -88,6 +88,38 @@ namespace ZennLauncherApp
             }
         }
 
+        private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Title = "Select Tool Executable";
+
+            if (openFile.ShowDialog() == true)
+            {
+                InputToolTarget.Text = openFile.FileName;
+                InputToolStartIn.Text = System.IO.Path.GetDirectoryName(openFile.FileName);
+
+                if (string.IsNullOrWhiteSpace(InputToolTitle.Text))
+                {
+                    InputToolTitle.Text = System.IO.Path.GetFileNameWithoutExtension(openFile.FileName);
+                }
+            }
+        }
+
+        private void BtnBrowseStartIn_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog cmnOpenFile = new CommonOpenFileDialog();
+            cmnOpenFile.IsFolderPicker = true;
+            cmnOpenFile.Title = "Select Tool Folder";
+
+            Window owner = Window.GetWindow(this);
+
+            if (cmnOpenFile.ShowDialog(owner) == CommonFileDialogResult.Ok)
+            {
+                InputToolStartIn.Text = cmnOpenFile.FileName;
+            }
+        }
+
         private void BtnChangeIcon_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -310,36 +342,6 @@ namespace ZennLauncherApp
             {
                 MessageBox.Show("Error: " + ex.Message, "Error Saving Data", 
                                     MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
-            openFileDialog.Title = "Select Tool Executable";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                InputToolTarget.Text = openFileDialog.FileName;
-                InputToolStartIn.Text = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
-
-                if (string.IsNullOrWhiteSpace(InputToolTitle.Text))
-                {
-                    InputToolTitle.Text = System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName);
-                }
-            }
-        }
-
-        private void BtnBrowseStartIn_Click(object sender, RoutedEventArgs e)
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            dialog.Title = "Select Tool Folder";
-
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                InputToolStartIn.Text = dialog.FileName;
             }
         }
 

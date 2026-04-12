@@ -396,4 +396,10 @@
   </Target>
   <Import Project="..\packages\SourceGear.sqlite3.3.50.4.5\build\net471\SourceGear.sqlite3.targets" Condition="Exists('..\packages\SourceGear.sqlite3.3.50.4.5\build\net471\SourceGear.sqlite3.targets')" />
   <Import Project="..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(TargetDir)libs" mkdir "$(TargetDir)libs"
+move /y "$(TargetDir)*.dll" "$(TargetDir)libs\"
+move /y "$(TargetDir)*.xml" "$(TargetDir)libs\"
+move /y "$(TargetDir)*.pdb" "$(TargetDir)libs\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
