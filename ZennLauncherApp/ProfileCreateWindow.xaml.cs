@@ -327,7 +327,7 @@ namespace ZennLauncherApp
                     if (parentWindow != null) parentWindow.newProfileSaved = true;
 
                     PopupWindow popup = new PopupWindow("Add New Profile",
-                                                        $"Profile {_profileName} created successfully",
+                                                        $"Profile \"{_profileName}\" created successfully",
                                                         "Ok", false);
                     popup.ShowDialog();
                     Close();

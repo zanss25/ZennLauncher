@@ -95,7 +95,7 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#AA3D3454"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#FF372f4C"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#80594D7B"/>
                             <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             <Setter Property="Cursor" Value="Hand"/>
@@ -114,6 +114,7 @@
     </Style>
 
     <Style x:Key="MenuButtonStyleB" TargetType="Button">
+        <!-- Used in "Profile Menu" Popup at MainWindow -->
         <Setter Property="Background" Value="#00221E2F"/>
         <Setter Property="Foreground" Value="#BBFFFFFF"/>
         <Setter Property="Padding" Value="10"/>
@@ -152,7 +153,8 @@
     </Style>
 
     <Style x:Key="MenuButtonStyleC" TargetType="Button">
-        <Setter Property="Background" Value="#51A896DD"/>
+        <!-- Used in "Apply" and "Ok" buttons -->
+        <Setter Property="Background" Value="#FF46405C"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
         <Setter Property="FontFamily" Value="Global Sans Serif"/>
         <Setter Property="FontSize" Value="12"/>
@@ -179,8 +181,8 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#70A896DD"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#80594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#FF574E72"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#AA594D7B"/>
                             <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
@@ -204,24 +206,26 @@
     </Style>
 
     <Style x:Key="MenuButtonStyleD" TargetType="Button">
-        <Setter Property="Background" Value="#FF221E2F"/>
+        <!-- Used in buttons at "SettingsWindow" User Control instances -->
+        <Setter Property="Background" Value="#FF353144"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="MainBorder" 
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="#00000000"
-                    BorderThickness="0.7"
-                    CornerRadius="3" 
-                    Padding="{TemplateBinding Padding}">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="#00000000"
+                            BorderThickness="0.7"
+                            CornerRadius="3" 
+                            Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#70A896DD"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#FF584f72"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#AA594D7B"/>
                             <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
@@ -229,7 +233,7 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -474,7 +478,7 @@
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2F"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

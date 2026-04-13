@@ -62,11 +62,11 @@ namespace ZennLauncherApp
             ComboToolsSortOption.SelectedValue = ((App)Application.Current).CurrentProfileCfg.General.ToolsDefaultSortOption;
 
             // Games Launch Action
-            if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction == ProfileGeneralSettings.LaunchAction.HideLauncher)
+            if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction == ProfileGeneralSettings.LaunchActions.HideLauncher)
             {
                 ComboGamesLaunch.SelectedIndex = 0;
             }
-            else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction == ProfileGeneralSettings.LaunchAction.CloseLauncher)
+            else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher)
             {
                 ComboGamesLaunch.SelectedIndex = 1;
             }
@@ -76,11 +76,11 @@ namespace ZennLauncherApp
             }
 
             // Tools Launch Action
-            if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction == ProfileGeneralSettings.LaunchAction.HideLauncher)
+            if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction == ProfileGeneralSettings.LaunchActions.HideLauncher)
             {
                 ComboToolsLaunch.SelectedIndex = 0;
             }
-            else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction == ProfileGeneralSettings.LaunchAction.CloseLauncher)
+            else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher)
             {
                 ComboToolsLaunch.SelectedIndex = 1;
             }
@@ -156,7 +156,7 @@ namespace ZennLauncherApp
             {
                 string selectedOption = Convert.ToString(selectedItem.Tag);
 
-                var action = (ProfileGeneralSettings.LaunchAction)Enum.Parse(typeof(ProfileGeneralSettings.LaunchAction), selectedOption);
+                var action = (ProfileGeneralSettings.LaunchActions)Enum.Parse(typeof(ProfileGeneralSettings.LaunchActions), selectedOption);
                 ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction = action;
 
                 Debug.WriteLine("GamesLaunchAction: " + 
@@ -173,7 +173,7 @@ namespace ZennLauncherApp
             {
                 string selectedOption = Convert.ToString(selectedItem.Tag);
 
-                var action = (ProfileGeneralSettings.LaunchAction)Enum.Parse(typeof(ProfileGeneralSettings.LaunchAction), selectedOption);
+                var action = (ProfileGeneralSettings.LaunchActions)Enum.Parse(typeof(ProfileGeneralSettings.LaunchActions), selectedOption);
                 ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction = action;
 
                 Debug.WriteLine("ToolsLaunchAction: " + 

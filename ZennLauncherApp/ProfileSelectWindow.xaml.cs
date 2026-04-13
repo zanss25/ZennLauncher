@@ -176,7 +176,7 @@ namespace ZennLauncherApp
                 blur.Radius = 20;
 
                 var converter = new BrushConverter();
-                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#30080808");
             }
         }
 

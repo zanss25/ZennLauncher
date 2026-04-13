@@ -259,35 +259,101 @@ namespace ZennLauncherApp
 
         private void BtnDeleteProfile_Click(object sender, RoutedEventArgs e)
         {
-            ProfileDataModel profile = db.GetProfileData();
+            ProfileDataModel currentProfile = db.GetProfileData();
 
-            if (profile.ProfileId >= 0)
+            if (currentProfile.ProfileId >= 0)
             {
-                PopupWindow popup = new PopupWindow("Confirm Profile Delete",
+                PopupWindow confirm = new PopupWindow("Confirm Profile Delete",
                                                     $"Are you sure you want to remove this profile? Removed profiles cannot be restored",
                                                     "Delete Profile", true);
 
-                popup.ShowDialog();
-                if (popup.DialogResult == true)
+                confirm.ShowDialog();
+                if (confirm.DialogResult == true)
                 {
-                    DBHandler db = new DBHandler();
-                    db.DeleteProfile(profile.ProfileId);
+                    int currentId = currentProfile.ProfileId;
+                    string passwordInput;
 
-                    ProfileSelectWindow profiles = new ProfileSelectWindow();
+                    if (!String.IsNullOrEmpty(currentProfile.ProfileHash))
+                    {
+                        bool isPasswordCorrect = false;
 
-                    PopupWindow popupDeleted = new PopupWindow("Delete Profile",
-                                                               $"This profile has been deleted successfully",
-                                                               "Ok", false);
+                        Settings.EnableBlurAndOverlay();
+                        while (!isPasswordCorrect)
+                        {
+                            InputBoxPopup currentpass = new InputBoxPopup("Delete Profile", "Enter Your Current Password",
+                                                                            "Confirm", true, true);
 
-                    popupDeleted.ShowDialog();
+                            if (currentpass.ShowDialog() == true)
+                            {
+                                passwordInput = currentpass.ResultText;
+                                string currentHash = currentProfile.ProfileHash;
 
-                    profiles.Show();
-                    Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault().Close();
-                    Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().Close();
+                                isPasswordCorrect = BCrypt.Net.BCrypt.Verify(passwordInput, currentHash);
+
+                                if (!isPasswordCorrect)
+                                {
+                                    PopupWindow incorrect = new PopupWindow("Password Incorrect",
+                                                                            $"The password you typed is incorrect",
+                                                                            "Ok", false);
+                                    incorrect.ShowDialog();
+                                }
+                                
+                                if (isPasswordCorrect)
+                                {
+                                    DBHandler db = new DBHandler();
+                                    db.DeleteProfile(currentProfile.ProfileId);
+
+                                    try
+                                    {
+                                        Directory.Delete(System.IO.Path.Combine(func.dataPath, currentId.ToString()), true);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show("Error: " + ex.Message + 
+                                                        $" (You can manually delete it later at \"{System.IO.Path.Combine(func.dataPath, currentId.ToString())}\")", 
+                                                        "Profile Data Deletion Error",
+                                                        MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+
+                                    PopupWindow popupDeleted = new PopupWindow("Delete Profile",
+                                                                               $"This profile has been deleted successfully",
+                                                                               "Ok", false);
+                                    popupDeleted.ShowDialog();
+
+                                    ProfileSelectWindow profiles = new ProfileSelectWindow(); profiles.Show();
+                                    Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault().Close();
+                                    Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().Close();
+                                }
+                            }
+                            else
+                            {
+                                Settings.DisableBlurAndOverlay();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        DBHandler db = new DBHandler();
+                        db.DeleteProfile(currentProfile.ProfileId);
+
+                        ProfileSelectWindow profiles = new ProfileSelectWindow();
+
+                        PopupWindow popupDeleted = new PopupWindow("Delete Profile",
+                                                                   $"This profile has been deleted successfully",
+                                                                   "Ok", false);
+
+                        popupDeleted.ShowDialog();
+
+                        profiles.Show();
+                        Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault().Close();
+                        Application.Current.Windows.OfType<MainWindow>().FirstOrDefault().Close();
+                    }
                 }
                 else
                 {
-
+                    Settings.DisableBlurAndOverlay();
+                    return;
                 }
             }
         }

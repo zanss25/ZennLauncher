@@ -160,6 +160,9 @@ namespace ZennLauncherApp
                 BitmapImage bmp = new BitmapImage();
                 bmp.BeginInit();
                 bmp.UriSource = new Uri(selectedCoverPath);
+
+                bmp.DecodePixelWidth = 235;
+
                 bmp.CacheOption = BitmapCacheOption.OnLoad;
                 bmp.EndInit();
 

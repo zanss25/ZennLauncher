@@ -83,7 +83,7 @@
                                     <Grid>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                                            <Image Source="{Binding GameIconPath, Converter={StaticResource ImageConverter}}" 
+                                            <Image Source="{Binding GameIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}" 
                                                    Width="92" 
                                                    Height="92" />
 
@@ -98,10 +98,10 @@
 
                                         </StackPanel>
 
-                                        <Image Source="{Binding GameCoverPath}" 
+                                        <Image Source="{Binding GameCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
                                                Width="149" 
                                                Height="223" 
-                                               Stretch="UniformToFill" />
+                                               Stretch="UniformToFill"/>
                                     </Grid>
                                 </Button>
                             </Grid>

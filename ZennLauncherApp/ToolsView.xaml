@@ -82,7 +82,7 @@
                                     <Grid>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                                            <Image Source="{Binding ToolIconPath, Converter={StaticResource ImageConverter}}" 
+                                            <Image Source="{Binding ToolIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}" 
                                                    Width="92" 
                                                    Height="92" />
                                             
@@ -97,7 +97,7 @@
 
                                         </StackPanel>
 
-                                        <Image Source="{Binding ToolCoverPath}" 
+                                        <Image Source="{Binding ToolCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
                                                Width="149" 
                                                Height="223" 
                                                Stretch="UniformToFill" />

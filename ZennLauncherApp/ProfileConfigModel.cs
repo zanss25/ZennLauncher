@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static ZennLauncherApp.ProfileGeneralSettings;
 
 namespace ZennLauncherApp
 {
     public partial class ProfileConfigModel
     {
         public ProfileGeneralSettings General { get; set; } = new ProfileGeneralSettings();
+        public ProfileInterfaceSettings Interface { get; set; } = new ProfileInterfaceSettings();
     }
 
     public partial class ProfileGeneralSettings
     {
         public string StartingTab { get; set; } = "games";
         public string GamesDefaultSortOption { get; set; } = "title";
-
         public string ToolsDefaultSortOption { get; set; } = "title";
-        public enum LaunchAction
+        public enum LaunchActions
         {
             HideLauncher,
             CloseLauncher,
@@ -26,12 +27,27 @@ namespace ZennLauncherApp
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public LaunchAction GamesLaunchAction { get; set; } = LaunchAction.HideLauncher;
+        public LaunchActions GamesLaunchAction { get; set; } = LaunchActions.HideLauncher;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public LaunchAction ToolsLaunchAction { get; set; } = LaunchAction.DoNothing;
+        public LaunchActions ToolsLaunchAction { get; set; } = LaunchActions.DoNothing;
 
         public bool StartOnWindows { get; set; } = false;
 
     }
+
+    public partial class ProfileInterfaceSettings
+    {
+        public enum DialogOverlayModes
+        {
+            DimWithBlur,
+            DimOnly,
+            None
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogOverlayModes DialogOverlay { get; set; } = DialogOverlayModes.DimWithBlur;
+
+    }
+
 }

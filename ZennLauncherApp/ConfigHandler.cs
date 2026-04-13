@@ -126,8 +126,11 @@ namespace ZennLauncherApp
         public void SaveProfileConfig(ProfileConfigModel profileData)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(profileData, options);
-            File.WriteAllText(ProfileConfigPath(), json);
+            string jsonString = JsonSerializer.Serialize(profileData, options);
+
+            jsonString = jsonString.Replace("\"Interface\":", "\n  \"Interface\":");
+
+            File.WriteAllText(ProfileConfigPath(), jsonString);
         }
 
         public ProfileConfigModel LoadProfileConfig()
@@ -144,6 +147,9 @@ namespace ZennLauncherApp
                 };
 
                 string jsonString = JsonSerializer.Serialize(defaultProfileConfig, options);
+
+                jsonString = jsonString.Replace("\"Interface\":", "\n  \"Interface\":");
+
                 File.WriteAllText(profileConfigPath, jsonString);
 
                 return defaultProfileConfig;

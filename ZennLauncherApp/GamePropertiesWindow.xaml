@@ -173,10 +173,10 @@
 
                     <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
                     <Border x:Name="PreviewIcon" 
-                        Width="80" 
-                        Height="80" 
-                        BorderBrush="#70594D7B" 
-                        BorderThickness="2">
+                            Width="80" 
+                            Height="80" 
+                            BorderBrush="#70594D7B" 
+                            BorderThickness="2">
                         <Border.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <LinearGradientBrush.RelativeTransform>

@@ -122,9 +122,12 @@
                                         <ImageBrush>
                                             <ImageBrush.ImageSource>
                                                 <Binding Path="ProfileId"  
-                                                                Converter="{StaticResource ProfileImgConv}">
+                                                                Converter="{StaticResource ProfileImgConv}"                    
+                                                                ConverterParameter="42">
                                                     <Binding.TargetNullValue>
-                                                        <BitmapImage UriSource="/default_avatar.jpg" />
+                                                        <BitmapImage UriSource="/default_avatar.jpg"
+                                                                     DecodePixelWidth="42"
+                                                                     CacheOption="OnLoad"/>
                                                     </Binding.TargetNullValue>
                                                 </Binding>
                                             </ImageBrush.ImageSource>
@@ -187,9 +190,12 @@
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <Binding Path="SelectedItem.ProfileId" ElementName="SidebarProfilesList" 
-                                         Converter="{StaticResource ProfileImgConv}">
+                                         Converter="{StaticResource ProfileImgConv}"
+                                         ConverterParameter="170">
                                     <Binding.TargetNullValue>
-                                        <BitmapImage UriSource="/default_avatar.jpg" />
+                                        <BitmapImage UriSource="/default_avatar.jpg"
+                                                     DecodePixelWidth="170"
+                                                     CacheOption="OnLoad"/>
                                     </Binding.TargetNullValue>
                                 </Binding>
                             </ImageBrush.ImageSource>
@@ -293,7 +299,7 @@
             </Grid>
 
             <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#00000000"
-                    IsHitTestVisible="False"/>
+                    Margin="-5,-39,-5,-5" IsHitTestVisible="False"/>
 
         </Grid>
     </Border>

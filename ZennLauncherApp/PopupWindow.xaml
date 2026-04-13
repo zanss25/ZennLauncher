@@ -82,7 +82,7 @@
 
             </StackPanel>
 
-            <StackPanel x:Name="InputStackPanel" Margin="0,25,0,0" Grid.Row="1" VerticalAlignment="Center">
+            <StackPanel x:Name="InputStackPanel" Margin="0,25,0,1" Grid.Row="1" VerticalAlignment="Center">
                 <TextBlock x:Name="MessageTextBlock" Text="MessageTextBlock: DefaultMessage" TextWrapping="Wrap"
                            FontSize="13" Padding="10" HorizontalAlignment="Center" Foreground="#FF9A8FB9"/>
             </StackPanel>

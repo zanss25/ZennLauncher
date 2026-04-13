@@ -53,9 +53,12 @@
                     <ImageBrush>
                         <ImageBrush.ImageSource>
                             <Binding Path="ProfileId"  
-                                     Converter="{StaticResource ProfileImgConv}">
+                                     Converter="{StaticResource ProfileImgConv}"
+                                     ConverterParameter="110">
                                 <Binding.TargetNullValue>
-                                    <BitmapImage UriSource="/default_avatar.jpg" />
+                                    <BitmapImage UriSource="/default_avatar.jpg"
+                                                 DecodePixelWidth="110"
+                                                 CacheOption="OnLoad"/>
                                 </Binding.TargetNullValue>
                             </Binding>
                         </ImageBrush.ImageSource>
@@ -124,7 +127,6 @@
                                         Click="BtnResetPass_Click" Grid.Column="2"
                                         MinHeight="25" MaxHeight="35" Padding="10,8"
                                         Style="{StaticResource MenuButtonStyleD}"
-                                        Background="#31A896DD" BorderBrush="#FF594D7B" 
                                         HorizontalAlignment="Right"/>
                             </Grid>
                         </Border>
@@ -141,7 +143,7 @@
                             <TextBlock Text="Add New Password" Grid.Column="0" 
                                        VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
 
-                            <TextBlock Text="Add a password to your profile" Grid.Column="1"
+                            <TextBlock Text="Add a new password to your profile" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Margin="15,0" Foreground="#55FFFFFF"/>
 
@@ -149,7 +151,6 @@
                                     Click="BtnAddPass_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
                                     Style="{StaticResource MenuButtonStyleD}"
-                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>
@@ -173,7 +174,6 @@
                                     Click="BtnExportBackup_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
                                     Style="{StaticResource MenuButtonStyleD}"
-                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>
@@ -189,7 +189,7 @@
                             <TextBlock Text="Delete Profile" Grid.Column="0" 
                                        VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
 
-                            <TextBlock Text="Delete current profile" Grid.Column="1"
+                            <TextBlock Text="Delete current profile permanently" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Margin="15,0" Foreground="#55FFFFFF"/>
 
@@ -197,7 +197,6 @@
                                     Click="BtnDeleteProfile_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
                                     Style="{StaticResource MenuButtonStyleD}"
-                                    Background="#31A896DD" BorderBrush="#FF594D7B" 
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>

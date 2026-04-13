@@ -36,9 +36,13 @@ namespace ZennLauncherApp
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(path);
-                // Kunci utama: Muat ke RAM, lepaskan file di Disk
+
+                int decodeWidth = parameter != null ? System.Convert.ToInt32(parameter) : 150;
+                bitmap.DecodePixelWidth = decodeWidth;
+
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.EndInit();
+
                 bitmap.Freeze();
                 return bitmap;
             }

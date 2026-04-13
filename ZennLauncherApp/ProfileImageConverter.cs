@@ -30,10 +30,10 @@ namespace ZennLauncherApp
                     string fullPath = Path.Combine(folderPath, "avatar" + ext);
                     if (File.Exists(fullPath))
                     {
-                        // Gunakan CacheOption agar file tidak "terkunci" oleh WPF
                         BitmapImage bitmap = new BitmapImage();
                         bitmap.BeginInit();
                         bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+
                         bitmap.CacheOption = BitmapCacheOption.OnLoad;
                         bitmap.EndInit();
                         return bitmap;

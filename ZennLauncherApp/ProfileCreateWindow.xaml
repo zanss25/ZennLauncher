@@ -193,7 +193,9 @@
                         <Border.Background>
                             <ImageBrush>
                                 <ImageBrush.ImageSource>
-                                    <BitmapImage UriSource="/default_avatar.jpg"/>
+                                    <BitmapImage UriSource="/default_avatar.jpg"
+                                                 DecodePixelWidth="85"
+                                                 CacheOption="OnLoad"/>
                                 </ImageBrush.ImageSource>
                             </ImageBrush>
                         </Border.Background>

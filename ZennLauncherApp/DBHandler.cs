@@ -266,6 +266,7 @@ namespace ZennLauncherApp
             SqliteConnection.ClearAllPools();
 
             GC.Collect();
+            GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
@@ -548,16 +549,9 @@ namespace ZennLauncherApp
             var currentConfig = cfg.LoadGlobalConfig();
 
             currentConfig.ActiveProfile = -1;
-            
-            try
-            {
-                cfg.SaveGlobalConfig(currentConfig);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Error Saving Config to JSON File", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+
+            cfg.SaveGlobalConfig(currentConfig);
+            CloseAllConnections();
         }
 
         public List<SettingsModel> GetAllProfileSettings(string sortBy = "id", bool ascending = true)

@@ -25,11 +25,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                  VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch"
+                      VerticalScrollBarVisibility="Hidden">
             <StackPanel Margin="20,5">
 
                 <ItemsControl x:Name="ContainerGeneralSettings">
+                    
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"/>
@@ -37,39 +38,63 @@
 
                     </ItemsControl.ItemsPanel>
 
-                    <Grid>
+                    <Grid Grid.Row="0" MinHeight="70" VerticalAlignment="Top">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" MinHeight="70">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-
-
-                            <TextBlock Text="Appearance"
+                        <TextBlock Text="Appearance"
                                    Grid.Column="1" Grid.Row="0"
                                    VerticalAlignment="Center"
                                    Foreground="WhiteSmoke"
                                    FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
 
-                        </Grid>
-
-                        <TextBlock Text="COMING SOON" Grid.Row="1" Margin="0,135,0,135" 
-                                   Foreground="#A89A8FB9" FontSize="25" FontWeight="Bold" 
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
                     </Grid>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                        <Grid HorizontalAlignment="Stretch">
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Backdrop Effects" Grid.Column="0" 
+                                           VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Set the visual style of the background overlay for windows and popups" Grid.Column="1"
+                                           HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                           Margin="15,0" Foreground="#55FFFFFF"/>
+
+                            <ComboBox x:Name="ComboDialogOverlay"
+                                          MinWidth="125" Grid.Column="2"
+                                          MinHeight="30" Padding="10,8"
+                                          Style="{StaticResource ComboBoxStyleB}"
+                                          SelectionChanged="ComboDialogOverlay_Changed"
+                                          Background="#31A896DD" BorderBrush="#FF594D7B" 
+                                          HorizontalAlignment="Right">
+
+                                <ComboBoxItem Content="Acrylic Blur" Tag="DimWithBlur"/>
+                                <ComboBoxItem Content="Dim Background" Tag="DimOnly"/>
+                                <ComboBoxItem Content="No Effects" Tag="None"/>
+
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyleB}">
+                                        <Setter Property="Tag" Value="{Binding ItemTag}"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+
+                            </ComboBox>
+                        </Grid>
+                    </Border>
 
                 </ItemsControl>
             </StackPanel>

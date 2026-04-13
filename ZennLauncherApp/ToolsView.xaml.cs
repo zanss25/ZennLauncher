@@ -121,19 +121,22 @@ namespace ZennLauncherApp
                 db.ExecuteQuery(db.ConnectionProfile, query__, args__);
 
                 if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                        == ProfileGeneralSettings.LaunchAction.HideLauncher 
+                        == ProfileGeneralSettings.LaunchActions.HideLauncher 
                         && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
                     Application.Current.MainWindow.Hide();
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+
                     func.runningProcess.EnableRaisingEvents = true;
                     func.runningProcess.Exited += (s, ev) =>
                     {
-                        // Ini berjalan saat proses awal tertutup
                         this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
                     };
                 }
                 else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                            == ProfileGeneralSettings.LaunchAction.CloseLauncher 
+                            == ProfileGeneralSettings.LaunchActions.CloseLauncher 
                             && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
                     Application.Current.MainWindow.Close();

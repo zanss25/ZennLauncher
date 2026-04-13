@@ -144,8 +144,8 @@
 
             <ContentControl x:Name="ContentSlot" Grid.RowSpan="2" Grid.Column="1" Margin="2,0,0,0"/>
 
-            <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#00000000"
-                    IsHitTestVisible="False"/>
+            <Border x:Name="BlackOverlay" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="#00000000"
+                    Margin="-5,-39,-5,0" IsHitTestVisible="False"/>
 
         </Grid>
     </Border>

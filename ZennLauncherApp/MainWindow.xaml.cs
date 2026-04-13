@@ -36,6 +36,7 @@ namespace ZennLauncherApp
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
 
             LoadProfileData();
             SidebarNavList.ItemsSource = func.SidebarTabs;
@@ -47,6 +48,7 @@ namespace ZennLauncherApp
         {
             db.profileData = db.GetProfileData();
             this.DataContext = db.profileData;
+            ((App)Application.Current).CurrentProfileCfg = cfg.LoadProfileConfig();
         }
 
         public void LoadDefaultStartingTab()
@@ -314,10 +316,31 @@ namespace ZennLauncherApp
         {
             if (MainGrid.Effect is BlurEffect blur)
             {
-                blur.Radius = 20;
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.DimWithBlur)
+                {
+                    blur.Radius = 20;
 
-                var converter = new BrushConverter();
-                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#30080808");
+                }
+
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.DimOnly)
+                {
+                    blur.Radius = 0;
+
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#60080808");
+                }
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.None)
+                {
+                    blur.Radius = 0;
+
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+                }
             }
         }
 

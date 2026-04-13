@@ -14,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Resources.ResXFileRef;
 
 namespace ZennLauncherApp
 {
@@ -118,6 +119,9 @@ namespace ZennLauncherApp
 
                 OnSettingsApplied?.Invoke();
                 BtnApply.IsEnabled = false;
+
+                var Main = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w is MainWindow) as MainWindow;
+                Main.EnableBlurAndOverlay();
             }
             catch (Exception ex)
             {
@@ -132,10 +136,29 @@ namespace ZennLauncherApp
         {
             if (MainGrid.Effect is BlurEffect blur)
             {
-                blur.Radius = 20;
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.DimWithBlur)
+                {
+                    blur.Radius = 20;
 
-                var converter = new BrushConverter();
-                BlackOverlay.Background = (Brush)converter.ConvertFromString("#20000000");
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#30080808");
+                }
+
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.DimOnly)
+                {
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#60080808");
+                }
+                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                  == ProfileInterfaceSettings.DialogOverlayModes.None)
+                {
+                    blur.Radius = 0;
+
+                    var converter = new BrushConverter();
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+                }
             }
         }
 
