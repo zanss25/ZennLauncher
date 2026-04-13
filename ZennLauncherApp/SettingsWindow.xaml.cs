@@ -23,7 +23,7 @@ namespace ZennLauncherApp
     public partial class SettingsWindow : Window
     {
         private readonly GlobalFunctions func = GlobalFunctions.Instance;
-        private readonly DBHandler db = DBHandler.Instance;
+        private readonly DBHandler db = new DBHandler();
         private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
         public Action OnSettingsApplied { get; set; }

@@ -29,8 +29,7 @@ namespace ZennLauncherApp
             {
                 try
                 {
-                    ConfigHandler configHandler = new ConfigHandler();
-                    var config = configHandler.LoadGlobalConfig();
+                    var config = cfg.LoadGlobalConfig();
 
                     if (config == null || config.ActiveProfile <= 0)
                     {
@@ -38,11 +37,6 @@ namespace ZennLauncherApp
                     }
 
                     string path = System.IO.Path.Combine(func.dataPath, config.ActiveProfile.ToString(), "profile_data.db");
-
-                    if (!System.IO.File.Exists(path))
-                    {
-                        return "Data Source=:memory:";
-                    }
 
                     return $"Data Source={path}";
                 }
@@ -52,6 +46,7 @@ namespace ZennLauncherApp
                 }
             }
         }
+
         private void ExecuteNonQuery(SqliteConnection conn, string sql)
         {
             using (var cmd = new SqliteCommand(sql, conn))
