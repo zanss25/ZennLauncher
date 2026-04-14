@@ -94,6 +94,11 @@ namespace ZennLauncherApp
             openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
             openFile.Title = "Select Tool Executable";
 
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))
+            {
+                openFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir;
+            }
+
             if (openFile.ShowDialog() == true)
             {
                 InputToolTarget.Text = openFile.FileName;
@@ -112,6 +117,11 @@ namespace ZennLauncherApp
             cmnOpenFile.IsFolderPicker = true;
             cmnOpenFile.Title = "Select Tool Folder";
 
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))
+            {
+                cmnOpenFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir;
+            }
+
             Window owner = Window.GetWindow(this);
 
             if (cmnOpenFile.ShowDialog(owner) == CommonFileDialogResult.Ok)
@@ -122,14 +132,18 @@ namespace ZennLauncherApp
 
         private void BtnChangeIcon_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Icon/Program Files (*.ico; *.exe; *.lnk)|*.ico; *.exe; *.lnk|Supported Image Files (*.png; *.jpg)|*.png; *.jpg|All files (*.*)|*.*";
+            openFile.Title = "Choose Icon/Exe/Shortcut File";
 
-            openFileDialog.Filter = "Supported Icon/Program Files (*.ico; *.exe; *.lnk)|*.ico; *.exe; *.lnk|Supported Image Files (*.png; *.jpg)|*.png; *.jpg|All files (*.*)|*.*";
-            openFileDialog.Title = "Choose Icon/Exe/Shortcut File";
-
-            if (openFileDialog.ShowDialog() == true)
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultIconsDir))
             {
-                string selectedIconPath = openFileDialog.FileName;
+                openFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultIconsDir;
+            }
+
+            if (openFile.ShowDialog() == true)
+            {
+                string selectedIconPath = openFile.FileName;
                 string extension = System.IO.Path.GetExtension(selectedIconPath).ToLower();
                 ImageSource iconSource = null;
 
@@ -153,14 +167,18 @@ namespace ZennLauncherApp
 
         private void BtnChangeCover_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Image Files (*.png; *.jpg)|*.png; *.jpg|All files (*.*)|*.*";
+            openFile.Title = "Choose Image File";
 
-            openFileDialog.Filter = "Supported Image Files (*.png; *.jpg)|*.png; *.jpg|All files (*.*)|*.*";
-            openFileDialog.Title = "Choose Image File";
-
-            if (openFileDialog.ShowDialog() == true)
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultCoversDir))
             {
-                string selectedCoverPath = openFileDialog.FileName;
+                openFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultCoversDir;
+            }
+
+            if (openFile.ShowDialog() == true)
+            {
+                string selectedCoverPath = openFile.FileName;
 
                 BitmapImage bmp = new BitmapImage();
                 bmp.BeginInit();

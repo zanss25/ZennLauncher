@@ -83,14 +83,12 @@
 
             <StackPanel Margin="10,10,10,0" Grid.Row="0">
                 <TextBlock Text="TITLE/SUBTITLE" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
-                <TextBox Name="InputGameTitle" Margin="10,5,10,5" VerticalContentAlignment="Center"
-                         Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                         Height="30" Padding="5,0,0,0"/>
-                <TextBox Name="InputGameSubtitle" Margin="10" VerticalContentAlignment="Center"
-                         Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                         Height="30" Padding="5,0,0,0"/>
+                
+                <TextBox Name="InputGameTitle" Margin="10,5,10,5" 
+                         Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
+                
+                <TextBox Name="InputGameSubtitle" Margin="10" 
+                         Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
             </StackPanel>
 
             <StackPanel Margin="10,0,10,0" Grid.Row="1">
@@ -103,25 +101,20 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Name="InputGameTarget" 
-                         Grid.Column="0"
-                         Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" 
-                         BorderBrush="#70594D7B" 
-                         Foreground="#99FFFFFF" 
-                         Height="30"
-                         VerticalContentAlignment="Center"
-                         Padding="5,0,0,0"/>
+                             Grid.Column="0"
+                             Style="{StaticResource TextBoxStyleB}"
+                             Padding="5,0,0,0"/>
 
                     <Button x:Name="BtnBrowseTarget" 
-                        Grid.Column="1"
-                        Content="Browse"
-                        FontSize="13"
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="BtnBrowseTarget_Click" 
-                        Margin="6,0,0,0" 
-                        Padding="15,0,15,0" 
-                        Height="30"
-                        BorderThickness="1"/>
+                            Grid.Column="1"
+                            Content="Browse"
+                            FontSize="13"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="BtnBrowseTarget_Click" 
+                            Margin="6,0,0,0" 
+                            Padding="15,0,15,0" 
+                            Height="30"
+                            BorderThickness="1"/>
                 </Grid>
             </StackPanel>
 
@@ -134,34 +127,28 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Name="InputGameStartIn" 
-                         Grid.Column="0"
-                         Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" 
-                         BorderBrush="#70594D7B" 
-                         Foreground="#99FFFFFF" 
-                         Height="30"
-                         VerticalContentAlignment="Center"
-                         Padding="5,0,0,0"/>
+                            Grid.Column="0"
+                            Style="{StaticResource TextBoxStyleB}"
+                            Padding="5,0,0,0"/>
 
                     <Button x:Name="BtnBrowseStartIn" 
-                        Grid.Column="1"
-                        Content="Browse" 
-                        FontSize="13"
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="BtnBrowseStartIn_Click" 
-                        Margin="6,0,0,0" 
-                        Padding="15,0,15,0" 
-                        Height="30"
-                        BorderThickness="1"/>
+                            Grid.Column="1"
+                            Content="Browse" 
+                            FontSize="13"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="BtnBrowseStartIn_Click" 
+                            Margin="6,0,0,0" 
+                            Padding="15,0,15,0" 
+                            Height="30"
+                            BorderThickness="1"/>
                 </Grid>
             </StackPanel>
 
             <StackPanel Margin="10,0,10,0" Grid.Row="3">
                 <TextBlock Text="LAUNCH OPTIONS" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
-                <TextBox Name="InputGameLaunchOptions" Margin="10,5,10,5" VerticalContentAlignment="Center"
-                         Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                         Height="30" Padding="5,0,0,0"/>
+                
+                <TextBox Name="InputGameLaunchOptions" Margin="10,5,10,5" 
+                         Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
             </StackPanel>
 
             <DockPanel Margin="10,10,10,0" Grid.Row="4">
@@ -195,8 +182,8 @@
                     </Border>
 
                     <Button x:Name="BtnChangeIcon" Content="Change" Click="BtnChangeIcon_Click" 
-                        Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,10" Padding="8"
-                        BorderThickness="0,0,0,0" FontFamily="Global Sans Serif" FontSize="13" />
+                            Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,10" Padding="8"
+                            BorderThickness="0,0,0,0" FontFamily="Global Sans Serif" FontSize="13" />
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">

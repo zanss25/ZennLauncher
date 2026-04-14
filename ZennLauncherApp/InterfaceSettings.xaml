@@ -26,10 +26,15 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch"
-                      VerticalScrollBarVisibility="Hidden">
+                      VerticalScrollBarVisibility="Auto">
+
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+            </ScrollViewer.Resources>
+
             <StackPanel Margin="20,5">
 
-                <ItemsControl x:Name="ContainerGeneralSettings">
+                <ItemsControl x:Name="ContainerInterfaceSettings">
                     
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -79,7 +84,6 @@
                                           MinHeight="30" Padding="10,8"
                                           Style="{StaticResource ComboBoxStyleB}"
                                           SelectionChanged="ComboDialogOverlay_Changed"
-                                          Background="#31A896DD" BorderBrush="#FF594D7B" 
                                           HorizontalAlignment="Right">
 
                                 <ComboBoxItem Content="Acrylic Blur" Tag="DimWithBlur"/>

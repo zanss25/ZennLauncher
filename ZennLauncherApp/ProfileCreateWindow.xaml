@@ -96,11 +96,6 @@
                     <TextBox Name="InputProfileName" 
                          Grid.Column="0"
                          Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" 
-                         BorderBrush="#70594D7B" 
-                         Foreground="#99FFFFFF" 
-                         Height="30"
-                         VerticalContentAlignment="Center"
                          Padding="5,0,0,0"/>
 
                 </Grid>
@@ -117,8 +112,6 @@
                     <PasswordBox Name="InputProfilePass"
                                  PasswordChar="●"
                                  Grid.Column="0"
-                                 Height="30"
-                                 VerticalContentAlignment="Center"
                                  Padding="5,0,0,0">
 
                         <PasswordBox.Style>
@@ -148,8 +141,6 @@
                     <PasswordBox Name="InputConfirmPass" 
                                  PasswordChar="●"
                                  Grid.Column="0"
-                                 Height="30"
-                                 VerticalContentAlignment="Center"
                                  Padding="5,0,0,0">
 
                         <PasswordBox.Style>

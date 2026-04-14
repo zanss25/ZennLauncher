@@ -82,14 +82,12 @@
 
         <StackPanel Margin="10,10,10,0" Grid.Row="0">
             <TextBlock Text="TITLE/DESCRIPTION" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
-            <TextBox Name="InputToolTitle" Margin="10,5,10,5" VerticalContentAlignment="Center"
-                     Style="{StaticResource TextBoxStyleB}"
-                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                     Height="30" Padding="5,0,0,0"/>
-            <TextBox Name="InputToolDesc" Margin="10" VerticalContentAlignment="Center"
-                     Style="{StaticResource TextBoxStyleB}"
-                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                     Height="30" Padding="5,0,0,0"/>
+            
+            <TextBox Name="InputToolTitle" Margin="10,5,10,5"
+                     Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
+            
+            <TextBox Name="InputToolDesc" Margin="10"
+                     Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
         </StackPanel>
 
         <StackPanel Margin="10,0,10,0" Grid.Row="1">
@@ -104,11 +102,6 @@
                 <TextBox Name="InputToolTarget" 
                          Grid.Column="0"
                          Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" 
-                         BorderBrush="#70594D7B" 
-                         Foreground="#99FFFFFF" 
-                         Height="30"
-                         VerticalContentAlignment="Center"
                          Padding="5,0,0,0"/>
 
                 <Button x:Name="BtnBrowseTarget" 
@@ -135,11 +128,6 @@
                 <TextBox Name="InputToolStartIn" 
                          Grid.Column="0"
                          Style="{StaticResource TextBoxStyleB}"
-                         Background="#FF272237" 
-                         BorderBrush="#70594D7B" 
-                         Foreground="#99FFFFFF" 
-                         Height="30"
-                         VerticalContentAlignment="Center"
                          Padding="5,0,0,0"/>
 
                 <Button x:Name="BtnBrowseStartIn" 
@@ -157,10 +145,8 @@
 
         <StackPanel Margin="10,0,10,0" Grid.Row="3">
             <TextBlock Text="LAUNCH OPTIONS" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
-            <TextBox Name="InputToolLaunchOptions" Margin="10,5,10,5" VerticalContentAlignment="Center"
-                     Style="{StaticResource TextBoxStyleB}"
-                     Background="#FF272237" BorderBrush="#70594D7B" Foreground="#99FFFFFF" 
-                     Height="30" Padding="5,0,0,0"/>
+            <TextBox Name="InputToolLaunchOptions" Margin="10,5,10,5"
+                     Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
         </StackPanel>
 
             <DockPanel Margin="10,10,10,0" Grid.Row="4">

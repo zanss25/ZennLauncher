@@ -31,8 +31,8 @@ namespace ZennLauncherApp
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 
-        public int build = 10230;
-        public string version = "0.2 Beta (Indev 3)";
+        public int build = 10240;
+        public string version = "0.2 Beta (Indev 4)";
 
         public string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -179,16 +179,16 @@ namespace ZennLauncherApp
 
             new TabModel
             {
-                ItemTag = "categories",
-                DisplayName = "Categories",
-                TargetView = typeof(CategoriesSettingsView)
+                ItemTag = "folders",
+                DisplayName = "Folders",
+                TargetView = typeof(FoldersSettingsView)
             },
 
             new TabModel
             {
-                ItemTag = "folders",
-                DisplayName = "Folders",
-                TargetView = typeof(FoldersSettingsView)
+                ItemTag = "categories",
+                DisplayName = "Categories",
+                TargetView = typeof(CategoriesSettingsView)
             },
 
             new TabModel

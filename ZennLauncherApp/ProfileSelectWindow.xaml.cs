@@ -173,10 +173,10 @@ namespace ZennLauncherApp
         {
             if (MainGrid.Effect is BlurEffect blur)
             {
-                blur.Radius = 20;
+                //blur.Radius = 20;
 
                 var converter = new BrushConverter();
-                BlackOverlay.Background = (Brush)converter.ConvertFromString("#30080808");
+                BlackOverlay.Background = (Brush)converter.ConvertFromString("#60080808");
             }
         }
 

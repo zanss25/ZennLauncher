@@ -245,10 +245,10 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 * **Default Starting Tab		:** Choose which tab is displayed when the launcher starts (Default: Tab paling atas (Tab '0')
-* **Default Games Sort By	:** Set the default sorting method (e.g., A-Z, Last Played, or Date Added) for your games
-* **Default Tools Sort By	:** Set the default sorting method (e.g., A-Z, Last Launched, or Date Added) for your tools
-* **Games Post-Launch Action	:** Set the launcher’s visibility once a game is running (Keep launcher open, Hide to background, Close the launcher)
-* **Tools Post-Launch Action	:** Set the launcher’s visibility once a tool is running (Keep launcher open, Hide to background, Close the launcher)
+* **Default Games Sort By	:** Set games default sorting method (e.g., Alphabetical)
+* **Default Tools Sort By	:** Set tools default sorting method (e.g., Alphabetical)
+* **Games Post-Launch Action	:** Set the launcher’s visibility once a game is running
+* **Tools Post-Launch Action	:** Set the launcher’s visibility once a tool is running
 * **Startup on Windows Login	:** Automatically start the launcher at Windows login
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -262,10 +262,10 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 * **Edit Profile			:** Edit your profile information (Change Username, Change Avatar)
-* **Add Password			:** Add a password to your profile
+* **Add Password			:** Add a new password to your profile
 * **Reset Password		:** Reset or change your current password
 * **Backup Profile		:** Backup current profile as .zip file (data includes: statistics, settings, saves)
-* **Delete Profile		:** Delete current profile
+* **Delete Profile		:** Delete current profile permanently
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -277,11 +277,11 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-* **Global Theme Color		:** Change the primary accent color of the launcher, including buttons, highlights, and borders.
-* **Elemental UI Coloring	:** Individually customize colors for specific UI components like the sidebar, header, or background.
-* **Component Opacity		:** Adjust the transparency levels of specific UI elements for a more layered or minimal look.
-* **Typography (Fonts)		:** Choose your preferred font style and size to improve readability and match your aesthetic.
-* **Scaling \& Layout Transform	:** Adjust the overall UI size (100%, 125%, 150%) to fit your screen resolution perfectly.
+* **Global Theme Color		:** Change the primary accent color of the launcher (including buttons, highlights, and borders)
+* **Elemental UI Coloring	:** Individually customize colors for specific UI components (e.g. sidebar, header, or background)
+* **Typography (Fonts)		:** Choose your preferred font style and size for the launcher
+* **Scaling \& Layout Transform	:** Adjust the overall UI size to fit your screen resolution
+* **Backdrop Effects		:** Set the visual style of the background overlay for windows and popups
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -308,11 +308,10 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-* **Default Game Path		:** The primary folder for your games. File dialogs will point here by default (jika belum diisi atau di-reset user maka akan 				  default ke folder terakhir yang dibuka dalam dialog file sebelumnya)
-* **Default Tools Path		:** The primary folder for your tools and utility apps (jika belum diisi atau di-reset user maka akan default ke folder 					  terakhir yang dibuka dalam dialog file sebelumnya)
-* **Default Icons Folder		:** Preferred location for game icons (.ico, .png) (jika belum diisi atau di-reset user maka akan default ke folder terakhir 				  yang dibuka dalam dialog file sebelumnya)
-* **Default Covers Folder	:** Preferred location for library cover art and posters (jika belum diisi atau di-reset user maka akan default ke folder 				  terakhir yang dibuka dalam dialog file sebelumnya)
-* **Steam Library Path		:** Link your 'steamapps' folder to enable automatic Steam AppID detection
+* **Default Game Directory	:** Set the default folder directory when selecting games executable 
+* **Default Tools Directory	:** Set the default folder directory when selecting tools executable
+* **Default Icons Directory	:** Set the default folder directory when selecting icon files
+* **Default Cover Grids Dir.	:** Set the default folder directory when selecting cover grid files
 * **Screenshot Storage Folder	:** The location where in-game screenshots will be saved (Jika nanti fitur ini dikembangkan)
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -339,7 +338,7 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-#### &#x20;**10230** -> Version 0.2 (Indev 3) **| 11231** -> Version 1.2.3
+#### &#x20;**10230** -> Version 0.2 (Indev 3) | **11231** -> Version 1.2.3
 
 
 

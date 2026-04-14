@@ -25,11 +25,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                  VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch"
+                  VerticalScrollBarVisibility="Auto">
+
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+            </ScrollViewer.Resources>
+
             <StackPanel Margin="20,5">
 
-                <ItemsControl x:Name="ContainerGeneralSettings">
+                <ItemsControl x:Name="ContainerFoldersSettings">
+
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"/>
@@ -37,13 +43,28 @@
 
                     </ItemsControl.ItemsPanel>
 
-                    <Grid>
+                    <Grid Grid.Row="0" MinHeight="70" VerticalAlignment="Top">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" MinHeight="70">
+                        <TextBlock Text="Folders"
+                               Grid.Column="1" Grid.Row="0"
+                               VerticalAlignment="Center"
+                               Foreground="WhiteSmoke"
+                               FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+                    </Grid>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
+                        <Grid HorizontalAlignment="Stretch">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -52,24 +73,214 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto" MinHeight="32"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
+                            <TextBlock Text="Games Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
 
+                            <TextBlock Text="Set the default folder directory when selecting games executable" 
+                                       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0"  HorizontalAlignment="Stretch" 
+                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
 
-                            <TextBlock Text="Folders"
-                                   Grid.Column="1" Grid.Row="0"
-                                   VerticalAlignment="Center"
-                                   Foreground="WhiteSmoke"
-                                   FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBox x:Name="InputGamesDefaultDir"
+                                     MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     Padding="5,0,0,0"/> 
+
+                            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+
+                                <Button x:Name="BtnBrowseGamesDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Browse" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnBrowseGamesDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                                <Button x:Name="BtnResetGamesDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Reset" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnResetGamesDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                            </StackPanel>
 
                         </Grid>
+                    </Border>
 
-                        <TextBlock Text="COMING SOON" Grid.Row="1" Margin="0,135,0,135" 
-                                   Foreground="#A89A8FB9" FontSize="25" FontWeight="Bold" 
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
+                        <Grid HorizontalAlignment="Stretch">
 
-                    </Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" MinHeight="32"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Tools Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Set the default folder directory when selecting tools executable" 
+                                       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
+                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+
+                            <TextBox x:Name="InputToolsDefaultDir"
+                                     MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     Padding="5,0,0,0"/>
+
+                            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+
+                                <Button x:Name="BtnBrowseToolsDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Browse" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnBrowseToolsDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                                <Button x:Name="BtnResetToolsDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Reset" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnResetToolsDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
+                        <Grid HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" MinHeight="32"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Icons Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Set the default folder directory when selecting icon files" 
+                                       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
+                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+
+                            <TextBox x:Name="InputIconsDefaultDir"
+                                     MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     Padding="5,0,0,0"/>
+                            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+
+                                <Button x:Name="BtnBrowseIconsDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Browse" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnBrowseIconsDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                                <Button x:Name="BtnResetIconsDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Reset" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnResetIconsDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
+                        <Grid HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" MinHeight="32"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Cover Grids Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
+                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+
+                            <TextBlock Text="Set the default folder directory when selecting cover grid files" 
+                                       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
+                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+
+                            <TextBox x:Name="InputCoversDefaultDir"
+                                     MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     Padding="5,0,0,0"/>
+
+                            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+
+                                <Button x:Name="BtnBrowseCoversDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Browse" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnBrowseCoversDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                                <Button x:Name="BtnResetCoversDefaultDir" 
+                                        Grid.Column="2" Grid.Row="2"
+                                        Content="Reset" 
+                                        FontSize="13"
+                                        Style="{StaticResource MenuButtonStyle}"
+                                        Click="BtnResetCoversDefaultDir_Click" 
+                                        Margin="6,0,0,0" 
+                                        Padding="15,0,15,0" 
+                                        Height="30"
+                                        BorderThickness="1"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
 
                 </ItemsControl>
             </StackPanel>

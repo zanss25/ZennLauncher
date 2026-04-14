@@ -29,7 +29,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
+
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+            </ScrollViewer.Resources>
+
             <StackPanel Margin="80,90,80,68">
                 <ItemsControl x:Name="ContainerBtnTools">
                     <ItemsControl.ItemsPanel>
@@ -100,7 +105,7 @@
                                         <Image Source="{Binding ToolCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
                                                Width="149" 
                                                Height="223" 
-                                               Stretch="UniformToFill" />
+                                               Stretch="UniformToFill"/>
                                     </Grid>
                                 </Button>
                             </Grid>
@@ -111,7 +116,7 @@
         </ScrollViewer>
 
         <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="70" 
-                   MaxHeight="100" Margin="0,-2,0,0">
+                   MaxHeight="100" Margin="0,-2,0,0" IsHitTestVisible="False">
 
             <DockPanel.Effect>
                 <BlurEffect/>

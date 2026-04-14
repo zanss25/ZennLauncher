@@ -12,6 +12,7 @@ namespace ZennLauncherApp
     {
         public ProfileGeneralSettings General { get; set; } = new ProfileGeneralSettings();
         public ProfileInterfaceSettings Interface { get; set; } = new ProfileInterfaceSettings();
+        public ProfileFoldersSettings Folders { get; set; } = new ProfileFoldersSettings();
     }
 
     public partial class ProfileGeneralSettings
@@ -48,6 +49,14 @@ namespace ZennLauncherApp
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public DialogOverlayModes DialogOverlay { get; set; } = DialogOverlayModes.DimWithBlur;
 
+    }
+
+    public partial class ProfileFoldersSettings
+    {
+        public string DefaultGamesDir { get; set; } = String.Empty;
+        public string DefaultToolsDir { get; set; } = String.Empty;
+        public string DefaultIconsDir { get; set; } = String.Empty;
+        public string DefaultCoversDir { get; set; } = String.Empty;
     }
 
 }

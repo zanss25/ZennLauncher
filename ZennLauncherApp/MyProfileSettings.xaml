@@ -96,7 +96,12 @@
         </Grid>
 
         <ScrollViewer x:Name="ContentViewer" Grid.Row="1" HorizontalAlignment="Stretch"
-                      VerticalScrollBarVisibility="Hidden">
+                      VerticalScrollBarVisibility="Auto">
+
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+            </ScrollViewer.Resources>
+
             <StackPanel Margin="20,5">
 
                 <ItemsControl x:Name="ContainerMyProfileSettings">

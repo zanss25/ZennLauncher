@@ -198,13 +198,18 @@ namespace ZennLauncherApp
         private void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
         {
             EnableBlurAndOverlay();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
-            openFileDialog.Title = "Select Game Executable";
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Title = "Select Game Executable";
 
-            if (openFileDialog.ShowDialog() == true)
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir))
             {
-                string selectedFilePath = openFileDialog.FileName;
+                openFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir;
+            }
+
+            if (openFile.ShowDialog() == true)
+            {
+                string selectedFilePath = openFile.FileName;
 
                 GamePropertiesWindow add = new GamePropertiesWindow();
 
@@ -241,13 +246,18 @@ namespace ZennLauncherApp
         private void BtnAddNewTool_Click(object sender, RoutedEventArgs e)
         {
             EnableBlurAndOverlay();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
-            openFileDialog.Title = "Select Tool Executable";
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Title = "Select Tool Executable";
 
-            if (openFileDialog.ShowDialog() == true)
+            if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))
             {
-                string selectedFilePath = openFileDialog.FileName;
+                openFile.InitialDirectory = ((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir;
+            }
+
+            if (openFile.ShowDialog() == true)
+            {
+                string selectedFilePath = openFile.FileName;
 
                 ToolPropertiesWindow add = new ToolPropertiesWindow();
 
