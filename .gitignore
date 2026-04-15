@@ -37,10 +37,12 @@ bld/
 [Rr]elease (x64)/
 [Dd]ebug (x64)/
 
-# Other Directories
+# Other Directories & Files
 UI Design Mock-Up/
 Logo & Icons/
 References/
+
+DEV LOG.md
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
