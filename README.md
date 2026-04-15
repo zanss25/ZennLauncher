@@ -1,6 +1,6 @@
 # **Zenn Launcher**
 
-#### Your Personal Unified Hub for Games and Tools.
+**Your Personal Unified Hub for Games and Tools.**
 
 Zenn Launcher is a lightweight, personalized launcher designed to bridge the gap between your game library and your essential modding/emulation tools. Tired of jumping between folders and different apps? Zenn brings everything into one sleek, customizable interface.
 
