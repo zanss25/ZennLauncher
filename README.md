@@ -20,7 +20,7 @@ Zenn Launcher is a lightweight, personalized launcher designed to bridge the gap
 
 #### Navigation Tabs
 
-- **Games:** Your main playground. Supports sorting by Alphabetical, Most Launched, and more.
+- **Games:** Centralized hub for managing your game library. Supports sorting by Alphabetical, Most Launched, and more.
 - **Tools:** Dedicated space for non-game software like mod managers or emulators.
 - **Categories (WIP):** Organized sections to split your library by genre or project.
 - **Relics (WIP):** A digital trophy room for your gaming history.
