@@ -103,9 +103,9 @@
                 <ListBox x:Name="SidebarProfilesList"
                          SelectionChanged="SidebarProfilesList_SelectionChanged"
                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                         Style="{StaticResource ListBoxStyle}"
                          ItemContainerStyle="{StaticResource ListBoxItemStyle}"
-                         FontFamily="Segoe UI" FontSize="14" FontWeight="Regular"
-                         BorderBrush="#66C9B5FF" Background="#00FFFFFF" Margin="0,15"
+                         FontFamily="Segoe UI" FontSize="14" FontWeight="Regular" Margin="0,15"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
 

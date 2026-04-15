@@ -99,7 +99,7 @@
                       VerticalScrollBarVisibility="Auto">
 
             <ScrollViewer.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBarEdge}"/>
             </ScrollViewer.Resources>
 
             <StackPanel Margin="20,5">

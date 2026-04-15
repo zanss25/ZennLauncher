@@ -104,8 +104,9 @@
                 <ListBox x:Name="SidebarSettingsList" 
                          SelectionChanged="SidebarSettingsList_SelectionChanged"
                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                         Background="Transparent" FontFamily="Segoe UI" FontSize="13" 
-                         BorderBrush="#66C9B5FF" Margin="0,15" FontWeight="Regular">
+                         Style="{StaticResource ListBoxStyle}"
+                         FontFamily="Segoe UI" FontSize="13" 
+                         Margin="0,15" FontWeight="Regular">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleB}">
                             <Setter Property="Height" Value="35"/>

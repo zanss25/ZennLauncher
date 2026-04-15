@@ -232,7 +232,7 @@ namespace ZennLauncherApp
 
         private void BtnExportBackup_Click(object sender, RoutedEventArgs e)
         {
-            var main = Application.Current.MainWindow as MainWindow;
+            var main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             var currentProfile = main.DataContext as ProfileDataModel;
 
             string profileDataPath = System.IO.Path.Combine(func.dataPath, currentProfile.ProfileId.ToString());

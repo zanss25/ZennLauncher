@@ -126,7 +126,7 @@
 
                 <ListBox x:Name="SidebarNavList"
                          SelectionChanged="SidebarNavList_SelectionChanged" 
-                         Width="200" Background="Transparent" Foreground="#B2FFFFFF" 
+                         Style="{StaticResource ListBoxStyle}" Width="200" 
                          FontFamily="Bahnschrift Light SemiCondensed" FontSize="17" 
                          BorderBrush="#00ABADB3" Margin="18,25,18,0" FontWeight="Bold">
 

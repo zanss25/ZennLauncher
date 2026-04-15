@@ -308,7 +308,7 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-* **Default Game Directory	:** Set the default folder directory when selecting games executable 
+* **Default Game Directory	:** Set the default folder directory when selecting games executable
 * **Default Tools Directory	:** Set the default folder directory when selecting tools executable
 * **Default Icons Directory	:** Set the default folder directory when selecting icon files
 * **Default Cover Grids Dir.	:** Set the default folder directory when selecting cover grid files
@@ -332,8 +332,6 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-
-
 **PENGATURAN PENAMAAN BUILD**
 
 
@@ -342,7 +340,7 @@ Berisi tampilan history dan stats game yang telah dimainkan pengguna. Ada 'Relic
 
 
 
-First Digit 	-> Prefix (To work around integers that can't start with 0)		ex. 0.2 (Indev 3) -> 1 **|** 1.2.3 -> 1
+First Digit 	-> Prefix (To work around integers that can't start with 0),		ex. 0.2 (Indev 3) -> 1 **|** 1.2.3 -> 1
 
 Second Digit 	-> Version Number First Digit,						ex. 0.2 (Indev 3) -> 0 **|** 1.2.3 -> 1
 
@@ -372,49 +370,27 @@ Last Digit	-> Internal Build / Release Build					ex. 0.2 (Indev 3) -> 0 **|** 1.
 
 
 
- 	Rilisan perdana aplikasi Zenn Launcher tercinta. membawakan fitur-fitur dasar launcher.
+ 	The first release of the beloved Zenn Launcher app. This release brings the launcher's basic features.
 
 
 
- 	Fitur-fitur dasar yang sudah diterapkan, diantaranya:
+ 	The basic features that have been implemented include:
 
 
 
- 	1. Games List dalam mode view 'Cover Grid'
+ 	1. Games tab with games list in 'Cover Grid' view mode
 
- 	2. Add New Game
+&#x09;2. Tools tab with tools list in 'Cover Grid' view mode
 
- 	3. Tools List dalam mode view 'Cover Grid'
+ 	3. Add New Game \& Add New Tool
 
- 	4. Add New Tool
+ 	4. Edit Game \& Edit Tool Properties (Edit Info)
 
- 	5. Edit Game/Tool Properties (Edit Info)
+ 	5. Delete Game \& Tool
 
- 	6. Delete Game/Tool
+ 	6. Basic "Sort by" feature : Alphabetical, Most Launched, Last Launched, Last Added
 
- 	7. Fitur Sort by (belum lengkap)
-
- 	8. Fitur search bar
-
-
-
-
-
- 	Rencana perbaikan selanjutnya untuk mencapai rilisan 0.2:
-
-
-
- 	1. Memperbaiki beberapa elemen UI yang masih 'gompel' atau kurang
-
- 	2. Menambah support pemilihan ikon dengan file .png dan .jpg (tidak hanya .ico atau .exe)
-
- 	3. Membuat tombol menampilkan ikon di atas teks judul ketika tidak ada gambar cover
-
- 	4. Membuat teks pada base tombol game tidak tembus saat offside (seharusnya ke baris bawahnya)
-
- 	5. Memberi opsi untuk membuka game tanpa menutup launcher \& membuka tool dengan menutup launcher setelahnya
-
-
+ 	7. Search bar at Games \& Tools Tab
 
 
 
@@ -488,11 +464,31 @@ Last Digit	-> Internal Build / Release Build					ex. 0.2 (Indev 3) -> 0 **|** 1.
 
   &#x09;1. Merealisasikan fitur 'Profile' yang sudah direncanakan sebelumnya
 
-  &#x09;2. Menambah fitur 'Settings' untuk personalisasi pengguna yang lebih fleksibel
+  &#x09;2. Menambah fitur 'Settings' untuk personalisasi pengguna yang lebih fleksibel, dengan section tabs:
 
-  &#x09;3. Menambah beberapa fitur Quality of Life seperti 'Open File Location' dan beberapa lainnya
+  &#x09;	a. General 	: Default Starting Tab, Default Games Sort By, Default Tools Sort By, Games Post-Launch Action, Tools Post-Launch Action, 				  Startup on Windows Login
 
-  &#x09;4. Beberapa upgrade dan perbaikan UI yang cukup signifikan (Termasuk kemungkinan penerapan font baru dan ikon)
+  &#x09;	b. Profile 	: Edit Profile, Add Password, Reset Password, Backup Profile, Delete Profile
+
+  &#x09;	c. Appearance 	: Backdrop Effects *(More options are still WIP)*
+
+  &#x09;	d. Folders 	: Default Game Directory, Default Tools Directory, Default Icons Directory, Default Cover Grids Dir
+
+  &#x09;	e. Categories 	: *(WIP - Coming Soon)*
+
+  &#x09;	f. Advanced	: *(WIP - Coming Soon)*
+
+
+
+  &#x09;   (Opsi tambahan akan ditambahkan secara berkala pada update selanjutnya)
+
+
+
+  &#x09;3. Menambah fungsi 'Open File Location' pada context menu grids dalam games dan tools view
+
+  &#x09;4. Beberapa upgrade dan perbaikan UI yang cukup signifikan
+
+  &#x09;5. Beberapa perbaikan kode dan optimisasi aplikasi
 
 
 

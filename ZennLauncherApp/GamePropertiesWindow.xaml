@@ -225,7 +225,7 @@
                 
                 <CheckBox x:Name="CheckBoxSteamGameFeature" Content="Enable Steam Game Feature"
                           Style="{StaticResource CheckBoxStyle}"
-                          IsEnabled="{Binding Text.Length, ElementName=InputGameTarget}"
+                          IsEnabled="False"
                           Visibility="Visible" Grid.Column="0"
                           Margin="20,15" Foreground="#CCFFFFFF" 
                           VerticalAlignment="Top" HorizontalAlignment="Left"/>
