@@ -1,8 +1,8 @@
-# **Zenn Launcher**
+# **ZennPlay**
 
 **Your Personal Unified Hub for Games and Tools.**
 
-Zenn Launcher is a lightweight, personalized launcher designed to bridge the gap between your game library and your essential modding/emulation tools. Tired of jumping between folders and different apps? Zenn brings everything into one sleek, customizable interface.
+ZennPlay Launcher is a lightweight, personalized launcher designed to bridge the gap between your game library and your essential modding/emulation tools. Tired of jumping between folders and different apps? ZennPlay brings everything into one sleek, customizable interface.
 
 ## Key Features
 
@@ -46,4 +46,4 @@ Currently in v0.2.0-beta:
 - [ ] Advanced Optimization Options
 - [ ] Enhanced UI Themes
 
-**Note:** Zenn Launcher started as a way to organize a messy collection of games from various platforms and game-oriented utilities into one convenient place. It is built with a focus on freedom and keeping your gaming history alive.
+**Note:** ZennPlay started as a way to organize a messy collection of games from various platforms and game-oriented utilities into one convenient place. It is built with a focus on freedom and keeping your gaming history alive.
