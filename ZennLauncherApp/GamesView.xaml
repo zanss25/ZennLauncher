@@ -54,14 +54,6 @@
                                         Tag="{Binding}"
                                         Cursor="Hand">
 
-                                    <Button.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FF342C49"/>
-                                            <GradientStop Color="#FF342C49" Offset="1"/>
-                                            <GradientStop Color="#FF403659" Offset="0.5"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
-
                                     <Button.ContextMenu>
                                         <ContextMenu Style="{StaticResource ContextMenuStyle}">
                                             
@@ -132,8 +124,9 @@
 
         </DockPanel>
 
-        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="41" 
-           MaxHeight="100" Margin="32,15,32,10" CornerRadius="3" Background="#BF372D51">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" 
+                MinHeight="43" MaxHeight="100" Margin="32,18,32,10" CornerRadius="5" 
+                Background="#BF372D51" BorderThickness="0.5" BorderBrush="#CC574D71">
 
             <DockPanel>
 

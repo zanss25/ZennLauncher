@@ -52,9 +52,9 @@
                 <ControlTemplate TargetType="Button">
                     
                     <Border x:Name="MainBorder" 
-                    Background="{TemplateBinding Background}"
-                    CornerRadius="3" 
-                    Padding="{TemplateBinding Padding}">
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
@@ -78,8 +78,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="#FF221E2F"/>
+    <Style x:Key="MenuButtonStyle_Common" TargetType="Button">
+        <Setter Property="Background" Value="#FF272237"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -89,7 +89,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="#00000000"
                             BorderThickness="0.7"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -116,7 +116,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyleB" TargetType="Button">
+    <Style x:Key="MenuButtonStyle_Popup" TargetType="Button">
         <!-- Used in "Profile Menu" Popup at MainWindow -->
         <Setter Property="Background" Value="#00221E2F"/>
         <Setter Property="Foreground" Value="#BBFFFFFF"/>
@@ -129,7 +129,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="#00000000"
                             BorderThickness="0.7"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Left" 
                                           VerticalAlignment="Center"/>
@@ -157,7 +157,70 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyleC" TargetType="Button">
+    <Style x:Key="MenuButtonStyle_PrimaryA" TargetType="Button">
+        <!-- Used in "Apply" and "Ok" buttons -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#CCF49348" Offset="0"/>
+                    <GradientStop Color="#CCEB6337" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="FontFamily" Value="Global Sans Serif"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="15,8,15,8"/>
+        <Setter Property="MinWidth" Value="125"/>
+        <Setter Property="Margin" Value="0,5"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="MainBorder" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="#00000000"
+                            BorderThickness="0.7"
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#DDF49348"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#20F69550"/>
+                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
+                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#33CB4327"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#DDEE8952"/>
+                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MenuButtonStyle_PrimaryB" TargetType="Button">
         <!-- Used in "Apply" and "Ok" buttons -->
         <Setter Property="Background" Value="#FF46405C"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
@@ -177,7 +240,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="#00000000"
                             BorderThickness="0.7"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
@@ -212,19 +275,19 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyleD" TargetType="Button">
+    <Style x:Key="MenuButtonStyle_SettingsCommon" TargetType="Button">
         <!-- Used in buttons at "SettingsWindow" User Control instances -->
         <Setter Property="Background" Value="#FF353144"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    
+
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
                             BorderBrush="#00000000"
                             BorderThickness="0.7"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -245,13 +308,13 @@
                         </Trigger>
 
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonStyle_Common" TargetType="ToggleButton">
         <Setter Property="Background" Value="#FF221E2F"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
         <Setter Property="Template">
@@ -262,7 +325,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="#00000000"
                             BorderThickness="0.7"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -297,7 +360,53 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ProfileButtonStyle" TargetType="Button">
+    <Style x:Key="ToggleButtonStyle_ProfileMenu" TargetType="ToggleButton">
+        <Setter Property="Background" Value="#00221E2F"/>
+        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+
+                    <Border x:Name="MainBorder" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#00000000"
+                        BorderThickness="0.7"
+                        CornerRadius="4" 
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#003D3454"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#00221E2C"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
+                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#00211739"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ProfileMenuButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="#FF221E2F"/>
         <Setter Property="Foreground" Value="WhiteSmoke"/>
         <Setter Property="Template">
@@ -306,7 +415,7 @@
                     
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            CornerRadius="3" 
+                            CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -337,7 +446,7 @@
 
     <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Background" Value="WhiteSmoke"/>
-        <Setter Property="BorderBrush" Value="#FF1A0D35"/>
+        <Setter Property="BorderBrush" Value="#001A0D35"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="6,0,0,0"/>
@@ -349,48 +458,55 @@
                     <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
                         <StackPanel Orientation="Horizontal">
                             <Border x:Name="checkBoxBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="2.5" 
-                                Width="17"
-                                Height="17">
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="2.5" 
+                                    Width="17"
+                                    Height="17">
 
                                 <Path x:Name="optionMark"
-                                  Data="M1.5,4.5 L4.5,7.5 L8.5,1.5"
-                                  Stroke="Black"
-                                  StrokeThickness="2"
-                                  Margin="2"
-                                  Visibility="Collapsed"
-                                  Stretch="Uniform"/>
+                                      Data="M1.5,4.5 L4.5,7.5 L8.5,1.5"
+                                      Stroke="Black"
+                                      StrokeThickness="2"
+                                      Margin="2"
+                                      Visibility="Collapsed"
+                                      Stretch="Uniform"/>
                             </Border>
 
                             <ContentPresenter x:Name="contentPresenter" 
-                                          Grid.Column="1" 
-                                          Focusable="False" 
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                          Margin="{TemplateBinding Padding}" 
-                                          RecognizesAccessKey="True" 
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                              Grid.Column="1" 
+                                              Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </StackPanel>
                     </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="optionMark" Property="Visibility" Value="Visible"/>
-                            <Setter TargetName="checkBoxBorder" Property="Background" Value="#EE9A8FB9"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.8">
+                                        <GradientStop Color="#DDF49348" Offset="0"/>
+                                        <GradientStop Color="#DDEB6337" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
                             <Setter TargetName="optionMark" Property="Stroke" Value="White"/>
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="checkBoxBorder" Property="Background" Value="#EEAA9DC8"/> 
-                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="#DDF49348"/>
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#DDEE8952"/>
                             <Setter TargetName="optionMark" Property="Stroke" Value="White"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="checkBoxBorder" Property="Background" Value="#D58A80A0"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="#33EB6337"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="false">
@@ -436,11 +552,11 @@
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Border x:Name="thumbBorder" 
-                                            Background="#AA4C4168" 
-                                            BorderBrush="#FF4C4168"
-                                            BorderThickness="0"
-                                            CornerRadius="1" 
-                                            Margin="2,0"/>
+                                                    Background="#AA4C4168" 
+                                                    BorderBrush="#FF4C4168"
+                                                    BorderThickness="0"
+                                                    CornerRadius="1" 
+                                                    Margin="2,0"/>
 
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="true">
@@ -511,11 +627,11 @@
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Border x:Name="thumbBorder" 
-                                        Background="#AA4C4168" 
-                                        BorderBrush="#FF4C4168"
-                                        BorderThickness="0"
-                                        CornerRadius="1" 
-                                        Margin="2,0"/>
+                                                    Background="#AA4C4168" 
+                                                    BorderBrush="#FF4C4168"
+                                                    BorderThickness="0"
+                                                    CornerRadius="2" 
+                                                    Margin="2,0"/>
 
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="true">
@@ -547,12 +663,12 @@
                         </Trigger>
 
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                 Value="Maximized">
+                                     Value="Maximized">
                             <Setter Property="Margin" Value="0,0,6,0" />
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                 Value="Normal">
+                                     Value="Normal">
                             <Setter Property="Margin" Value="0,0,0,0" />
                         </DataTrigger>
 
@@ -575,7 +691,7 @@
                             Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3"
+                            CornerRadius="4"
                             SnapsToDevicePixels="true">
 
                         <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
@@ -604,7 +720,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="Transparent"
                             BorderThickness="1,1,1,1"
-                            CornerRadius="3"
+                            CornerRadius="4"
                             MinHeight="40"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter VerticalAlignment="Center"/>
@@ -642,7 +758,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="Transparent"
                             BorderThickness="1,1,1,1"
-                            CornerRadius="3"
+                            CornerRadius="4"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter VerticalAlignment="Center"/>
                     </Border>
@@ -667,7 +783,15 @@
     </Style>
 
     <Style x:Key="CoverButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="#FF272237"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+                    <GradientStop Color="#FF342C49"/>
+                    <GradientStop Color="#FF342C49" Offset="1"/>
+                    <GradientStop Color="#FF403659" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Foreground" Value="WhiteSmoke"/>
         <Setter Property="BorderBrush" Value="#FF221E2F"/>
         <Setter Property="Template">
@@ -676,17 +800,26 @@
                     
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}">
+                            Padding="0"
+                            BorderThickness="1.5"
+                            BorderBrush="#00000000">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF937BD1"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#CCF49348" Offset="0"/>
+                                        <GradientStop Color="#CCEB6337" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00AB3317"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                     
@@ -707,7 +840,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="Transparent"
                             BorderThickness="0"
-                            CornerRadius="2"
+                            CornerRadius="4"
                             Margin="2,0"
                             Padding="4,5">
                         <ContentPresenter HorizontalAlignment="Left" 
@@ -743,12 +876,12 @@
                 <ControlTemplate TargetType="ComboBoxItem">
                     
                     <Border x:Name="ItemBorder"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="Transparent"
-                        BorderThickness="0"
-                        CornerRadius="2"
-                        Margin="2,0"
-                        Padding="4,5">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="4"
+                            Margin="2,0"
+                            Padding="4,5">
                         <ContentPresenter HorizontalAlignment="Left" 
                           VerticalAlignment="Center"/>
                     </Border>
@@ -798,7 +931,7 @@
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="#60A896DD"
                                             BorderThickness="0.7"
-                                            CornerRadius="3">
+                                            CornerRadius="4">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -912,7 +1045,7 @@
                                     <Border x:Name="Border" 
                                             Background="{TemplateBinding Background}" 
                                             BorderThickness="0.7"
-                                            CornerRadius="3">
+                                            CornerRadius="4">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -1020,7 +1153,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
+                            CornerRadius="4">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
                                       Margin="0"
@@ -1069,7 +1202,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
+                            CornerRadius="4">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
                                       Margin="0"
@@ -1117,7 +1250,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
+                            CornerRadius="4">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
                                       Margin="0"
@@ -1165,7 +1298,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
+                            CornerRadius="4">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
                                       Margin="0"
@@ -1206,7 +1339,7 @@
                     <Border x:Name="ItemBorder"
                             Background="Transparent"
                             BorderThickness="0"
-                            CornerRadius="2"
+                            CornerRadius="4"
                             Margin="4,4"
                             Padding="4,5">
                         <Grid>
@@ -1217,22 +1350,22 @@
                             </Grid.ColumnDefinitions>
 
                             <ContentPresenter x:Name="Icon" 
-                                  ContentSource="Icon"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"
-                                  Margin="5,0"/>
+                                              ContentSource="Icon"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Margin="5,0"/>
 
                             <ContentPresenter Grid.Column="1"
-                                  ContentSource="Header"
-                                  VerticalAlignment="Center"
-                                  Margin="5,0"/>
+                                              ContentSource="Header"
+                                              VerticalAlignment="Center"
+                                              Margin="5,0"/>
 
                             <TextBlock Grid.Column="2"
-                           Text="{TemplateBinding InputGestureText}"
-                           VerticalAlignment="Center"
-                           Margin="5,0"
-                           Foreground="#88FFFFFF"
-                           FontSize="11"/>
+                                       Text="{TemplateBinding InputGestureText}"
+                                       VerticalAlignment="Center"
+                                       Margin="5,0"
+                                       Foreground="#88FFFFFF"
+                                       FontSize="11"/>
                         </Grid>
                     </Border>
 
@@ -1278,9 +1411,9 @@
                 <ControlTemplate TargetType="ContextMenu">
 
                     <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="3">
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                     </Border>
 

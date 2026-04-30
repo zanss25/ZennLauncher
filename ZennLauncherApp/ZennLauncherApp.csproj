@@ -77,7 +77,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>zenn_icon_v0_1beta.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3A04A2B770BE19609B9557B180EA0BF085569683</ManifestCertificateThumbprint>
@@ -390,6 +390,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Icons\Interface\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

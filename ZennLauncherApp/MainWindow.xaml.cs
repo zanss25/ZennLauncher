@@ -41,7 +41,6 @@ namespace ZennLauncherApp
             LoadProfileData();
             SidebarNavList.ItemsSource = func.SidebarTabs;
             LoadDefaultStartingTab();
-
         }
 
         public void LoadProfileData()
@@ -130,18 +129,18 @@ namespace ZennLauncherApp
             this.WindowState = WindowState.Minimized;
         }
 
-        private void LinkProfileInfo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnProfileSettings_Click(object sender, RoutedEventArgs e)
+        private void LinkProfileSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settings = new SettingsWindow("myprofile");
 
             EnableBlurAndOverlay();
             settings.ShowDialog();
             DisableBlurAndOverlay();
+        }
+
+        private void BtnProfileSettings_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void BtnSwitchProfile_Click(object sender, RoutedEventArgs e)
@@ -291,16 +290,6 @@ namespace ZennLauncherApp
             DisableBlurAndOverlay();
         }
 
-        private void OnTabChanged(TabModel selectedTab)
-        {
-            if (selectedTab.TargetView != null)
-            {
-                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
-
-                ContentSlot.Content = view;
-            }
-        }
-
         private void RefreshCurrentTab()
         {
             var selected = SidebarNavList.SelectedItem as TabModel;
@@ -312,6 +301,16 @@ namespace ZennLauncherApp
             }
         }
 
+        private void OnTabChanged(TabModel selectedTab)
+        {
+            if (selectedTab.TargetView != null)
+            {
+                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+
+                ContentSlot.Content = view;
+            }
+        }
+
         private void SidebarNavList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selected = SidebarNavList.SelectedItem as TabModel;
@@ -319,6 +318,18 @@ namespace ZennLauncherApp
             if (selected != null)
             {
                 OnTabChanged(selected);
+
+                StackPanelGamesBtns.Visibility = Visibility.Collapsed;
+                StackPanelToolsBtns.Visibility = Visibility.Collapsed;
+
+                if (selected.ItemTag == "games")
+                {
+                    StackPanelGamesBtns.Visibility = Visibility.Visible;
+                }
+                if (selected.ItemTag == "tools")
+                {
+                    StackPanelToolsBtns.Visibility = Visibility.Visible;
+                }
             }
         }
 

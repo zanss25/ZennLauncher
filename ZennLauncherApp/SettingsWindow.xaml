@@ -132,7 +132,7 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnApply" Content="Apply" Grid.Row="1"
-                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyleC}" 
+                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle_PrimaryB}" 
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
                                 FontFamily="Global Sans Serif" FontSize="12" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Bottom"

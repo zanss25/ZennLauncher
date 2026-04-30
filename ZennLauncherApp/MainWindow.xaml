@@ -160,7 +160,7 @@
                     </LinearGradientBrush>
                 </Border.BorderBrush>
 
-                <DockPanel VerticalAlignment="Center" MinHeight="50" LastChildFill="False">
+                <DockPanel VerticalAlignment="Center" MinHeight="20" LastChildFill="False">
                     <DockPanel.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <LinearGradientBrush.RelativeTransform>
@@ -174,25 +174,25 @@
                         </LinearGradientBrush>
                     </DockPanel.Background>
 
-                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="15,0,0,0">
-                        <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle}" Content="Add New Game" 
-                                Click="BtnAddNewGame_Click" Margin="5,10,5,10" Background="#FF221E2F"
-                                FontFamily="Global User Interface" FontSize="13" 
-                                BorderThickness="0,0,0,0" Padding="10,1,10,1"/>
+                    <StackPanel x:Name="StackPanelGamesBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
+                                Margin="0,0,25,0" Visibility="Collapsed">
+                        <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
+                                Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="5,8"
+                                FontFamily="Global User Interface" FontSize="13"/>
                     </StackPanel>
 
-                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                        <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle}" Content="Add New Tool" 
-                                Click="BtnAddNewTool_Click" Margin="5,10,10,10" Background="#FF221E2F" 
-                                FontFamily="Global User Interface" FontSize="13" 
-                                BorderThickness="0,0,0,0" Padding="10,1,10,1"/>
+                    <StackPanel x:Name="StackPanelToolsBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
+                                Margin="0,0,25,0" Visibility="Collapsed">
+                        <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
+                                Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="5,8"
+                                FontFamily="Global User Interface" FontSize="13"/>
                     </StackPanel>
 
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,10,15,10">
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="20,5,0,5">
                         <Border x:Name="ProfileAvatar" 
                                 BorderBrush="#70594D7B" 
                                 BorderThickness="1.5" CornerRadius="3"
-                                MinHeight="30" MinWidth="30" Margin="0,0,5,0">
+                                MinHeight="40" MinWidth="40" Margin="0,0,0,0">
                             <Border.Background>
                                 <ImageBrush>
                                     <ImageBrush.ImageSource>
@@ -211,14 +211,14 @@
                         </Border>
                     </StackPanel>
 
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,0,0,0">
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="0,5,0,5" >
                         <Grid HorizontalAlignment="Right">
 
-                            <ToggleButton x:Name="BtnProfileMenu" Style="{StaticResource ToggleButtonStyle}" 
-                                          Content="{Binding ProfileName}" 
-                                          Margin="5,10,0,10" 
+                            <ToggleButton x:Name="BtnProfileMenu" 
+                                          Style="{StaticResource ToggleButtonStyle_ProfileMenu}" 
+                                          Content="{Binding ProfileName}"
                                           FontFamily="Global User Interface" FontSize="13" 
-                                          BorderThickness="0,0,0,0" Padding="10,1,10,1">
+                                          BorderThickness="0,0,0,0" Padding="10,10,10,10">
 
                             </ToggleButton>
 
@@ -258,10 +258,10 @@
                                                            FontSize="11"
                                                            VerticalAlignment="Bottom">
                                             
-                                                <Hyperlink Click="LinkProfileInfo_Click"
+                                                <Hyperlink Click="LinkProfileSettings_Click"
                                                            Style="{StaticResource HyperlinkStyle}">
 
-                                                           View Profile Info..
+                                                           Profile Settings
                                                 </Hyperlink>
 
                                                 </TextBlock>
@@ -299,13 +299,13 @@
                                                 <Separator VerticalAlignment="Bottom"
                                                            Margin="0,5,0,10"
                                                            Background="#55594D7B"/>
-                                                <Button x:Name="BtnProfileSettings"
-                                                        Style="{StaticResource MenuButtonStyleB}"
-                                                        Content="Profile Settings"
-                                                        Click="BtnProfileSettings_Click"
+                                                <Button x:Name="BtnSettings"
+                                                        Style="{StaticResource MenuButtonStyle_Popup}"
+                                                        Content="Settings"
+                                                        Click="BtnSettings_Click"
                                                         MinHeight="35"/>
                                                 <Button x:Name="BtnLogOut"
-                                                        Style="{StaticResource MenuButtonStyleB}"
+                                                        Style="{StaticResource MenuButtonStyle_Popup}"
                                                         Content="Log Out"
                                                         Click="BtnLogOut_Click"
                                                         MinHeight="35"/>
@@ -320,20 +320,7 @@
                             </Popup>
                         </Grid>
                     </StackPanel>
-
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,0,0,0">
-                        <Button x:Name="BtnSettings" Style="{StaticResource MenuButtonStyle}" 
-                                Click="BtnSettings_Click" Margin="10,10,5,10"
-                                FontFamily="Global User Interface" FontSize="13"
-                                BorderThickness="0,0,0,0" Padding="10,1,10,1">
-
-                            <Button.Content>
-                                <Image Source="/Settings.png" 
-                                       Width="18" Height="18" Margin="0"/>
-                            </Button.Content>
-
-                        </Button>
-                    </StackPanel>
+                    
                 </DockPanel>
             </Border>
 

@@ -157,7 +157,7 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnCreateNewProfile" Content="Create New Profile" Grid.Row="0"
-                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyleC}"
+                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_PrimaryB}"
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" FontFamily="Global Sans Serif" 
                                 FontSize="12" BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
 
@@ -282,7 +282,7 @@
                         </PasswordBox>
 
                         <Button x:Name="BtnLogIn" Content="Login" Grid.Column="1" Grid.Row="0"
-                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle}" 
+                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle_Common}" 
                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                                 Margin="5,0,0,0" Padding="15,8,15,8" MinWidth="30"
                                 FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B" 

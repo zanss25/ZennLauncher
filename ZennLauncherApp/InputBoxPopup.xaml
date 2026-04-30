@@ -107,7 +107,7 @@
 
             <DockPanel Margin="10,10,10,0" Grid.Row="4">
                 <Button x:Name="BtnOk" Content="Ok" Click="BtnOk_Click" 
-                        Style="{StaticResource MenuButtonStyleC}" Margin="10,10,10,25" Padding="15,8,15,8" 
+                        Style="{StaticResource MenuButtonStyle_PrimaryB}" Margin="10,10,10,25" Padding="15,8,15,8" 
                         MinWidth="125" MaxWidth="125" BorderThickness="0,0,0,0" HorizontalAlignment="Left"
                         FontFamily="Global Sans Serif" FontSize="12" 
                         VerticalAlignment="Bottom" IsDefault="True"/>

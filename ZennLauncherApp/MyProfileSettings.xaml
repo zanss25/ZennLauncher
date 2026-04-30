@@ -77,7 +77,7 @@
             <Button x:Name="BtnEditProfile"
                     Margin="20,0" MinHeight="25" MaxHeight="35" Padding="10"
                     Grid.Column="2" Grid.RowSpan="2"
-                    Style="{StaticResource MenuButtonStyle}"
+                    Style="{StaticResource MenuButtonStyle_Common}"
                     Content="Edit Profile"
                     Click="BtnEditProfile_Click" 
                     HorizontalAlignment="Right"
@@ -131,7 +131,7 @@
                                 <Button x:Name="BtnResetPass" Content="Reset Password" 
                                         Click="BtnResetPass_Click" Grid.Column="2"
                                         MinHeight="25" MaxHeight="35" Padding="10,8"
-                                        Style="{StaticResource MenuButtonStyleD}"
+                                        Style="{StaticResource MenuButtonStyle_SettingsCommon}"
                                         HorizontalAlignment="Right"/>
                             </Grid>
                         </Border>
@@ -155,7 +155,7 @@
                             <Button x:Name="BtnAddPass" Content="Add Password" 
                                     Click="BtnAddPass_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyleD}"
+                                    Style="{StaticResource MenuButtonStyle_SettingsCommon}"
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>
@@ -178,7 +178,7 @@
                             <Button x:Name="BtnExportBackup" Content="Backup Profile" 
                                     Click="BtnExportBackup_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyleD}"
+                                    Style="{StaticResource MenuButtonStyle_SettingsCommon}"
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>
@@ -201,7 +201,7 @@
                             <Button x:Name="BtnDeleteProfile" Content="Delete Profile" 
                                     Click="BtnDeleteProfile_Click" Grid.Column="2"
                                     MinHeight="25" MaxHeight="35" Padding="10,8"
-                                    Style="{StaticResource MenuButtonStyleD}"
+                                    Style="{StaticResource MenuButtonStyle_SettingsCommon}"
                                     HorizontalAlignment="Right"/>
                         </Grid>
                     </Border>
