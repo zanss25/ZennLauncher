@@ -11,6 +11,8 @@ namespace ZennLauncherApp
         public int ToolId { get; set; }
         public string ToolTitle { get; set; }
         public string ToolDesc { get; set; }
+        public int ToolCategoryId { get; set; }
+        public int ToolUserRating { get; set; }
         public string ToolFirstLaunched { get; set; }
         public string ToolLastLaunched { get; set; }
         public int ToolLaunchTimes { get; set; }

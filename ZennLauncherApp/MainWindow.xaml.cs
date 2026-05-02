@@ -41,6 +41,7 @@ namespace ZennLauncherApp
             LoadProfileData();
             SidebarNavList.ItemsSource = func.SidebarTabs;
             LoadDefaultStartingTab();
+
         }
 
         public void LoadProfileData()
@@ -138,16 +139,6 @@ namespace ZennLauncherApp
             DisableBlurAndOverlay();
         }
 
-        private void BtnProfileSettings_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void BtnSwitchProfile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void BtnLogOut_Click(object sender, RoutedEventArgs e)
         {
             var currentProfile = this.DataContext as ProfileDataModel;
@@ -227,14 +218,16 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
+                        gview.LoadGamesList();
+                        gview.ApplyFilters();
                     }
                 }
                 else
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
+                        gview.LoadGamesList();
+                        gview.ApplyFilters();
                     }
                 }
             }
@@ -273,16 +266,18 @@ namespace ZennLauncherApp
 
                 if (add.ShowDialog() == true)
                 {
-                    if (ContentSlot.Content is ToolsView gview)
+                    if (ContentSlot.Content is ToolsView tview)
                     {
-                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
+                        tview.LoadToolsList();
+                        tview.ApplyFilters();
                     }
                 }
                 else
                 {
-                    if (ContentSlot.Content is ToolsView gview)
+                    if (ContentSlot.Content is ToolsView tview)
                     {
-                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
+                        tview.LoadToolsList();
+                        tview.ApplyFilters();
                     }
                 }
             }

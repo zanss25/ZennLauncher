@@ -11,6 +11,10 @@ namespace ZennLauncherApp
         public int GameId { get; set; }
         public string GameTitle { get; set; }
         public string GameSubtitle { get; set; }
+        public int GameCategoryId { get; set; }
+        public int GameGenreId { get; set; }
+        public int GameUserRating { get; set; }
+
         public string GameFirstLaunched { get; set; }
         public string GameLastLaunched { get; set; }
         public int GameLaunchTimes { get; set; }

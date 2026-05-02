@@ -180,6 +180,7 @@
     <Compile Include="CategoriesSettings.xaml.cs">
       <DependentUpon>CategoriesSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CategoryModel.cs" />
     <Compile Include="ConfigHandler.cs" />
     <Compile Include="FoldersSettings.xaml.cs">
       <DependentUpon>FoldersSettings.xaml</DependentUpon>
@@ -229,8 +230,8 @@
     </Compile>
     <Compile Include="DBHandler.cs" />
     <Compile Include="GameModel.cs" />
-    <Compile Include="RelicsHistoryView.xaml.cs">
-      <DependentUpon>RelicsHistoryView.xaml</DependentUpon>
+    <Compile Include="BoardsView.xaml.cs">
+      <DependentUpon>BoardsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="WindowHelper.cs" />
@@ -324,7 +325,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RelicsHistoryView.xaml">
+    <Page Include="BoardsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -31,15 +31,19 @@ namespace ZennLauncherApp
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
         List<GameModel> allGamesList = new List<GameModel>();
+        List<CategoryModel> allCategoriesList = new List<CategoryModel>();
 
         public GamesView()
         {            
             InitializeComponent();
 
             LoadGamesList();
-            ComboSortByGames.ItemsSource = GlobalFunctions.Instance.SortOptions;
-            ComboSortByGames.DisplayMemberPath = "DisplayName";
-            ComboSortByGames.SelectedIndex = 0;
+            LoadCategoriesList();
+
+            ComboSortBy.ItemsSource = GlobalFunctions.Instance.SortOptions;
+            ComboSortBy.DisplayMemberPath = "DisplayName";
+            ComboSortBy.SelectedIndex = 0;
+
             LoadDefaultSortOptions();
         }
 
@@ -59,11 +63,11 @@ namespace ZennLauncherApp
 
                 if (targetSortObject != null)
                 {
-                    ComboSortByGames.SelectedItem = targetSortObject;
+                    ComboSortBy.SelectedItem = targetSortObject;
                 }
                 else
                 {
-                    ComboSortByGames.SelectedIndex = 0;
+                    ComboSortBy.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
@@ -83,13 +87,43 @@ namespace ZennLauncherApp
             {
                 allGamesList = db.GetAllGames(_sortBy, _ascending);
 
-                ContainerBtnGames.ItemsSource = null;
-                ContainerBtnGames.ItemsSource = allGamesList;
-
+                ContainerBtnApps.ItemsSource = null;
+                ContainerBtnApps.ItemsSource = allGamesList;
             }
         }
 
-        private void BtnGames_MouseDoubleClick(object sender, RoutedEventArgs e)
+        public void LoadCategoriesList()
+        {
+            int _categoriesCount = 0;
+            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE id = 1");
+
+            CategoryModel allCategory = new CategoryModel
+            {
+                CategoryId = 0,
+                CategoryName = "All Games",
+                CategoryDesc = "Display all games from your library"
+            };
+
+            if (_categoriesCount > 0)
+            {
+                allCategoriesList = db.GetAllCategories(1);
+
+                allCategoriesList.Insert(0, allCategory);
+
+                ComboCategories.ItemsSource = allCategoriesList;
+                ComboCategories.DisplayMemberPath = "CategoryName";
+
+            }
+            else
+            {
+                allCategoriesList.Insert(0, allCategory);
+
+                ComboCategories.ItemsSource = allCategoriesList;
+                ComboCategories.DisplayMemberPath = "CategoryName";
+            }
+        }
+
+        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
 
@@ -102,14 +136,20 @@ namespace ZennLauncherApp
 
                 func.LaunchFile(filePath, args);
 
-                string query_ = "UPDATE games SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-
-                var args_ = new Dictionary<string, object>
+                string query_fl = "UPDATE games SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
+                string query_ll = "UPDATE games SET last_launched = datetime('now', 'localtime') WHERE id = @id";
+                
+                var args_fl = new Dictionary<string, object>
+                {
+                    { "@id", game.GameId }
+                };
+                var args_ll = new Dictionary<string, object>
                 {
                     { "@id", game.GameId }
                 };
 
-                db.ExecuteQuery(db.ConnectionProfile, query_, args_);
+                db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
+                db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
 
                 string query__ = "UPDATE games SET launch_times = launch_times + 1 WHERE id = @id";
 
@@ -158,7 +198,7 @@ namespace ZennLauncherApp
             GamePropertiesWindow edit = new GamePropertiesWindow(selectedGame);
             if (edit.ShowDialog() == true)
             {
-                ComboSortByGames_Changed(ComboSortByGames, null);
+                ApplyFilters();
             }
 
             Main.DisableBlurAndOverlay();
@@ -221,47 +261,86 @@ namespace ZennLauncherApp
                     db.DeleteGame(selectedGame.GameId);
                     Main.DisableBlurAndOverlay();
 
-                    ComboSortByGames_Changed(ComboSortByGames, null);
+                    ApplyFilters();
                 }
             }
 
             Main.DisableBlurAndOverlay();
         }
 
-        private void SearchBarGames_Changed(object sender, TextChangedEventArgs e)
+        private void SearchBar_Changed(object sender, TextChangedEventArgs e)
         {
-            string query = SearchBarGames.Text.ToLower().Trim();
-
-            if (string.IsNullOrEmpty(query))
-            {
-                ContainerBtnGames.ItemsSource = allGamesList;
-                return;
-            }
-
-            var filteredList = allGamesList.Where(g =>
-                g.GameTitle.ToLower().Contains(query) ||
-                (g.GameSubtitle != null && g.GameSubtitle.ToLower().Contains(query))
-            ).ToList();
-
-            ContainerBtnGames.ItemsSource = filteredList;
+            ApplyFilters();
         }
 
-        public void ComboSortByGames_Changed(object sender, SelectionChangedEventArgs e)
+        public void ComboCategories_Changed(object sender, SelectionChangedEventArgs e)
         {
-            if (db == null || ComboSortByGames.SelectedItem == null) return;
+            ApplyFilters();
+        }
 
-            var selectedItem = (SortCriterion)ComboSortByGames.SelectedItem;
-            string sortBy = selectedItem.SortByTag.ToString();
-            bool asc = true;
+        public void ComboSortBy_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
 
-            if (sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times")
+        public void ApplyFilters()
+        {
+            if (allGamesList == null) return;
+
+            // --- 1. AMBIL INPUT ---
+            var selectedCategory = ComboCategories.SelectedItem as CategoryModel;
+            string searchQuery = SearchBar.Text.ToLower().Trim();
+
+            var selectedSortItem = (SortCriterion)ComboSortBy.SelectedItem;
+            if (selectedSortItem == null) return;
+
+            string sortBy = selectedSortItem.SortByTag.ToString();
+            bool asc = !(sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times");
+
+            // --- 2. FILTERING (Kategori & Search) ---
+            var query = allGamesList.Where(game =>
             {
-                asc = false;
+                bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
+                                     || game.GameCategoryId == selectedCategory.CategoryId;
+
+                bool matchSearch = string.IsNullOrEmpty(searchQuery)
+                                   || game.GameTitle.ToLower().Contains(searchQuery);
+
+                return matchCategory && matchSearch;
+            });
+
+            // --- 3. SORTING (LINQ) ---
+            IOrderedEnumerable<GameModel> sortedData;
+
+            switch (sortBy)
+            {
+                case "last_launched":
+                    sortedData = query.OrderByDescending(g => g.GameLastLaunched);
+                    break;
+                case "launch_times":
+                    sortedData = query.OrderByDescending(g => g.GameLaunchTimes);
+                    break;
+                case "id":
+                    sortedData = query.OrderByDescending(g => g.GameId);
+                    break;
+                default: // "title"
+                    sortedData = query.OrderBy(g => g.GameTitle);
+                    break;
             }
 
-            ContainerBtnGames.ItemsSource = db.GetAllGames(sortBy, asc);
+            // --- 4. UPDATE UI ---
+            ContainerBtnApps.ItemsSource = sortedData.ToList();
 
+            if (!sortedData.Any())
+            {
+                NoAppsAvailable.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NoAppsAvailable.Visibility = Visibility.Hidden;
+            }
         }
 
     }
 }
+

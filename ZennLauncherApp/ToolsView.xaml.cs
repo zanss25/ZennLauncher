@@ -30,16 +30,20 @@ namespace ZennLauncherApp
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-
         List<ToolModel> allToolsList = new List<ToolModel>();
+        List<CategoryModel> allCategoriesList = new List<CategoryModel>();
+
         public ToolsView()
         {
             InitializeComponent();
 
             LoadToolsList();
-            ComboSortByTools.ItemsSource = func.SortOptions;
-            ComboSortByTools.DisplayMemberPath = "DisplayName";
-            ComboSortByTools.SelectedIndex = 0;
+            LoadCategoriesList();
+
+            ComboSortBy.ItemsSource = func.SortOptions;
+            ComboSortBy.DisplayMemberPath = "DisplayName";
+            ComboSortBy.SelectedIndex = 0;
+
             LoadDefaultSortOptions();
         }
 
@@ -66,11 +70,11 @@ namespace ZennLauncherApp
 
             if (targetSortObject != null)
             {
-                ComboSortByTools.SelectedItem = targetSortObject;
+                ComboSortBy.SelectedItem = targetSortObject;
             }
             else
             {
-                ComboSortByTools.SelectedIndex = 0;
+                ComboSortBy.SelectedIndex = 0;
             }
         }
 
@@ -84,12 +88,43 @@ namespace ZennLauncherApp
             {
                 allToolsList = db.GetAllTools(_sortBy, _ascending);
 
-                ContainerBtnTools.ItemsSource = null;
-                ContainerBtnTools.ItemsSource = allToolsList;
+                ContainerBtnApps.ItemsSource = null;
+                ContainerBtnApps.ItemsSource = allToolsList;
             }
         }
 
-        private void BtnTools_MouseDoubleClick(object sender, RoutedEventArgs e)
+        public void LoadCategoriesList()
+        {
+            int _categoriesCount = 0;
+            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE id = 2");
+
+            CategoryModel allCategory = new CategoryModel
+            {
+                CategoryId = 0,
+                CategoryName = "All Tools",
+                CategoryDesc = "Display all tools from your library"
+            };
+
+            if (_categoriesCount > 0)
+            {
+                allCategoriesList = db.GetAllCategories(2);
+
+                allCategoriesList.Insert(0, allCategory);
+
+                ComboCategories.ItemsSource = allCategoriesList;
+                ComboCategories.DisplayMemberPath = "CategoryName";
+
+            }
+            else
+            {
+                allCategoriesList.Insert(0, allCategory);
+
+                ComboCategories.ItemsSource = allCategoriesList;
+                ComboCategories.DisplayMemberPath = "CategoryName";
+            }
+        }
+
+        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
 
@@ -102,14 +137,20 @@ namespace ZennLauncherApp
 
                 func.LaunchFile(filePath, args);
 
-                string query = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
+                string query_fl = "UPDATE tools SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
+                string query_ll = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
 
-                var args_ = new Dictionary<string, object>
+                var args_fl = new Dictionary<string, object>
+                {
+                    { "@id", tool.ToolId }
+                };
+                var args_ll = new Dictionary<string, object>
                 {
                     { "@id", tool.ToolId }
                 };
 
-                db.ExecuteQuery(db.ConnectionProfile, query, args_);
+                db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
+                db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
 
                 string query__ = "UPDATE tools SET launch_times = launch_times + 1 WHERE id = @id";
 
@@ -154,12 +195,12 @@ namespace ZennLauncherApp
             if (edit.ShowDialog() == true)
             {
                 LoadToolsList();
-                ComboSortByTools_Changed(ComboSortByTools, null);
+                ApplyFilters();
             }
             else
             {
                 LoadToolsList();
-                ComboSortByTools_Changed(ComboSortByTools, null);
+                ApplyFilters();
             }
             Main.DisableBlurAndOverlay();
         }
@@ -220,45 +261,84 @@ namespace ZennLauncherApp
                     db.DeleteTool(selectedTool.ToolId);
                     
                     LoadToolsList();
-                    ComboSortByTools_Changed(ComboSortByTools, null);
+                    ApplyFilters();
                 }
             }
 
             Main.DisableBlurAndOverlay();
         }
 
-        private void SearchBarTools_Changed(object sender, TextChangedEventArgs e)
+        private void SearchBar_Changed(object sender, TextChangedEventArgs e)
         {
-            string query = SearchBarTools.Text.ToLower().Trim();
-
-            if (string.IsNullOrEmpty(query))
-            {
-                ContainerBtnTools.ItemsSource = allToolsList;
-                return;
-            }
-
-            var filteredList = allToolsList.Where(g =>
-                g.ToolTitle.ToLower().Contains(query) ||
-                (g.ToolDesc != null && g.ToolDesc.ToLower().Contains(query))
-            ).ToList();
-
-            ContainerBtnTools.ItemsSource = filteredList;
+            ApplyFilters();
         }
 
-        public void ComboSortByTools_Changed(object sender, SelectionChangedEventArgs e)
+        public void ComboCategories_Changed(object sender, SelectionChangedEventArgs e)
         {
-            if (db == null || ComboSortByTools.SelectedItem == null) return;
+            ApplyFilters();
+        }
 
-            var selectedItem = (SortCriterion)ComboSortByTools.SelectedItem;
-            string sortBy = selectedItem.SortByTag.ToString();
-            bool asc = true;
+        public void ComboSortBy_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
 
-            if (sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times")
+        public void ApplyFilters()
+        {
+            if (allToolsList == null) return;
+
+            // --- 1. AMBIL INPUT ---
+            var selectedCategory = ComboCategories.SelectedItem as CategoryModel;
+            string searchQuery = SearchBar.Text.ToLower().Trim();
+
+            var selectedSortItem = (SortCriterion)ComboSortBy.SelectedItem;
+            if (selectedSortItem == null) return;
+
+            string sortBy = selectedSortItem.SortByTag.ToString();
+            bool asc = !(sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times");
+
+            // --- 2. FILTERING (Kategori & Search) ---
+            var query = allToolsList.Where(tools =>
             {
-                asc = false;
+                bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
+                                     || tools.ToolCategoryId == selectedCategory.CategoryId;
+
+                bool matchSearch = string.IsNullOrEmpty(searchQuery)
+                                   || tools.ToolTitle.ToLower().Contains(searchQuery);
+
+                return matchCategory && matchSearch;
+            });
+
+            // --- 3. SORTING (LINQ) ---
+            IOrderedEnumerable<ToolModel> sortedData;
+
+            switch (sortBy)
+            {
+                case "last_launched":
+                    sortedData = query.OrderByDescending(t => t.ToolLastLaunched);
+                    break;
+                case "launch_times":
+                    sortedData = query.OrderByDescending(t => t.ToolLaunchTimes);
+                    break;
+                case "id":
+                    sortedData = query.OrderByDescending(t => t.ToolId);
+                    break;
+                default: // "title"
+                    sortedData = query.OrderBy(t => t.ToolTitle);
+                    break;
             }
 
-            ContainerBtnTools.ItemsSource = db.GetAllTools(sortBy, asc);
+            // --- 4. UPDATE UI ---
+            ContainerBtnApps.ItemsSource = sortedData.ToList();
+
+            if (!sortedData.Any())
+            {
+                NoAppsAvailable.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NoAppsAvailable.Visibility = Visibility.Hidden;
+            }
         }
 
     }

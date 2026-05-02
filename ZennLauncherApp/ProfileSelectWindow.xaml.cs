@@ -68,6 +68,15 @@ namespace ZennLauncherApp
                 SidebarProfilesList.ItemsSource = null;
                 SidebarProfilesList.ItemsSource = allProfilesList;
 
+                EmptyProfileWelcome.Visibility = Visibility.Hidden;
+                SidebarProfilesList.Visibility = Visibility.Visible;
+                BtnCreateNewProfile.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SidebarProfilesList.Visibility = Visibility.Collapsed;
+                BtnCreateNewProfile.Visibility = Visibility.Collapsed;
+                EmptyProfileWelcome.Visibility = Visibility.Visible;
             }
         }
 
@@ -101,7 +110,8 @@ namespace ZennLauncherApp
 
             try
             {
-                EnableBlurAndOverlay();
+                //EnableBlurAndOverlay();
+                Hide();
                 create.ShowDialog();
 
                 if (newProfileSaved == true)
@@ -110,7 +120,8 @@ namespace ZennLauncherApp
                     newProfileSaved = false;
                 }
 
-                DisableBlurAndOverlay();
+                Show();
+                //DisableBlurAndOverlay();
 
             } catch (Exception ex)
             {

@@ -233,7 +233,7 @@
                 <TextBlock x:Name="TextBlockSteamId" Text="No ID Selected" Grid.Column="1"
                            Margin="20,15" Foreground="#44FFFFFF"/>
 
-                <Button x:Name="BtnSaveGameInfo" Content="Save" Click="BtnSaveGameInfo_Click" Grid.Column="0"
+                <Button x:Name="BtnSaveGameInfo" Content="Add" Click="BtnSaveGameInfo_Click" Grid.Column="0"
                         Style="{StaticResource MenuButtonStyle_PrimaryB}" HorizontalAlignment="Left" 
                         Margin="20,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
                         FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"

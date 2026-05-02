@@ -380,7 +380,7 @@ namespace ZennLauncherApp
 
                 PreviewAvatar.Background = imageBrush;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 LinearGradientBrush defaultBgBrush = new LinearGradientBrush();
                 var color1 = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF342C49");

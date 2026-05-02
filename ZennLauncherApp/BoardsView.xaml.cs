@@ -18,9 +18,9 @@ namespace ZennLauncherApp
     /// <summary>
     /// Interaction logic for RelicsHistoryView.xaml
     /// </summary>
-    public partial class RelicsHistoryView : UserControl
+    public partial class BoardsView : UserControl
     {
-        public RelicsHistoryView()
+        public BoardsView()
         {
             InitializeComponent();
         }

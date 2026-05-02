@@ -188,10 +188,32 @@ namespace ZennLauncherApp
                 command.CommandText = "PRAGMA foreign_keys = ON;";
                 command.ExecuteNonQuery();
 
+                var createTableSqlSections = @"CREATE TABLE IF NOT EXISTS sections (
+                                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                 name TEXT UNIQUE);";
+
+                var insertSectionsDefaults = @"INSERT OR IGNORE INTO sections (id, name)
+                                                 VALUES ('1', 'Games'), ('2', 'Tools');";
+
                 var createTableSqlCategories = @"CREATE TABLE IF NOT EXISTS categories (
                                                  id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                 name TEXT NOT NULL,
-                                                 desc TEXT);";
+                                                 name TEXT UNIQUE,
+                                                 desc TEXT,
+                                                 section_id INT REFERENCES sections(id));";
+
+                var insertCategoriesDefaults = @"INSERT OR IGNORE INTO categories (name, desc, section_id)
+                                                 VALUES ('Action', 'Fast-paced reflex-based games', '1'),
+                                                        ('Adventure', 'Story-driven exploration games', '1'),
+                                                        ('RPG', 'Games with deep character progression and narrative choices', '1'),
+                                                        ('Sandbox', 'Limitless creativity and free-form gameplay', '1'),
+                                                        ('Simulation', 'Realistic mimicry of real-world activities', '1'),
+                                                        ('Strategy', 'Games involving actical planning and resource management', '1'),
+                                                        ('Platformer', 'Jumping and navigating through levels.', '1'),
+                                                        ('Horror', 'Suspenseful gameplay designed to evoke fear', '1'),
+                                                        ('Puzzle', 'Logical challenges and brain-teasing tasks', '1'),
+                                                        ('Emulators', 'Run games from console platforms.', '2'),
+                                                        ('Game Configuration', 'Game configuration apps', '2'),
+                                                        ('Modding Tools', 'Tools to create, install, and manage game modifications', '2');";
 
                 var createTableSqlGenre = @"CREATE TABLE IF NOT EXISTS genres (
                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -218,6 +240,8 @@ namespace ZennLauncherApp
                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                                             title TEXT NOT NULL,
                                             desc TEXT,
+                                            category_id INT REFERENCES categories(id),
+                                            user_rating INT(10),
                                             first_launched DATETIME,
                                             last_launched DATETIME,
                                             launch_times INT DEFAULT 0,
@@ -227,36 +251,13 @@ namespace ZennLauncherApp
                                             cover_path TEXT,
                                             icon_path TEXT);";
 
-                var createTableSqlRelics = @"CREATE TABLE IF NOT EXISTS relics (
-                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                             title TEXT NOT NULL,
-                                             subtitle TEXT,
-                                             category_id INT REFERENCES categories(id),
-                                             genre_id INT REFERENCES genres(id),
-                                             user_rating INT(10),
-                                             user_commentary TEXT,
-                                             first_launched DATETIME,
-                                             last_launched DATETIME,
-                                             launch_times INT,
-                                             executable_path TEXT,
-                                             cover_path TEXT,
-                                             icon_path TEXT,
-                                             profile_name TEXT);";
-
-                var createTableSqlSettings = @"CREATE TABLE IF NOT EXISTS profile_settings (
-                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                             option_name TEXT NOT NULL,
-                                             option_display TEXT,
-                                             desc TEXT,
-                                             value TEXT);";
-
+                ExecuteNonQuery(connection, createTableSqlSections);
+                ExecuteNonQuery(connection, insertSectionsDefaults);
                 ExecuteNonQuery(connection, createTableSqlCategories);
+                ExecuteNonQuery(connection, insertCategoriesDefaults);
                 ExecuteNonQuery(connection, createTableSqlGenre);
                 ExecuteNonQuery(connection, createTableSqlGames);
                 ExecuteNonQuery(connection, createTableSqlTools);
-                ExecuteNonQuery(connection, createTableSqlRelics);
-                ExecuteNonQuery(connection, createTableSqlSettings);
-
             }
             Debug.WriteLine("Current active profile data: " + profileData.ProfileId);
         }
@@ -270,7 +271,7 @@ namespace ZennLauncherApp
             GC.WaitForPendingFinalizers();
         }
 
-        // Fungsi untuk Query SQLite
+        // Fungsi untuk query SQLite (Tanpa Return)
         public void ExecuteQuery(string conn, string query, Dictionary<string, object> parameters = null)
         {
             using (var connection = new SqliteConnection(conn))
@@ -290,7 +291,7 @@ namespace ZennLauncherApp
             }
         }
 
-        // Fungsi untuk query SQLite dengan ExecuteScalar
+        // Fungsi untuk query SQLite dengan Type dan Return
         public T ExecuteScalar<T>(string conn, string query, Dictionary<string, object> parameters = null)
         {
             using (var connection = new SqliteConnection(conn))
@@ -377,9 +378,9 @@ namespace ZennLauncherApp
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var command = new SqliteCommand($@"SELECT id, title, subtitle, first_launched, 
-                                                last_launched, launch_times, target, launch_options, 
-                                                icon_path, cover_path FROM games 
+                var command = new SqliteCommand($@"SELECT id, title, subtitle, category_id, genre_id, 
+                                                user_rating, first_launched, last_launched, launch_times, 
+                                                target, launch_options, icon_path, cover_path FROM games 
                                                 ORDER BY [{sortBy}] {order}", connection);
 
 
@@ -394,18 +395,86 @@ namespace ZennLauncherApp
                             GameId = reader.GetInt32(0),
                             GameTitle = reader.IsDBNull(1) ? "" : reader.GetString(1),
                             GameSubtitle = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            GameFirstLaunched = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                            GameLastLaunched = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                            GameLaunchTimes = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
-                            GameTarget = reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            GameLaunchOptions = reader.IsDBNull(7) ? "" : reader.GetString(7),
-                            GameIconPath = reader.IsDBNull(8) ? "" : reader.GetString(8),
-                            GameCoverPath = reader.IsDBNull(9) ? "" : reader.GetString(9)
+                            GameCategoryId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                            GameGenreId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                            GameUserRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                            GameFirstLaunched = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                            GameLastLaunched = reader.IsDBNull(7) ? "" : reader.GetString(7),
+                            GameLaunchTimes = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
+                            GameTarget = reader.IsDBNull(9) ? "" : reader.GetString(9),
+                            GameLaunchOptions = reader.IsDBNull(10) ? "" : reader.GetString(10),
+                            GameIconPath = reader.IsDBNull(11) ? "" : reader.GetString(11),
+                            GameCoverPath = reader.IsDBNull(12) ? "" : reader.GetString(12)
                         });
                     }
                 }
             }
             return games;
+        }
+
+        public List<CategoryModel> GetAllCategories(int sectionId)
+        {
+            ProfileDBInitialize();
+            GetCurrentProfileData();
+
+            string query_cc = "SELECT COUNT(*) FROM categories WHERE id = @id;";
+
+            var args_cc = new Dictionary<string, object>()
+            {
+                { "@id", sectionId }
+            };
+
+            int result = ExecuteScalar<int>(ConnectionProfile, query_cc, args_cc);
+
+            if (result < 1)
+            {
+                return null;
+            }
+
+            List<CategoryModel> categories = new List<CategoryModel>();
+
+            Debug.WriteLine("GET ALL CATEGORIES PATH: " + ConnectionProfile);
+
+            if (ConnectionProfile.Contains(":memory:"))
+            {
+                return new List<CategoryModel>();
+            }
+
+            using (var connection = new SqliteConnection(ConnectionProfile))
+            {
+                connection.Open();
+                var command = new SqliteCommand($@"SELECT id, name, desc, section_id FROM categories WHERE section_id = @section_id", connection);
+
+                var args = new Dictionary<string, object>()
+                {
+                    { "@section_id", sectionId }
+                };
+
+                if (args != null)
+                {
+                    foreach (var arg in args)
+                    {
+                        command.Parameters.AddWithValue(arg.Key, arg.Value ?? DBNull.Value);
+                    }
+                }
+
+                var reader = command.ExecuteReader();
+
+                using (reader)
+                {
+                    while (reader.Read())
+                    {
+                        categories.Add(new CategoryModel
+                        {
+                            CategoryId = reader.GetInt32(0),
+                            CategoryName = reader.IsDBNull(1) ? "" : reader.GetString(1),
+                            CategoryDesc = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                            CategorySection = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                        });
+                    }
+                }
+            }
+            return categories;
         }
 
         public List<ToolModel> GetAllTools(string sortBy = "title", bool ascending = true)
@@ -424,7 +493,7 @@ namespace ZennLauncherApp
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var command = new SqliteCommand($"SELECT id, title, desc, first_launched, " +
+                var command = new SqliteCommand($"SELECT id, title, desc, category_id, user_rating, first_launched, " +
                                                 $"last_launched, launch_times, target, launch_options, " +
                                                 $"icon_path, cover_path FROM tools " +
                                                 $"ORDER BY [{sortBy}] {order}", connection);
@@ -439,13 +508,15 @@ namespace ZennLauncherApp
                             ToolId = reader.GetInt32(0),
                             ToolTitle = reader.IsDBNull(1) ? "" : reader.GetString(1),
                             ToolDesc = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            ToolFirstLaunched = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                            ToolLastLaunched = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                            ToolLaunchTimes = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
-                            ToolTarget = reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            ToolLaunchOptions = reader.IsDBNull(7) ? "" : reader.GetString(7),
-                            ToolIconPath = reader.IsDBNull(8) ? "" : reader.GetString(8),
-                            ToolCoverPath = reader.IsDBNull(9) ? "" : reader.GetString(9)
+                            ToolCategoryId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                            ToolUserRating = reader.IsDBNull (4) ? 0 : reader.GetInt32(4),
+                            ToolFirstLaunched = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                            ToolLastLaunched = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                            ToolLaunchTimes = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
+                            ToolTarget = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                            ToolLaunchOptions = reader.IsDBNull(9) ? "" : reader.GetString(9),
+                            ToolIconPath = reader.IsDBNull(10) ? "" : reader.GetString(10),
+                            ToolCoverPath = reader.IsDBNull(11) ? "" : reader.GetString(11)
                         });
                     }
                 }

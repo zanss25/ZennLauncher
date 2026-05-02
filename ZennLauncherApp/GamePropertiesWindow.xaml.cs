@@ -43,6 +43,7 @@ namespace ZennLauncherApp
                 _existingGame = game;
                 _isEditMode = true;
                 FillDataToFields();
+                BtnSaveGameInfo.Content = "Save";
             }
         }
 

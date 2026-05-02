@@ -6,6 +6,210 @@
              xmlns:local="clr-namespace:ZennLauncherApp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBlock Text="COMING SOON" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                   Margin="0,0,0,135" Foreground="#A89A8FB9" FontSize="25" FontWeight="Bold"/>
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+
+            <local:PathToImageConverter x:Key="ImageConverter"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CustomResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" 
+                  VerticalScrollBarVisibility="Auto">
+
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBarEdge}"/>
+            </ScrollViewer.Resources>
+
+            <Grid Margin="40,90,20,68" HorizontalAlignment="Left">
+                <ItemsControl x:Name="ContainerBtnApps" HorizontalAlignment="Stretch">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10,8" HorizontalAlignment="Stretch">
+
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0"
+                   MinHeight="70" MaxHeight="100" Margin="0,-2,0,0" IsHitTestVisible="False">
+
+            <DockPanel.Effect>
+                <BlurEffect/>
+            </DockPanel.Effect>
+
+            <DockPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#00161616" Offset="1"/>
+                    <GradientStop Color="#FF342D47" Offset="0"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+
+        </DockPanel>
+
+        <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
+                MinWidth="220" Margin="17,15" CornerRadius="6" 
+                Background="#CF372D51" BorderBrush="#CC574D71" BorderThickness="0.5">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <TextBox  x:Name="SearchBar" 
+                                  TextChanged="SearchBar_Changed"
+                                  VerticalContentAlignment="Center" 
+                                  MinHeight="30"
+                                  Margin="8,6,8,6" 
+                                  Padding="5,0,0,0"
+                                  Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock IsHitTestVisible="False" 
+                                   Text="🔍  Search categories" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="20,0,0,0" 
+                                   Foreground="#30FFFFFF">
+
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+
+                    </TextBlock>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1">
+
+                    <ScrollViewer.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource SimpleScrollBar}"/>
+                    </ScrollViewer.Resources>
+
+                    <StackPanel>
+                        <StackPanel x:Name="GamesCategories" Margin="15,6,15,15">
+                            <TextBlock Text="Games" Foreground="#99F5F5F5"
+                                       FontSize="15" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                            <ListBox x:Name="GamesCategoriesList"
+                                     Style="{StaticResource ListBoxStyle}"
+                                     SelectionChanged="GamesCategoriesList_Changed"
+                                     BorderThickness="0.5"
+                                     MinHeight="30">
+
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                        
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListBox.Template>
+
+                            </ListBox>
+                        </StackPanel>
+
+                        <StackPanel x:Name="ToolsCategories" Margin="15,6,15,6">
+                            <TextBlock Text="Tools" Foreground="#99F5F5F5"
+                                       FontSize="15" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                            <ListBox x:Name="ToolsCategoriesList"
+                                     Style="{StaticResource ListBoxStyle}"
+                                     SelectionChanged="ToolsCategoriesList_Changed"
+                                     BorderThickness="0.5"
+                                     MinHeight="30">
+
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListBox.Template>
+
+                            </ListBox>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+
+        <Border x:Name="NoAppsAvailable" Visibility="Visible"
+                Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                Height="50" Width="Auto" MaxWidth="600" Margin="0,100"
+                CornerRadius="5" BorderThickness="1">
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0019171f" Offset="0"/>
+                    <GradientStop Color="#0019171f" Offset="0.1"/>
+                    <GradientStop Color="#FF19171f" Offset="0.4"/>
+                    <GradientStop Color="#FF19171f" Offset="0.6"/>
+                    <GradientStop Color="#0019171f" Offset="0.9"/>
+                    <GradientStop Color="#0019171f" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#00342D47" Offset="0"/>
+                    <GradientStop Color="#00342D47" Offset="0.1"/>
+                    <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                    <GradientStop Color="#00342D47" Offset="0.9"/>
+                    <GradientStop Color="#00342D47" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <TextBlock Text="✖   No apps found" FontSize="14" FontWeight="Regular"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Foreground="#70F5F5F5"/>
+        </Border>
+
+    </Grid>
 </UserControl>
