@@ -638,7 +638,7 @@
                             <Setter Property="MinHeight" Value="8"/>
                             <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="false"/>
                         </Trigger>
-                       
+
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
@@ -715,12 +715,12 @@
                         </Trigger>
 
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                     Value="Maximized">
+                             Value="Maximized">
                             <Setter Property="Margin" Value="0,0,6,0" />
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                     Value="Normal">
+                             Value="Normal">
                             <Setter Property="Margin" Value="0,0,0,0" />
                         </DataTrigger>
 
@@ -1431,19 +1431,143 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ContextMenuItemStyle" TargetType="MenuItem">
+    <Style x:Key="DataGridColumnHeaderGripperStyle" TargetType="Thumb">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#FF221E2C"/>
+        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="BorderThickness" Value="0,0,0.5,1"/>
+        <Setter Property="BorderBrush" Value="#FF594D7B"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <!-- Teks Header -->
+                                <ContentPresenter VerticalAlignment="Center"/>
+
+                                <!-- Panah Sortir -->
+                                <Path x:Name="SortArrow"
+                                      Visibility="Collapsed"
+                                      Data="M 0.6,4 L 6,4 L 3.36,0.6 Z" 
+                                      Fill="{TemplateBinding Foreground}" 
+                                      Stretch="Uniform" 
+                                      Width="8" Height="6" 
+                                      Margin="6,1,0,0"
+                                      RenderTransformOrigin="0.5,0.5"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource DataGridColumnHeaderGripperStyle}"/>
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource DataGridColumnHeaderGripperStyle}"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Trigger untuk panah mengarah ke ATAS (Ascending) -->
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="SortArrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <!-- Trigger untuk panah mengarah ke BAWAH (Descending) -->
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+        <Setter Property="Padding" Value="10,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="Transparent" BorderThickness="0">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- Menghilangkan border focus biru -->
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Margin" Value="0,1"/>
+        <Setter Property="Height" Value="38"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridRow">
+                    <Border x:Name="RowBorder" 
+                        Background="{TemplateBinding Background}" 
+                        CornerRadius="2"
+                        Margin="4,1">
+                        <SelectiveScrollingGrid>
+                            <SelectiveScrollingGrid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </SelectiveScrollingGrid.ColumnDefinitions>
+                            <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </SelectiveScrollingGrid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Hover Effect: Sama dengan IsMouseOver Button -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RowBorder" Property="Background" Value="#FF372f4C"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                        </Trigger>
+                        <!-- Selection Effect: Sama dengan IsPressed Button -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="RowBorder" Property="Background" Value="#FF272237"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ContextMenuItemStyle_Common" TargetType="MenuItem">
         <Setter Property="Foreground" Value="#A6FFFFFF"/>
         <Setter Property="Padding" Value="10,6"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
-                    
+
                     <Border x:Name="ItemBorder"
-                            Background="Transparent"
                             BorderThickness="0"
                             CornerRadius="4"
-                            Margin="4,4"
-                            Padding="4,5">
+                            Margin="0"
+                            MinHeight="32">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"/>
@@ -1487,6 +1611,77 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ContextMenuItemStyle_Primary" TargetType="MenuItem">
+        <Setter Property="Foreground" Value="#A6FFFFFF"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+
+                    <Border x:Name="ItemBorder"
+                            BorderThickness="0"
+                            CornerRadius="4"
+                            Margin="0"
+                            MinHeight="32">
+
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#DFF49348" Offset="0"/>
+                                <GradientStop Color="#DFEB6337" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter x:Name="Icon" 
+                                              ContentSource="Icon"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Margin="5,0"/>
+
+                            <ContentPresenter Grid.Column="1"
+                                              ContentSource="Header"
+                                              VerticalAlignment="Center"
+                                              Margin="5,0"/>
+
+                            <TextBlock Grid.Column="2"
+                                       Text="{TemplateBinding InputGestureText}"
+                                       VerticalAlignment="Center"
+                                       Margin="5,0"
+                                       Foreground="#88FFFFFF"
+                                       FontSize="11"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#FFF49348" Offset="0"/>
+                                        <GradientStop Color="#DDEB6337" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#20F69550"/>
+                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ContextMenuSeparatorStyle" TargetType="Separator">
         <Setter Property="Background" Value="#55594D7B"/>
         <Setter Property="Margin" Value="1,1"/>
@@ -1515,10 +1710,51 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4">
+                            CornerRadius="4" Padding="5">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                     </Border>
 
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SimpleScrollViewer" TargetType="ScrollViewer">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ScrollContentPresenter Grid.Column="0" Grid.Row="0"/>
+
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                               Grid.Column="1" Grid.Row="0"
+                               Value="{TemplateBinding VerticalOffset}"
+                               Maximum="{TemplateBinding ScrollableHeight}"
+                               ViewportSize="{TemplateBinding ViewportHeight}"
+                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                               Grid.Column="0" Grid.Row="1"
+                               Orientation="Horizontal"
+                               Value="{TemplateBinding HorizontalOffset}"
+                               Maximum="{TemplateBinding ScrollableWidth}"
+                               ViewportSize="{TemplateBinding ViewportWidth}"
+                               Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                        <!-- CORNER -->
+                        <Rectangle Grid.Row="1" Grid.Column="1" 
+                               Fill="Transparent" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

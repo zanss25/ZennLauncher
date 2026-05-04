@@ -55,7 +55,8 @@ namespace ZennLauncherApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex, "ToolsView Load Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex, "ToolsView Load Error", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             string defaultSortOption = ((App)Application.Current).CurrentProfileCfg?.General?.ToolsDefaultSortOption;
@@ -124,45 +125,46 @@ namespace ZennLauncherApp
             }
         }
 
-        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
+        private void UpdateAtLaunch(ToolModel tool)
         {
-            Button btn = sender as Button;
+            string filePath = tool.ToolTarget;
+            string args = tool.ToolLaunchOptions;
 
-            var tool = btn.DataContext as ToolModel;
+            func.LaunchFile(filePath, args);
 
-            if (tool != null)
+            string query_fl = "UPDATE tools SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
+            string query_ll = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
+
+            var args_fl = new Dictionary<string, object>
+                {
+                    { "@id", tool.ToolId }
+                };
+            var args_ll = new Dictionary<string, object>
+                {
+                    { "@id", tool.ToolId }
+                };
+
+            db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
+            db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
+
+            string query__ = "UPDATE tools SET launch_times = launch_times + 1 WHERE id = @id";
+
+            var args__ = new Dictionary<string, object>
+                {
+                    { "@id", tool.ToolId }
+                };
+
+            db.ExecuteQuery(db.ConnectionProfile, query__, args__);
+        }
+
+        private void LaunchApp(ToolModel launchedTool)
+        {
+            if (launchedTool != null)
             {
-                string filePath = tool.ToolTarget;
-                string args = tool.ToolLaunchOptions;
+                UpdateAtLaunch(launchedTool);
 
-                func.LaunchFile(filePath, args);
-
-                string query_fl = "UPDATE tools SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
-                string query_ll = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-
-                var args_fl = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-                var args_ll = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
-                db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
-
-                string query__ = "UPDATE tools SET launch_times = launch_times + 1 WHERE id = @id";
-
-                var args__ = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query__, args__);
-
-                if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                        == ProfileGeneralSettings.LaunchActions.HideLauncher 
+                if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction
+                        == ProfileGeneralSettings.LaunchActions.HideLauncher
                         && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
                     Application.Current.MainWindow.Hide();
@@ -176,13 +178,37 @@ namespace ZennLauncherApp
                         this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
                     };
                 }
-                else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                            == ProfileGeneralSettings.LaunchActions.CloseLauncher 
+                else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction
+                            == ProfileGeneralSettings.LaunchActions.CloseLauncher
                             && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
                     Application.Current.MainWindow.Close();
                 }
+                else
+                {
+
+                }
             }
+            else
+            {
+                PopupWindow popup = new PopupWindow("Tool doesn't exist",
+                                                     "No tool found at this menu",
+                                                     "Ok", false);
+            }
+        }
+
+        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            var tool = btn.DataContext as ToolModel;
+            LaunchApp(tool);
+        }
+
+        private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var game = menuItem.DataContext as ToolModel;
+            LaunchApp(game);
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
@@ -197,11 +223,7 @@ namespace ZennLauncherApp
                 LoadToolsList();
                 ApplyFilters();
             }
-            else
-            {
-                LoadToolsList();
-                ApplyFilters();
-            }
+
             Main.DisableBlurAndOverlay();
         }
 

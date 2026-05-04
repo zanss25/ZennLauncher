@@ -88,7 +88,7 @@ namespace ZennLauncherApp
         private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe; *.lnk; *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Game Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir))

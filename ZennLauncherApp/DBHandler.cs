@@ -378,10 +378,10 @@ namespace ZennLauncherApp
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var command = new SqliteCommand($@"SELECT id, title, subtitle, category_id, genre_id, 
-                                                user_rating, first_launched, last_launched, launch_times, 
-                                                target, launch_options, icon_path, cover_path FROM games 
-                                                ORDER BY [{sortBy}] {order}", connection);
+                var command = new SqliteCommand($@"SELECT g.*, c.name as category_name 
+                                                   FROM games g
+                                                   LEFT JOIN categories c ON g.category_id = c.id 
+                                                   ORDER BY [{sortBy}] {order}", connection);
 
 
                 var reader = command.ExecuteReader();
@@ -393,18 +393,19 @@ namespace ZennLauncherApp
                         games.Add(new GameModel
                         {
                             GameId = reader.GetInt32(0),
-                            GameTitle = reader.IsDBNull(1) ? "" : reader.GetString(1),
-                            GameSubtitle = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            GameCategoryId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
-                            GameGenreId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
-                            GameUserRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
-                            GameFirstLaunched = reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            GameLastLaunched = reader.IsDBNull(7) ? "" : reader.GetString(7),
-                            GameLaunchTimes = reader.IsDBNull(8) ? 0 : reader.GetInt32(8),
-                            GameTarget = reader.IsDBNull(9) ? "" : reader.GetString(9),
-                            GameLaunchOptions = reader.IsDBNull(10) ? "" : reader.GetString(10),
-                            GameIconPath = reader.IsDBNull(11) ? "" : reader.GetString(11),
-                            GameCoverPath = reader.IsDBNull(12) ? "" : reader.GetString(12)
+                            GameTitle = reader.IsDBNull(reader.GetOrdinal("title")) ? "" : reader.GetString(reader.GetOrdinal("title")),
+                            GameSubtitle = reader.IsDBNull(reader.GetOrdinal("subtitle")) ? "" : reader.GetString(reader.GetOrdinal("subtitle")),
+                            GameCategoryId = reader.IsDBNull(reader.GetOrdinal("category_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("category_id")),
+                            GameCategoryName = reader.IsDBNull(reader.GetOrdinal("category_name")) ? "" : reader.GetString(reader.GetOrdinal("category_name")),
+                            GameGenreId = reader.IsDBNull(reader.GetOrdinal("genre_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("genre_id")),
+                            GameUserRating = reader.IsDBNull(reader.GetOrdinal("user_rating")) ? 0 : reader.GetInt32(reader.GetOrdinal("user_rating")),
+                            GameFirstLaunched = reader.IsDBNull(reader.GetOrdinal("first_launched")) ? "" : reader.GetString(reader.GetOrdinal("first_launched")),
+                            GameLastLaunched = reader.IsDBNull(reader.GetOrdinal("last_launched")) ? "" : reader.GetString(reader.GetOrdinal("last_launched") ),
+                            GameLaunchTimes = reader.IsDBNull(reader.GetOrdinal("launch_times")) ? 0 : reader.GetInt32(reader.GetOrdinal("launch_times")),
+                            GameTarget = reader.IsDBNull(reader.GetOrdinal("target")) ? "" : reader.GetString(reader.GetOrdinal("target")),
+                            GameLaunchOptions = reader.IsDBNull(reader.GetOrdinal("launch_options")) ? "" : reader.GetString(reader.GetOrdinal("launch_options")),
+                            GameIconPath = reader.IsDBNull(reader.GetOrdinal("icon_path")) ? "" : reader.GetString(reader.GetOrdinal("icon_path")),
+                            GameCoverPath = reader.IsDBNull(reader.GetOrdinal("cover_path")) ? "" : reader.GetString(reader.GetOrdinal("cover_path"))
                         });
                     }
                 }
@@ -493,10 +494,10 @@ namespace ZennLauncherApp
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var command = new SqliteCommand($"SELECT id, title, desc, category_id, user_rating, first_launched, " +
-                                                $"last_launched, launch_times, target, launch_options, " +
-                                                $"icon_path, cover_path FROM tools " +
-                                                $"ORDER BY [{sortBy}] {order}", connection);
+                var command = new SqliteCommand($@"SELECT t.*, c.name as category_name 
+                                                   FROM tools t
+                                                   LEFT JOIN categories c ON t.category_id = c.id 
+                                                   ORDER BY [{sortBy}] {order}", connection);
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -506,17 +507,18 @@ namespace ZennLauncherApp
                         tools.Add(new ToolModel
                         {
                             ToolId = reader.GetInt32(0),
-                            ToolTitle = reader.IsDBNull(1) ? "" : reader.GetString(1),
-                            ToolDesc = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            ToolCategoryId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
-                            ToolUserRating = reader.IsDBNull (4) ? 0 : reader.GetInt32(4),
-                            ToolFirstLaunched = reader.IsDBNull(5) ? "" : reader.GetString(5),
-                            ToolLastLaunched = reader.IsDBNull(6) ? "" : reader.GetString(6),
-                            ToolLaunchTimes = reader.IsDBNull(7) ? 0 : reader.GetInt32(7),
-                            ToolTarget = reader.IsDBNull(8) ? "" : reader.GetString(8),
-                            ToolLaunchOptions = reader.IsDBNull(9) ? "" : reader.GetString(9),
-                            ToolIconPath = reader.IsDBNull(10) ? "" : reader.GetString(10),
-                            ToolCoverPath = reader.IsDBNull(11) ? "" : reader.GetString(11)
+                            ToolTitle = reader.IsDBNull(reader.GetOrdinal("title")) ? "" : reader.GetString(reader.GetOrdinal("title")),
+                            ToolDesc = reader.IsDBNull(reader.GetOrdinal("desc")) ? "" : reader.GetString(reader.GetOrdinal("desc")),
+                            ToolCategoryId = reader.IsDBNull(reader.GetOrdinal("category_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("category_id")),
+                            ToolCategoryName = reader.IsDBNull(reader.GetOrdinal("category_name")) ? "" : reader.GetString(reader.GetOrdinal("category_name")),
+                            ToolUserRating = reader.IsDBNull(reader.GetOrdinal("user_rating")) ? 0 : reader.GetInt32(reader.GetOrdinal("user_rating")),
+                            ToolFirstLaunched = reader.IsDBNull(reader.GetOrdinal("first_launched")) ? "" : reader.GetString(reader.GetOrdinal("first_launched")),
+                            ToolLastLaunched = reader.IsDBNull(reader.GetOrdinal("last_launched")) ? "" : reader.GetString(reader.GetOrdinal("last_launched")),
+                            ToolLaunchTimes = reader.IsDBNull(reader.GetOrdinal("launch_times")) ? 0 : reader.GetInt32(reader.GetOrdinal("launch_times")),
+                            ToolTarget = reader.IsDBNull(reader.GetOrdinal("target")) ? "" : reader.GetString(reader.GetOrdinal("target")),
+                            ToolLaunchOptions = reader.IsDBNull(reader.GetOrdinal("launch_options")) ? "" : reader.GetString(reader.GetOrdinal("launch_options")),
+                            ToolIconPath = reader.IsDBNull(reader.GetOrdinal("icon_path")) ? "" : reader.GetString(reader.GetOrdinal("icon_path")),
+                            ToolCoverPath = reader.IsDBNull(reader.GetOrdinal("cover_path")) ? "" : reader.GetString(reader.GetOrdinal("cover_path"))
                         });
                     }
                 }

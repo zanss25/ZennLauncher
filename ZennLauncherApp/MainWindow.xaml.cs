@@ -189,7 +189,7 @@ namespace ZennLauncherApp
         {
             EnableBlurAndOverlay();
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk, *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Game Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir))
@@ -239,7 +239,7 @@ namespace ZennLauncherApp
         {
             EnableBlurAndOverlay();
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk, *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Tool Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))

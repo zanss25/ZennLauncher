@@ -123,44 +123,45 @@ namespace ZennLauncherApp
             }
         }
 
-        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
+        private void UpdateAtLaunch(GameModel game)
         {
-            Button btn = sender as Button;
+            string filePath = game.GameTarget;
+            string args = game.GameLaunchOptions;
 
-            var game = btn.DataContext as GameModel;
+            func.LaunchFile(filePath, args);
 
-            if (game != null)
+            string query_fl = "UPDATE games SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
+            string query_ll = "UPDATE games SET last_launched = datetime('now', 'localtime') WHERE id = @id";
+
+            var args_fl = new Dictionary<string, object>
+                {
+                    { "@id", game.GameId }
+                };
+            var args_ll = new Dictionary<string, object>
+                {
+                    { "@id", game.GameId }
+                };
+
+            db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
+            db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
+
+            string query__ = "UPDATE games SET launch_times = launch_times + 1 WHERE id = @id";
+
+            var args__ = new Dictionary<string, object>
+                {
+                    { "@id", game.GameId }
+                };
+
+            db.ExecuteQuery(db.ConnectionProfile, query__, args__);
+        }
+
+        private void LaunchGame(GameModel launchedGame)
+        {
+            if (launchedGame != null)
             {
-                string filePath = game.GameTarget;
-                string args = game.GameLaunchOptions;
+                UpdateAtLaunch(launchedGame);
 
-                func.LaunchFile(filePath, args);
-
-                string query_fl = "UPDATE games SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
-                string query_ll = "UPDATE games SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-                
-                var args_fl = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-                var args_ll = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
-                db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
-
-                string query__ = "UPDATE games SET launch_times = launch_times + 1 WHERE id = @id";
-
-                var args__ = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query__, args__);
-
-                if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction 
+                if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
                         == ProfileGeneralSettings.LaunchActions.HideLauncher
                         && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
@@ -175,8 +176,8 @@ namespace ZennLauncherApp
                         this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
                     };
                 }
-                else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction 
-                            == ProfileGeneralSettings.LaunchActions.CloseLauncher 
+                else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
+                            == ProfileGeneralSettings.LaunchActions.CloseLauncher
                             && !Keyboard.IsKeyDown(Key.LeftShift))
                 {
                     Application.Current.MainWindow.Close();
@@ -186,6 +187,26 @@ namespace ZennLauncherApp
 
                 }
             }
+            else
+            {
+                PopupWindow popup = new PopupWindow("Game doesn't exist",
+                                                     "No game found at this menu",
+                                                     "Ok", false);
+            }
+        }
+
+        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            var game = btn.DataContext as GameModel;
+            LaunchGame(game);
+        }
+
+        private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var game = menuItem.DataContext as GameModel;
+            LaunchGame(game);
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
@@ -198,6 +219,7 @@ namespace ZennLauncherApp
             GamePropertiesWindow edit = new GamePropertiesWindow(selectedGame);
             if (edit.ShowDialog() == true)
             {
+                LoadGamesList();
                 ApplyFilters();
             }
 
@@ -208,10 +230,8 @@ namespace ZennLauncherApp
         {
             MenuItem menuItem = sender as MenuItem;
             if (menuItem == null) return;
-
             ContextMenu parentMenu = menuItem.Parent as ContextMenu;
             if (parentMenu == null) return;
-
             Button btnGame = parentMenu.PlacementTarget as Button;
             if (btnGame == null) return;
 
@@ -261,6 +281,7 @@ namespace ZennLauncherApp
                     db.DeleteGame(selectedGame.GameId);
                     Main.DisableBlurAndOverlay();
 
+                    LoadGamesList();
                     ApplyFilters();
                 }
             }

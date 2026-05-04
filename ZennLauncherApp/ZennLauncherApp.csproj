@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="GlobalConfigModel.cs" />
     <Compile Include="GlobalFunctions.cs" />
+    <Compile Include="IAppItem.cs" />
     <Compile Include="InputBoxPopup.xaml.cs">
       <DependentUpon>InputBoxPopup.xaml</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,8 +35,15 @@ namespace ZennLauncherApp
         {
             InitializeComponent();
 
+            allGamesList = db.GetAllGames();
+            allToolsList = db.GetAllTools();
+
             LoadCategoriesList(1);
             LoadCategoriesList(2);
+
+            GamesCategoriesList.SelectedIndex = 0;
+            CheckAndPreventAddNewToCategories();
+
         }
 
         public void LoadCategoriesList(int sectionId)
@@ -82,7 +90,20 @@ namespace ZennLauncherApp
             }
         }
 
-        private void SearchBar_Changed(object sender, TextChangedEventArgs e)
+        private void CheckAndPreventAddNewToCategories()
+        {
+            if (GamesCategoriesList.SelectedIndex == 0 ||
+                ToolsCategoriesList.SelectedIndex == 0)
+            {
+                BtnAddNewToCategory.IsEnabled = false;
+            }
+            else
+            {
+                BtnAddNewToCategory.IsEnabled = true;
+            }
+        }
+
+        private void SearchBarCategories_Changed(object sender, TextChangedEventArgs e)
         {
             
         }
@@ -92,8 +113,12 @@ namespace ZennLauncherApp
             if (GamesCategoriesList.SelectedItem != null)
             {
                 ToolsCategoriesList.SelectedIndex = -1;
-                ApplyFilters(2);
+
+                AppsDataGrid.ItemsSource = null;
+                ApplyFilters(1);
             }
+
+            CheckAndPreventAddNewToCategories();
         }
 
         private void ToolsCategoriesList_Changed(object sender, SelectionChangedEventArgs e)
@@ -101,80 +126,137 @@ namespace ZennLauncherApp
             if (ToolsCategoriesList.SelectedItem != null)
             {
                 GamesCategoriesList.SelectedIndex = -1;
-                ApplyFilters(1);
+
+                AppsDataGrid.ItemsSource = null;
+                ApplyFilters(2);
             }
+
+            CheckAndPreventAddNewToCategories();
+        }
+
+        private void SearchBarApps_Changed(object sender, TextChangedEventArgs e)
+        {
+            int activeSection = (GamesCategoriesList.SelectedIndex > -1) ? 1 : 2;
+            ApplyFilters(activeSection);
+        }
+
+        public void Combo_Changed(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         public void ApplyFilters(int sectionId)
         {
-            // --- 1. AMBIL INPUT ---
-            var selectedCategory = GamesCategoriesList.SelectedItem as CategoryModel;
-            string searchQuery = SearchBar.Text.ToLower().Trim();
+            CategoryModel selectedCategory = (sectionId == 1)
+                ? GamesCategoriesList.SelectedItem as CategoryModel
+                : ToolsCategoriesList.SelectedItem as CategoryModel;
 
-            if (sectionId == 1)
+            string searchQuery = SearchBarApps.Text.ToLower().Trim();
+
+            // 1. Pilih sumber data
+            IEnumerable<IAppItem> source = (sectionId == 1)
+                ? allGamesList?.Cast<IAppItem>()
+                : allToolsList?.Cast<IAppItem>();
+
+            if (source == null) return;
+
+            // 2. Filtering & Sorting (Cukup tulis sekali!)
+            var filteredData = source.Where(item =>
             {
-                if (allGamesList == null) return;
+                // Langsung panggil item.CategoryId tanpa bantuan fungsi lain
+                bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
+                                     || item.AppCategoryId == selectedCategory.CategoryId;
 
-                // --- 2. FILTERING (Kategori & Search) ---
-                var query = allGamesList.Where(game =>
+                bool matchSearch = string.IsNullOrEmpty(searchQuery)
+                                   || item.AppTitle.ToLower().Contains(searchQuery);
+
+                return matchCategory && matchSearch;
+            }).OrderBy(item => item.AppTitle).ToList();
+
+            // 3. Update UI
+            AppsDataGrid.ItemsSource = filteredData;
+            NoAppsAvailable.Visibility = filteredData.Any() ? Visibility.Hidden : Visibility.Visible;
+        }
+
+        private void BtnAddNewCategoryGames_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewCategory(1);
+            LoadCategoriesList(1);
+        }
+
+        private void BtnAddNewCategoryTools_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewCategory(2);
+            LoadCategoriesList(2);
+        }
+
+        private void AddNewCategory(int currentSectionId)
+        {
+            InputBoxPopup inputA = new InputBoxPopup("Enter Category Name", 
+                                                    "Enter your new category name", 
+                                                    "Confirm");
+
+            string newName;
+            string newDesc;
+
+            if (inputA.ShowDialog() == true)
+            {
+                newName = inputA.ResultText.Trim();
+            }
+            else
+            {
+                return;
+            }
+
+            InputBoxPopup inputB = new InputBoxPopup("Enter Category Description",
+                                                    "Enter your new category description",
+                                                    "Confirm");
+
+            if (inputB.ShowDialog() == true)
+            {
+                newDesc = inputB.ResultText.Trim();
+            }
+            else
+            {
+                return;
+            }
+
+            if (!String.IsNullOrEmpty(newName) || !String.IsNullOrEmpty(newDesc))
+            {
+                string query_sc = @"INSERT INTO categories (name, desc, section_id) 
+                                    VALUES (@new_name, @new_desc, @section_id)";
+
+                var args_sc = new Dictionary<string, object>()
                 {
-                    bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
-                                         || game.GameCategoryId == selectedCategory.CategoryId;
+                    { "@new_name", newName },
+                    { "@new_desc", newDesc },
+                    { "@section_id", currentSectionId }
+                };
 
-                    bool matchSearch = string.IsNullOrEmpty(searchQuery)
-                                       || game.GameTitle.ToLower().Contains(searchQuery);
-
-                    return matchCategory && matchSearch;
-                });
-
-                // --- 3. SORTING (LINQ) ---
-                IOrderedEnumerable<GameModel> sortedData;
-                sortedData = query.OrderBy(g => g.GameTitle);
-
-                // --- 4. UPDATE UI ---
-                ContainerBtnApps.ItemsSource = sortedData.ToList();
-
-                if (!sortedData.Any())
+                try
                 {
-                    NoAppsAvailable.Visibility = Visibility.Visible;
+                    db.ExecuteQuery(db.ConnectionProfile, query_sc, args_sc);
                 }
-                else
+                catch (Exception ex)
                 {
-                    NoAppsAvailable.Visibility = Visibility.Hidden;
+                    MessageBox.Show("Error: " + ex.Message, "Error Saving Category",
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else if (sectionId == 2)
+            else
             {
-                if (allToolsList == null) return;
-
-                // --- 2. FILTERING (Kategori & Search) ---
-                var query = allToolsList.Where(game =>
-                {
-                    bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
-                                         || game.ToolCategoryId == selectedCategory.CategoryId;
-
-                    bool matchSearch = string.IsNullOrEmpty(searchQuery)
-                                       || game.ToolTitle.ToLower().Contains(searchQuery);
-
-                    return matchCategory && matchSearch;
-                });
-
-                // --- 3. SORTING (LINQ) ---
-                IOrderedEnumerable<ToolModel> sortedData;
-                sortedData = query.OrderBy(t => t.ToolTitle);
-
-                // --- 4. UPDATE UI ---
-                ContainerBtnApps.ItemsSource = sortedData.ToList();
-
-                if (!sortedData.Any())
-                {
-                    NoAppsAvailable.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    NoAppsAvailable.Visibility = Visibility.Hidden;
-                }
+                Debug.WriteLine("EMPTY: The newName and newDesc are empty.");
+                return;
             }
+        }
+
+        private void BtnAddNewToCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnRemoveFromCategory_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
