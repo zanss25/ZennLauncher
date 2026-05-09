@@ -97,7 +97,7 @@ namespace ZennLauncherApp
         public void LoadCategoriesList()
         {
             int _categoriesCount = 0;
-            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE id = 2");
+            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE section_id = 2");
 
             CategoryModel allCategory = new CategoryModel
             {
@@ -106,62 +106,31 @@ namespace ZennLauncherApp
                 CategoryDesc = "Display all tools from your library"
             };
 
+            allCategoriesList = new List<CategoryModel>();
+
             if (_categoriesCount > 0)
             {
-                allCategoriesList = db.GetAllCategories(2);
-
-                allCategoriesList.Insert(0, allCategory);
-
-                ComboCategories.ItemsSource = allCategoriesList;
-                ComboCategories.DisplayMemberPath = "CategoryName";
-
+                var dbResult = db.GetAllCategories(2);
+                if (dbResult != null)
+                {
+                    allCategoriesList = dbResult;
+                }
             }
-            else
-            {
-                allCategoriesList.Insert(0, allCategory);
 
-                ComboCategories.ItemsSource = allCategoriesList;
-                ComboCategories.DisplayMemberPath = "CategoryName";
-            }
+            allCategoriesList.Insert(0, allCategory);
+
+            ComboCategories.ItemsSource = null; // Reset binding
+            ComboCategories.ItemsSource = allCategoriesList;
+            ComboCategories.DisplayMemberPath = "CategoryName";
+            ComboCategories.SelectedIndex = 0;
         }
 
-        private void UpdateAtLaunch(ToolModel tool)
+        private void LaunchApp(IAppItem launchedApp)
         {
-            string filePath = tool.ToolTarget;
-            string args = tool.ToolLaunchOptions;
-
-            func.LaunchFile(filePath, args);
-
-            string query_fl = "UPDATE tools SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
-            string query_ll = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-
-            var args_fl = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-            var args_ll = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-
-            db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
-            db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
-
-            string query__ = "UPDATE tools SET launch_times = launch_times + 1 WHERE id = @id";
-
-            var args__ = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-
-            db.ExecuteQuery(db.ConnectionProfile, query__, args__);
-        }
-
-        private void LaunchApp(ToolModel launchedTool)
-        {
-            if (launchedTool != null)
+            if (launchedApp != null)
             {
-                UpdateAtLaunch(launchedTool);
+                func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
+                db.UpdateAppAtLaunch(launchedApp, 1);
 
                 if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction
                         == ProfileGeneralSettings.LaunchActions.HideLauncher
@@ -207,8 +176,8 @@ namespace ZennLauncherApp
         private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
-            var game = menuItem.DataContext as ToolModel;
-            LaunchApp(game);
+            var tool = menuItem.DataContext as ToolModel;
+            LaunchApp(tool);
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
@@ -272,15 +241,15 @@ namespace ZennLauncherApp
             Main.EnableBlurAndOverlay();
             if (selectedTool != null)
             {
-                PopupWindow popup = new PopupWindow("Confirm Delete",
-                                                     $"Are you sure you want to remove \"{selectedTool.ToolTitle}\"?",
-                                                     "Delete Tool", true);
+                PopupWindow popup = new PopupWindow("Remove Tool",
+                                                     $"Are you sure you want to remove \"{selectedTool.ToolTitle}\" from your library?",
+                                                     "Remove", true);
 
                 popup.ShowDialog();
                 if (popup.DialogResult == true)
                 {
                     DBHandler db = DBHandler.Instance;
-                    db.DeleteTool(selectedTool.ToolId);
+                    db.DeleteApp(selectedTool.ToolId, selectedTool.TargetTable);
                     
                     LoadToolsList();
                     ApplyFilters();

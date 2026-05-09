@@ -83,7 +83,7 @@
                         </LinearGradientBrush>
                     </Border.BorderBrush>
 
-                <ScrollViewer x:Name="ContentViewer" Style="{StaticResource SimpleScrollViewer}"
+                <ScrollViewer x:Name="ContentViewer" Style="{StaticResource SimpleScrollViewer}" 
                               HorizontalScrollBarVisibility="Auto" 
                               VerticalScrollBarVisibility="Auto">
 
@@ -98,11 +98,40 @@
                               GridLinesVisibility="None"
                               CanUserAddRows="False"
                               SelectionUnit="FullRow"
+                              SelectionChanged="AppsDataGrid_Changed"
                               HeadersVisibility="Column"
                               IsReadOnly="True"
                               ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                               CellStyle="{StaticResource DataGridCellStyle}"
-                              RowStyle="{StaticResource DataGridRowStyle}">
+                              RowStyle="{StaticResource DataGridRowStyle}"
+                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick"
+                              PreviewMouseWheel="AppsDataGrid_PreviewMouseWheel">
+
+                        <DataGrid.ContextMenu>
+                            <ContextMenu Style="{StaticResource ContextMenuStyle}">
+
+                                <MenuItem x:Name="MenuItemLaunch"
+                                          Header="LAUNCH" 
+                                          Click="MenuItemLaunch_Click"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Primary}"
+                                          TextBlock.FontWeight="DemiBold"/>
+
+                                <MenuItem x:Name="MenuItemOpenDir"
+                                          Header="Open File Location" 
+                                          Click="MenuOpenDir_Click"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+
+                                <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
+
+                                <MenuItem x:Name="MenuItemDelete"
+                                          Header="Delete App" 
+                                          Click="MenuItemDelete_Click" 
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
 
                         <DataGrid.Columns>
 
@@ -154,7 +183,7 @@
                                           Style="{StaticResource TextBoxStyle}"/>
 
                                 <TextBlock IsHitTestVisible="False" 
-                                           Text="🔍  Search programs" 
+                                           Text="🔍  Search games/tools" 
                                            VerticalAlignment="Center" 
                                            HorizontalAlignment="Left" 
                                            Margin="20,0,0,0" 
@@ -177,24 +206,57 @@
 
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
-                        <Button x:Name="BtnRemoveFromCategory" Content="Remove"
-                                Style="{StaticResource MenuButtonStyle_Common}"
-                                Background="Transparent"
+                        <Button x:Name="BtnRemoveFromCategory" Content="🗑️  Remove category"
+                                Style="{StaticResource MenuButtonStyle_Popup}"
                                 Click="BtnRemoveFromCategory_Click"
                                 Margin="0,0,0,0"
-                                VerticalAlignment="Center"/>
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                IsEnabled="False"/>
 
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
-                            <Button x:Name="BtnAddNewToCategory" Content="✚  Add to Category"
-                                    Style="{StaticResource MenuButtonStyle_PrimaryA}"
-                                    Click="BtnAddNewToCategory_Click"
-                                    Margin="10,0,12,0"
-                                    VerticalAlignment="Center"/>
+                        <ToggleButton x:Name="BtnAddNewToCategory" Content="✚  Add to Category"
+                                      Style="{StaticResource ToggleButtonStyle_PrimaryA}"
+                                      Click="BtnAddNewToCategory_Checked"
+                                      Margin="10,0,12,0"
+                                      VerticalAlignment="Center"
+                                      IsEnabled="False"/>
 
-                        </StackPanel>
+                        <Popup x:Name="PopupCategories" 
+                               IsOpen="{Binding IsChecked, ElementName=BtnAddNewToCategory}" 
+                               PlacementTarget="{Binding ElementName=BtnAddNewToCategory}"
+                               Placement="Top"
+                               StaysOpen="False"
+                               AllowsTransparency="True"
+                               PopupAnimation="Fade"
+                               HorizontalOffset="0"
+                               VerticalOffset="-5">
+
+                            <Border Background="#F02B2245" CornerRadius="4" BorderThickness="1" BorderBrush="#FF594D7B">
+                                <StackPanel Margin="5">
+                                    <!-- Header Dinamis -->
+                                    <TextBlock x:Name="TextPopupHeader" Text="Add to Category" 
+                                               Foreground="Gray" FontSize="10" Margin="10,5"/>
+
+                                    <!-- Daftar Kategori -->
+                                    <ItemsControl x:Name="ListPopupCategories">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Content="{Binding CategoryName}"
+                                                        Click="BtnCategoryItem_Click"
+                                                        Tag="{Binding CategoryId}"
+                                                        Style="{StaticResource MenuButtonStyle_Popup}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+
+                    </StackPanel>
 
                     </DockPanel>
                 </Border>
@@ -202,7 +264,7 @@
         </Grid>
 
         <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
-                MinWidth="200" Margin="17,15" CornerRadius="6" 
+                MinWidth="200" MaxWidth="200" Margin="17,15" CornerRadius="6" 
                 Background="#CF372D51" BorderBrush="#CC574D71" BorderThickness="0.5">
 
             <Grid>
@@ -258,7 +320,7 @@
                                         Content="✚"
                                         Style="{StaticResource MenuButtonStyle_ProfileMenu}"
                                         Background="Transparent"
-                                        Foreground="#99F5F5F5"
+                                        Foreground="#AAF5F5F5"
                                         Click="BtnAddNewCategoryGames_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
@@ -273,7 +335,69 @@
 
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemBorder" 
+                                                            Background="{TemplateBinding Background}" 
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5">
+                                                        
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
 
+                                                            <TextBlock Grid.Column="0" 
+                                                                       Text="{Binding CategoryName}" 
+                                                                       VerticalAlignment="Center"/>
+
+                                                            <Button x:Name="BtnDeleteCategoryGames"
+                                                                    Grid.Column="1" 
+                                                                    Content="&#xf2ed;"
+                                                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid"
+                                                                    FontSize="12" Width="20"
+                                                                    Tag="{Binding}"
+                                                                    Click="BtnRemoveCategory_Click"
+                                                                    VerticalAlignment="Center">
+                                                                
+                                                                <Button.Style>
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_ProfileMenu}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            
+                                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" 
+                                                                                         Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding CategoryId}" Value="0">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                            
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Button.Style>
+                                                                
+                                                            </Button>
+                                                        </Grid>
+                                                        
+                                                    </Border>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                    
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Style>
                                 </ListBox.ItemContainerStyle>
 
@@ -295,7 +419,7 @@
                                         Content="✚"
                                         Style="{StaticResource MenuButtonStyle_ProfileMenu}"
                                         Background="Transparent"
-                                        Foreground="#99F5F5F5"
+                                        Foreground="#AAF5F5F5"
                                         Click="BtnAddNewCategoryTools_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
@@ -310,6 +434,68 @@
 
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemBorder" 
+                                                            Background="{TemplateBinding Background}" 
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5">
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" 
+                                                                       Text="{Binding CategoryName}" 
+                                                                       VerticalAlignment="Center"/>
+
+                                                            <Button x:Name="BtnDeleteCategoryTools"
+                                                                    Grid.Column="1" 
+                                                                    Content="🗑️" 
+                                                                    FontSize="10" Width="20"
+                                                                    Tag="{Binding}"
+                                                                    Click="BtnRemoveCategory_Click"
+                                                                    VerticalAlignment="Center">
+
+                                                                <Button.Style>
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_ProfileMenu}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+
+                                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" 
+                                                                                         Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding CategoryId}" Value="0">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                            
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Button.Style>
+
+                                                            </Button>
+                                                        </Grid>
+
+                                                    </Border>
+                                                    
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                    
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Style>
                                 </ListBox.ItemContainerStyle>
 
@@ -328,7 +514,7 @@
             </Grid>
         </Border>
 
-        <Border x:Name="NoAppsAvailable" Visibility="Visible"
+        <Border x:Name="NoAppsAvailable" Visibility="Hidden"
                 Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
                 Height="50" Width="Auto" MaxWidth="600" Margin="0,100"
                 CornerRadius="5" BorderThickness="1">

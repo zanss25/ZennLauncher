@@ -11,6 +11,7 @@ namespace ZennLauncherApp
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string CategoryDesc { get; set; }
-        public string CategorySection { get; set; }
+        public int CategorySectionId { get; set; }
+        public string CategorySectionName { get; set; }
     }
 }

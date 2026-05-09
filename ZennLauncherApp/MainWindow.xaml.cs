@@ -33,6 +33,8 @@ namespace ZennLauncherApp
         private readonly DBHandler db = DBHandler.Instance;
         private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
+        private bool isSidebarCollapsed = true;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,8 +42,13 @@ namespace ZennLauncherApp
 
             LoadProfileData();
             SidebarNavList.ItemsSource = func.SidebarTabs;
+            if (isSidebarCollapsed)
+            {
+                SidebarPanel.Width = 63;
+                SidebarPanel.Tag = "Collapsed";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Center;
+            }
             LoadDefaultStartingTab();
-
         }
 
         public void LoadProfileData()
@@ -325,6 +332,7 @@ namespace ZennLauncherApp
                 {
                     StackPanelToolsBtns.Visibility = Visibility.Visible;
                 }
+
             }
         }
 
@@ -371,5 +379,22 @@ namespace ZennLauncherApp
             }
         }
 
+        private void BtnSidebarCollapse_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isSidebarCollapsed)
+            {
+                SidebarPanel.Width = 63;
+                SidebarPanel.Tag = "Collapsed";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Center;
+                isSidebarCollapsed = true;
+            }
+            else
+            {
+                SidebarPanel.Width = 230;
+                SidebarPanel.Tag = "Expanded";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Left;
+                isSidebarCollapsed = false;
+            }
+        }
     }
 }

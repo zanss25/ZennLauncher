@@ -263,8 +263,8 @@ namespace ZennLauncherApp
 
             if (currentProfile.ProfileId >= 0)
             {
-                PopupWindow confirm = new PopupWindow("Confirm Profile Delete",
-                                                    $"Are you sure you want to remove this profile? Removed profiles cannot be restored",
+                PopupWindow confirm = new PopupWindow("Delete Profile",
+                                                    $"Are you sure you want to remove this profile ({currentProfile.ProfileName})? Removed profiles cannot be restored",
                                                     "Delete Profile", true);
 
                 confirm.ShowDialog();

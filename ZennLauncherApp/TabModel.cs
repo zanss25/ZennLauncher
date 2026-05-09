@@ -9,6 +9,7 @@ namespace ZennLauncherApp
     public class TabModel
     {
         public string ItemTag { get; set; } = String.Empty;
+        public string DisplayIcon { get; set; } = "&#xf45c;";
         public string DisplayName { get; set; } = String.Empty;
         public Type TargetView { get; set; }
     }

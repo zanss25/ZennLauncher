@@ -327,8 +327,8 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    PopupWindow popup = new PopupWindow("Confirm Edit",
-                                                        $"Confirm editing \"{InputToolTitle.Text}\"?",
+                    PopupWindow popup = new PopupWindow("Edit Tool Properties",
+                                                        $"Confirm your edits to \"{InputToolTitle.Text}\"?",
                                                         "Confirm", true);
 
                     popup.ShowDialog();

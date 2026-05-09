@@ -109,7 +109,6 @@
 												<Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
 												<MenuItem Header="Delete Tool"
-                                                          Foreground="#FFFF3F3F"
                                                           Click="MenuItemDelete_Click"
                                                           Tag="{Binding}"
                                                           Style="{StaticResource ContextMenuItemStyle_Common}"/>

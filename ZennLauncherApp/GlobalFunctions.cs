@@ -101,6 +101,7 @@ namespace ZennLauncherApp
             new TabModel
             {
                 ItemTag = "games",
+                DisplayIcon = "\uf11b;",
                 DisplayName = "Games",
                 TargetView = typeof(GamesView)
             },
@@ -108,6 +109,7 @@ namespace ZennLauncherApp
             new TabModel
             {
                 ItemTag = "tools",
+                DisplayIcon = "\uf552;", //f7d9
                 DisplayName = "Tools",
                 TargetView = typeof(ToolsView)
             },
@@ -115,13 +117,15 @@ namespace ZennLauncherApp
             new TabModel
             {
                 ItemTag = "categories",
-                DisplayName = "Categories",
+                DisplayIcon = "\uf5fd;", 
+                DisplayName = "Library",
                 TargetView = typeof(CategoriesView)
             },
 
             new TabModel
             {
                 ItemTag = "boards",
+                DisplayIcon = "\uf51b;",
                 DisplayName = "Boards",
                 TargetView = typeof(BoardsView)
             }

@@ -95,7 +95,7 @@ namespace ZennLauncherApp
         public void LoadCategoriesList()
         {
             int _categoriesCount = 0;
-            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE id = 1");
+            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE section_id = 1");
 
             CategoryModel allCategory = new CategoryModel
             {
@@ -104,62 +104,31 @@ namespace ZennLauncherApp
                 CategoryDesc = "Display all games from your library"
             };
 
+            allCategoriesList = new List<CategoryModel>();
+
             if (_categoriesCount > 0)
             {
-                allCategoriesList = db.GetAllCategories(1);
-
-                allCategoriesList.Insert(0, allCategory);
-
-                ComboCategories.ItemsSource = allCategoriesList;
-                ComboCategories.DisplayMemberPath = "CategoryName";
-
+                var dbResult = db.GetAllCategories(1);
+                if (dbResult != null)
+                {
+                    allCategoriesList = dbResult;
+                }
             }
-            else
-            {
-                allCategoriesList.Insert(0, allCategory);
 
-                ComboCategories.ItemsSource = allCategoriesList;
-                ComboCategories.DisplayMemberPath = "CategoryName";
-            }
+            allCategoriesList.Insert(0, allCategory);
+
+            ComboCategories.ItemsSource = null; // Reset binding
+            ComboCategories.ItemsSource = allCategoriesList;
+            ComboCategories.DisplayMemberPath = "CategoryName";
+            ComboCategories.SelectedIndex = 0;
         }
 
-        private void UpdateAtLaunch(GameModel game)
+        private void LaunchGame(IAppItem launchedApp)
         {
-            string filePath = game.GameTarget;
-            string args = game.GameLaunchOptions;
-
-            func.LaunchFile(filePath, args);
-
-            string query_fl = "UPDATE games SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
-            string query_ll = "UPDATE games SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-
-            var args_fl = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-            var args_ll = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-
-            db.ExecuteQuery(db.ConnectionProfile, query_fl, args_fl);
-            db.ExecuteQuery(db.ConnectionProfile, query_ll, args_ll);
-
-            string query__ = "UPDATE games SET launch_times = launch_times + 1 WHERE id = @id";
-
-            var args__ = new Dictionary<string, object>
-                {
-                    { "@id", game.GameId }
-                };
-
-            db.ExecuteQuery(db.ConnectionProfile, query__, args__);
-        }
-
-        private void LaunchGame(GameModel launchedGame)
-        {
-            if (launchedGame != null)
+            if (launchedApp != null)
             {
-                UpdateAtLaunch(launchedGame);
+                func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
+                db.UpdateAppAtLaunch(launchedApp, 1);
 
                 if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
                         == ProfileGeneralSettings.LaunchActions.HideLauncher
@@ -270,15 +239,15 @@ namespace ZennLauncherApp
             Main.EnableBlurAndOverlay();
             if (selectedGame != null)
             {
-                PopupWindow popup = new PopupWindow("Confirm Delete", 
-                                                     $"Are you sure you want to remove \"{selectedGame.GameTitle}\"?",
-                                                     "Delete Game", true);
+                PopupWindow popup = new PopupWindow("Remove Game", 
+                                                     $"Are you sure you want to remove \"{selectedGame.GameTitle}\" from your library?",
+                                                     "Remove", true);
 
                 popup.ShowDialog();
                 if (popup.DialogResult == true)
                 {
                     DBHandler db = DBHandler.Instance;
-                    db.DeleteGame(selectedGame.GameId);
+                    db.DeleteApp(selectedGame.GameId, selectedGame.TargetTable);
                     Main.DisableBlurAndOverlay();
 
                     LoadGamesList();

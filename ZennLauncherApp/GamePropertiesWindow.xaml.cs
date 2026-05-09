@@ -323,8 +323,8 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    PopupWindow popup = new PopupWindow("Confirm Edit",
-                                                        $"Confirm editing \"{InputGameTitle.Text}\"?",
+                    PopupWindow popup = new PopupWindow("Edit Game Properties",
+                                                        $"Confirm your edits to \"{InputGameTitle.Text}\"?",
                                                         "Confirm", true);
 
                     popup.ShowDialog();

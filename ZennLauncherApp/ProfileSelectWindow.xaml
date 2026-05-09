@@ -119,8 +119,8 @@
                          SelectionChanged="SidebarProfilesList_SelectionChanged"
                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Style="{StaticResource ListBoxStyle}"
-                         ItemContainerStyle="{StaticResource ListBoxItemStyle}"
-                         FontFamily="Segoe UI" FontSize="14" FontWeight="Regular" Margin="0,15"
+                         ItemContainerStyle="{StaticResource ListBoxItemStyle_Common}"
+                         Margin="0,15"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
 

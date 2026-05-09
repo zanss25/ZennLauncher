@@ -108,7 +108,7 @@
                          FontFamily="Segoe UI" FontSize="13" 
                          Margin="0,15" FontWeight="Regular">
                     <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleB}">
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle_Common}">
                             <Setter Property="Height" Value="35"/>
                             <Setter Property="Padding" Value="10,0"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>

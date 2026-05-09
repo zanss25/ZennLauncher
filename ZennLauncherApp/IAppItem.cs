@@ -15,6 +15,7 @@ namespace ZennLauncherApp
         string AppCategoryName { get; }
         string AppLastLaunched { get; }
         string AppTarget {  get; }
-
+        string AppLaunchOptions { get; }
+        string TargetTable { get; }
     }
 }

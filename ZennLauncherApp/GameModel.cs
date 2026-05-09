@@ -32,6 +32,8 @@ namespace ZennLauncherApp
         public string AppCategoryName => GameCategoryName;
         public string AppLastLaunched => GameLastLaunched;
         public string AppTarget => GameTarget;
+        public string AppLaunchOptions => GameLaunchOptions;
+        public string TargetTable => "games";
     }
 
 }

@@ -30,5 +30,7 @@ namespace ZennLauncherApp
         public string AppCategoryName => ToolCategoryName;
         public string AppLastLaunched => ToolLastLaunched;
         public string AppTarget => ToolTarget;
+        public string AppLaunchOptions => ToolLaunchOptions;
+        public string TargetTable => "tools";
     }
 }

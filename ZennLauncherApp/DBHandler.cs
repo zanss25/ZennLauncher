@@ -188,6 +188,12 @@ namespace ZennLauncherApp
                 command.CommandText = "PRAGMA foreign_keys = ON;";
                 command.ExecuteNonQuery();
 
+                var createTableMetadata = @"CREATE TABLE IF NOT EXISTS db_metadata (
+                                            key TEXT PRIMARY KEY,
+                                            value TEXT);";
+
+                ExecuteNonQuery(connection, createTableMetadata);
+
                 var createTableSqlSections = @"CREATE TABLE IF NOT EXISTS sections (
                                                  id INTEGER PRIMARY KEY AUTOINCREMENT,
                                                  name TEXT UNIQUE);";
@@ -200,20 +206,6 @@ namespace ZennLauncherApp
                                                  name TEXT UNIQUE,
                                                  desc TEXT,
                                                  section_id INT REFERENCES sections(id));";
-
-                var insertCategoriesDefaults = @"INSERT OR IGNORE INTO categories (name, desc, section_id)
-                                                 VALUES ('Action', 'Fast-paced reflex-based games', '1'),
-                                                        ('Adventure', 'Story-driven exploration games', '1'),
-                                                        ('RPG', 'Games with deep character progression and narrative choices', '1'),
-                                                        ('Sandbox', 'Limitless creativity and free-form gameplay', '1'),
-                                                        ('Simulation', 'Realistic mimicry of real-world activities', '1'),
-                                                        ('Strategy', 'Games involving actical planning and resource management', '1'),
-                                                        ('Platformer', 'Jumping and navigating through levels.', '1'),
-                                                        ('Horror', 'Suspenseful gameplay designed to evoke fear', '1'),
-                                                        ('Puzzle', 'Logical challenges and brain-teasing tasks', '1'),
-                                                        ('Emulators', 'Run games from console platforms.', '2'),
-                                                        ('Game Configuration', 'Game configuration apps', '2'),
-                                                        ('Modding Tools', 'Tools to create, install, and manage game modifications', '2');";
 
                 var createTableSqlGenre = @"CREATE TABLE IF NOT EXISTS genres (
                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -254,12 +246,50 @@ namespace ZennLauncherApp
                 ExecuteNonQuery(connection, createTableSqlSections);
                 ExecuteNonQuery(connection, insertSectionsDefaults);
                 ExecuteNonQuery(connection, createTableSqlCategories);
-                ExecuteNonQuery(connection, insertCategoriesDefaults);
                 ExecuteNonQuery(connection, createTableSqlGenre);
                 ExecuteNonQuery(connection, createTableSqlGames);
                 ExecuteNonQuery(connection, createTableSqlTools);
+
             }
+
             Debug.WriteLine("Current active profile data: " + profileData.ProfileId);
+        }
+
+
+
+        public void InsertDbDefaults(string targetTable)
+        {
+            using (var connection = new SqliteConnection(ConnectionProfile))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "PRAGMA foreign_keys = ON;";
+                command.ExecuteNonQuery();
+
+                if (targetTable == "categories")
+                {
+                    var defaults = @"INSERT OR IGNORE INTO categories (name, desc, section_id)
+                                     VALUES ('Action', 'Fast-paced reflex-based games', '1'),
+                                            ('Adventure', 'Story-driven exploration games', '1'),
+                                            ('RPG', 'Games with deep character progression and narrative choices', '1'),
+                                            ('Sandbox', 'Limitless creativity and free-form gameplay', '1'),
+                                            ('Simulation', 'Realistic mimicry of real-world activities', '1'),
+                                            ('Strategy', 'Games involving actical planning and resource management', '1'),
+                                            ('Platformer', 'Jumping and navigating through levels.', '1'),
+                                            ('Horror', 'Suspenseful gameplay designed to evoke fear', '1'),
+                                            ('Puzzle', 'Logical challenges and brain-teasing tasks', '1'),
+                                            ('Emulators', 'Run games from console platforms.', '2'),
+                                            ('Game Configuration', 'Game configuration apps', '2'),
+                                            ('Modding Tools', 'Tools to create, install, and manage game modifications', '2');";
+
+                    ExecuteNonQuery(connection, defaults);
+
+                    ExecuteNonQuery(connection, @"INSERT OR IGNORE INTO db_metadata (key, value) 
+                                                  VALUES ('defaults_categories_installed', 'true')");
+                }
+            }
+
         }
 
         public void CloseAllConnections()
@@ -418,11 +448,11 @@ namespace ZennLauncherApp
             ProfileDBInitialize();
             GetCurrentProfileData();
 
-            string query_cc = "SELECT COUNT(*) FROM categories WHERE id = @id;";
+            string query_cc = "SELECT COUNT(*) FROM categories WHERE section_id = @section_id;";
 
             var args_cc = new Dictionary<string, object>()
             {
-                { "@id", sectionId }
+                { "@section_id", sectionId }
             };
 
             int result = ExecuteScalar<int>(ConnectionProfile, query_cc, args_cc);
@@ -444,7 +474,10 @@ namespace ZennLauncherApp
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var command = new SqliteCommand($@"SELECT id, name, desc, section_id FROM categories WHERE section_id = @section_id", connection);
+                var command = new SqliteCommand($@"SELECT c.id, c.name, c.desc, c.section_id, s.name AS section_name
+                                                   FROM categories c
+                                                   INNER JOIN sections s ON c.section_id = s.id
+                                                   WHERE c.section_id = @section_id", connection);
 
                 var args = new Dictionary<string, object>()
                 {
@@ -470,7 +503,8 @@ namespace ZennLauncherApp
                             CategoryId = reader.GetInt32(0),
                             CategoryName = reader.IsDBNull(1) ? "" : reader.GetString(1),
                             CategoryDesc = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            CategorySection = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                            CategorySectionId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                            CategorySectionName = reader.IsDBNull(4) ? "" : reader.GetString(4)
                         });
                     }
                 }
@@ -587,28 +621,16 @@ namespace ZennLauncherApp
             }
         }
 
-        public void DeleteGame(int id)
+        public void DeleteApp(int id, string tableName)
         {
             using (var connection = new SqliteConnection(ConnectionProfile))
             {
                 connection.Open();
-                var cmd = new SqliteCommand("DELETE FROM games WHERE id = @id", connection);
+                var cmd = new SqliteCommand($"DELETE FROM {tableName} WHERE id = @id", connection);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
         }
-
-        public void DeleteTool(int id)
-        {
-            using (var connection = new SqliteConnection(ConnectionProfile))
-            {
-                connection.Open();
-                var cmd = new SqliteCommand("DELETE FROM tools WHERE id = @id", connection);
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         public void DeleteProfile(int id)
         {
             using (var connection = new SqliteConnection(ConnectionGlobal))
@@ -625,6 +647,51 @@ namespace ZennLauncherApp
 
             cfg.SaveGlobalConfig(currentConfig);
             CloseAllConnections();
+        }
+
+        public void UpdateAppCategory(int appId, string tableName, int newCategoryId)
+        {
+            using (var connection = new SqliteConnection(ConnectionProfile))
+            {
+                connection.Open();
+
+                string query = $"UPDATE {tableName} SET category_id = @catid WHERE id = @id";
+                var cmd = new SqliteCommand(query, connection);
+                if (newCategoryId <= 0)
+                    cmd.Parameters.AddWithValue("@catid", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@catid", newCategoryId);
+
+                cmd.Parameters.AddWithValue("@id", appId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateAppAtLaunch(IAppItem app, int sectionId)
+        {
+            string query_fl = $"UPDATE {app.TargetTable} SET first_launched = datetime('now', 'localtime') WHERE id = @id AND launch_times < 1";
+            string query_ll = $"UPDATE {app.TargetTable} SET last_launched = datetime('now', 'localtime') WHERE id = @id";
+
+            var args_fl = new Dictionary<string, object>
+                {
+                    { "@id", app.AppId }
+                };
+            var args_ll = new Dictionary<string, object>
+                {
+                    { "@id", app.AppId }
+                };
+
+            ExecuteQuery(ConnectionProfile, query_fl, args_fl);
+            ExecuteQuery(ConnectionProfile, query_ll, args_ll);
+
+            string query__ = $"UPDATE {app.TargetTable} SET launch_times = launch_times + 1 WHERE id = @id";
+
+            var args__ = new Dictionary<string, object>
+                {
+                    { "@id", app.AppId }
+                };
+
+            ExecuteQuery(ConnectionProfile, query__, args__);
         }
 
         public List<SettingsModel> GetAllProfileSettings(string sortBy = "id", bool ascending = true)
