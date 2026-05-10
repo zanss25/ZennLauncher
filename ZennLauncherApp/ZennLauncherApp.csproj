@@ -397,8 +397,8 @@
     <Resource Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-	<Content Remove="Assets\Fonts\**\*" />
-	<Resource Include="Assets\Fonts\**\*" />
+    <Content Remove="Assets\Fonts\**\*" />
+    <Resource Include="Assets\Fonts\**\*" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

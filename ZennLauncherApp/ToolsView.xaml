@@ -210,6 +210,7 @@
                               Width="230" MinWidth="125" MaxWidth="250" Margin="0,7,10,7"
                               Style="{StaticResource ComboBoxStyle}"
                               SelectionChanged="ComboCategories_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
 						<ComboBox.Resources>
 							<SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
@@ -234,6 +235,7 @@
                               MinWidth="135" Margin="10,7,10,7"
                               Style="{StaticResource ComboBoxStyle}"
                               SelectionChanged="ComboSortBy_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
 
 						<ComboBox.Resources>

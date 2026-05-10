@@ -43,7 +43,6 @@ namespace ZennLauncherApp
             }
         }
 
-
         public ConfigHandler()
         {
 

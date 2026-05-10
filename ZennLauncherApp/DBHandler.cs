@@ -203,7 +203,7 @@ namespace ZennLauncherApp
 
                 var createTableSqlCategories = @"CREATE TABLE IF NOT EXISTS categories (
                                                  id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                 name TEXT UNIQUE,
+                                                 name TEXT,
                                                  desc TEXT,
                                                  section_id INT REFERENCES sections(id));";
 

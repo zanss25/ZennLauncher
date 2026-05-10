@@ -35,6 +35,7 @@ namespace ZennLauncherApp
         List<CategoryModel> masterGamesCategories = new List<CategoryModel>();
         List<CategoryModel> masterToolsCategories = new List<CategoryModel>();
 
+        private bool isSidebarCollapsed = true;
         public CategoriesView()
         {
             InitializeComponent();
@@ -49,6 +50,8 @@ namespace ZennLauncherApp
 
             GamesCategoriesList.SelectedIndex = 0;
             BtnAddNewToCategory.Checked += BtnAddNewToCategory_Checked;
+
+            SidebarCategoriesList.Visibility = Visibility.Collapsed;
         }
 
         public void LoadDefaultCategories()
@@ -213,13 +216,11 @@ namespace ZennLauncherApp
         private void BtnAddNewCategoryGames_Click(object sender, RoutedEventArgs e)
         {
             AddNewCategory(1);
-            LoadCategoriesList(1);
         }
 
         private void BtnAddNewCategoryTools_Click(object sender, RoutedEventArgs e)
         {
             AddNewCategory(2);
-            LoadCategoriesList(2);
         }
 
         private void AddNewCategory(int currentSectionId)
@@ -233,7 +234,29 @@ namespace ZennLauncherApp
 
             if (inputA.ShowDialog() == true)
             {
-                newName = inputA.ResultText.Trim();
+                string inputName = inputA.ResultText.Trim();
+
+                string query_cc = $"SELECT COUNT(*) FROM categories WHERE name = @name AND section_id = @section_id";
+
+                var args_cc = new Dictionary<string, object>()
+                {
+                    { "@name", inputName },
+                    { "@section_id", currentSectionId }
+                };
+
+                int result = db.ExecuteScalar<int>(db.ConnectionProfile, query_cc, args_cc);
+
+                if (result > 0)
+                {
+                    new PopupWindow("Enter Category Name",
+                                    "Category name has already been taken. Use a different name for your new category",
+                                    "Ok", false).ShowDialog();
+                    return;
+                }
+                else
+                {
+                    newName = inputName;
+                }
             }
             else
             {
@@ -253,7 +276,7 @@ namespace ZennLauncherApp
                 return;
             }
 
-            if (!String.IsNullOrEmpty(newName) || !String.IsNullOrEmpty(newDesc))
+            if (!String.IsNullOrEmpty(newName) && !String.IsNullOrEmpty(newDesc))
             {
                 string query_sc = @"INSERT INTO categories (name, desc, section_id) 
                                     VALUES (@new_name, @new_desc, @section_id)";
@@ -276,6 +299,7 @@ namespace ZennLauncherApp
                 }
 
                 AppsDataGrid.ItemsSource = null;
+                LoadCategoriesList(currentSectionId);
                 ApplyFilters(currentSectionId);
             }
             else
@@ -662,5 +686,18 @@ namespace ZennLauncherApp
             }
         }
 
+        private void BtnSidebarCollapse_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isSidebarCollapsed)
+            {
+                SidebarCategoriesList.Visibility = Visibility.Collapsed;
+                isSidebarCollapsed = true;
+            }
+            else
+            {
+                SidebarCategoriesList.Visibility = Visibility.Visible;
+                isSidebarCollapsed = false;
+            }
+        }
     }
 }

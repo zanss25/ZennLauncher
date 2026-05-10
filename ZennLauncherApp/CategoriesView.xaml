@@ -51,7 +51,7 @@
 
         </DockPanel>
 
-        <Grid Margin="0,16,22,14" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+        <Grid Margin="22,16,22,14" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -83,14 +83,6 @@
                         </LinearGradientBrush>
                     </Border.BorderBrush>
 
-                <ScrollViewer x:Name="ContentViewer" Style="{StaticResource SimpleScrollViewer}" 
-                              HorizontalScrollBarVisibility="Auto" 
-                              VerticalScrollBarVisibility="Auto">
-
-                    <ScrollViewer.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
-                    </ScrollViewer.Resources>
-
                     <DataGrid x:Name="AppsDataGrid" 
                               AutoGenerateColumns="False"
                               Background="Transparent"
@@ -104,8 +96,11 @@
                               ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                               CellStyle="{StaticResource DataGridCellStyle}"
                               RowStyle="{StaticResource DataGridRowStyle}"
-                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick"
-                              PreviewMouseWheel="AppsDataGrid_PreviewMouseWheel">
+                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick">
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+                        </DataGrid.Resources>
 
                         <DataGrid.ContextMenu>
                             <ContextMenu Style="{StaticResource ContextMenuStyle}">
@@ -154,12 +149,10 @@
                                                 Binding="{Binding AppLastLaunched}" Width="130"/>
                             <DataGridTextColumn Header="Target" 
                                                 Binding="{Binding AppTarget}" Width="Auto"/>
-                            
+
                         </DataGrid.Columns>
 
                     </DataGrid>
-
-                </ScrollViewer>
 
                 </Border>
 
@@ -171,13 +164,32 @@
 
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
                                     MinHeight="30" Margin="0,0">
+                            
+                            <Button x:Name="BtnSidebarCollapse"
+                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf03a;" 
+                                    FontSize="16" FontWeight="Light" Padding="0" Margin="10,5,0,5"
+                                    Background="Transparent" MinHeight="20" MinWidth="30" MaxWidth="40"
+                                    Click="BtnSidebarCollapse_Click">
+
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Common}">
+
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                                    MinHeight="30" Margin="0,0">
                             <Grid>
-                                <TextBox  x:Name="SearchBarApps" 
+                            
+                            <TextBox  x:Name="SearchBarApps" 
                                           TextChanged="SearchBarApps_Changed" 
                                           MinWidth="230"
                                           MaxWidth="280"
                                           VerticalContentAlignment="Center" 
-                                          MinHeight="25"
+                                          MinHeight="30"
                                           Margin="10,6,12,6" 
                                           Padding="5,0,0,0"
                                           Style="{StaticResource TextBoxStyle}"/>
@@ -207,12 +219,20 @@
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
                         <Button x:Name="BtnRemoveFromCategory" Content="🗑️  Remove category"
-                                Style="{StaticResource MenuButtonStyle_Popup}"
                                 Click="BtnRemoveFromCategory_Click"
                                 Margin="0,0,0,0"
-                                Padding="5"
+                                Padding="6,0"
+                                MinHeight="30"
                                 VerticalAlignment="Center"
-                                IsEnabled="False"/>
+                                IsEnabled="False">
+
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MenuButtonStyle_Common}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Style>
+                            </Button.Style>
+                            
+                        </Button>
 
                     </StackPanel>
 
@@ -263,8 +283,9 @@
 
         </Grid>
 
-        <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
-                MinWidth="200" MaxWidth="200" Margin="17,15" CornerRadius="6" 
+        <Border x:Name="SidebarCategoriesList"
+                VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
+                MinWidth="200" MaxWidth="200" Margin="22,15,0,15" CornerRadius="6" 
                 Background="#CF372D51" BorderBrush="#CC574D71" BorderThickness="0.5">
 
             <Grid>
@@ -275,20 +296,25 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <TextBox  x:Name="SearchBarCategories" 
-                                  TextChanged="SearchBarCategories_Changed"
-                                  VerticalContentAlignment="Center" 
-                                  MinHeight="30"
-                                  Margin="8,6,8,6" 
-                                  Padding="5,0,0,0"
-                                  Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock IsHitTestVisible="False" 
-                                   Text="🔍  Search categories" 
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" 
-                                   Margin="20,0,0,0" 
-                                   Foreground="#30FFFFFF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox  x:Name="SearchBarCategories" Grid.Column="0"
+                              TextChanged="SearchBarCategories_Changed"
+                              VerticalContentAlignment="Center"
+                              MinHeight="30"
+                              Margin="8,6,8,6" 
+                              Padding="5,0,0,0"
+                              Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock x:Name="SearchBarCategoriesTextOverlay"
+                               IsHitTestVisible="False" Grid.Column="0"
+                               Text="🔍  Search categories" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left" 
+                               Margin="20,0,0,0" 
+                               Foreground="#30FFFFFF">
 
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
@@ -313,18 +339,17 @@
                     <StackPanel>
                         <StackPanel x:Name="GamesCategories" Margin="15,6,15,10">
                             <Grid Margin="0,0,0,10">
-                                <TextBlock Text="Games" Foreground="#99F5F5F5" 
+                                <TextBlock Text="Games" Foreground="#DDF5F5F5" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Bold"/>
                                 <Button x:Name="BtnAddNewCategoryGames"
-                                        Content="✚"
-                                        Style="{StaticResource MenuButtonStyle_ProfileMenu}"
+                                        FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
+                                        Style="{StaticResource MenuButtonStyle_Common}"
                                         Background="Transparent"
-                                        Foreground="#AAF5F5F5"
                                         Click="BtnAddNewCategoryGames_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        MinWidth="20"/>
+                                        MinHeight="20" MinWidth="20"/>
                             </Grid>
 
                             <ListBox x:Name="GamesCategoriesList"
@@ -362,7 +387,7 @@
                                                                     VerticalAlignment="Center">
                                                                 
                                                                 <Button.Style>
-                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_ProfileMenu}">
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_SidebarList}">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                         <Style.Triggers>
                                                                             
@@ -374,7 +399,7 @@
                                                                             <DataTrigger Binding="{Binding CategoryId}" Value="0">
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                             </DataTrigger>
-                                                                            
+
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </Button.Style>
@@ -412,18 +437,17 @@
 
                         <StackPanel x:Name="ToolsCategories" Margin="15,6,15,10">
                             <Grid Margin="0,0,0,10">
-                                <TextBlock Text="Tools" Foreground="#99F5F5F5" 
+                                <TextBlock Text="Tools" Foreground="#DDF5F5F5" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Bold"/>
                                 <Button x:Name="BtnAddNewCategoryTools"
-                                        Content="✚"
-                                        Style="{StaticResource MenuButtonStyle_ProfileMenu}"
+                                        FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
+                                        Style="{StaticResource MenuButtonStyle_Common}"
                                         Background="Transparent"
-                                        Foreground="#AAF5F5F5"
                                         Click="BtnAddNewCategoryTools_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        MinWidth="20"/>
+                                        MinHeight="20" MinWidth="20"/>
                             </Grid>
 
                             <ListBox x:Name="ToolsCategoriesList"
@@ -453,14 +477,15 @@
 
                                                             <Button x:Name="BtnDeleteCategoryTools"
                                                                     Grid.Column="1" 
-                                                                    Content="🗑️" 
-                                                                    FontSize="10" Width="20"
+                                                                    Content="&#xf2ed;"
+                                                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" 
+                                                                    FontSize="12" Width="20"
                                                                     Tag="{Binding}"
                                                                     Click="BtnRemoveCategory_Click"
                                                                     VerticalAlignment="Center">
 
                                                                 <Button.Style>
-                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_ProfileMenu}">
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_SidebarList}">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                         <Style.Triggers>
 

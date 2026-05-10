@@ -332,6 +332,10 @@ namespace ZennLauncherApp
                 {
                     StackPanelToolsBtns.Visibility = Visibility.Visible;
                 }
+                if (selected.ItemTag == "categories")
+                {
+                    
+                }
 
             }
         }

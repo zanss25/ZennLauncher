@@ -45,6 +45,7 @@
                     Height="100" 
                     BorderBrush="#70594D7B" 
                     BorderThickness="2"
+                    CornerRadius="5"
                     Grid.Column="0" Grid.RowSpan="2"
                     Margin="20"
                     HorizontalAlignment="Left"

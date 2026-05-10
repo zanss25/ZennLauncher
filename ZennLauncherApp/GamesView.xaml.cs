@@ -331,6 +331,28 @@ namespace ZennLauncherApp
             }
         }
 
+        private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if (!comboBox.IsDropDownOpen)
+            {
+                if (e.Delta > 0)
+                {
+                    if (comboBox.SelectedIndex > 0)
+                        comboBox.SelectedIndex--;
+                }
+                else if (e.Delta < 0)
+                {
+                    if (comboBox.SelectedIndex < comboBox.Items.Count - 1)
+                        comboBox.SelectedIndex++;
+                }
+
+                // Tandai event sebagai handled agar tidak men-scroll halaman utama
+                e.Handled = true;
+            }
+        }
+
     }
 }
 

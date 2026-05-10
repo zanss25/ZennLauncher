@@ -253,20 +253,20 @@
                     </DockPanel.Background>
 
                     <StackPanel x:Name="StackPanelGamesBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
-                                Margin="0,0,25,0" Visibility="Collapsed">
+                                Margin="0,0,22,0" Visibility="Collapsed">
                         <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
-                                Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="5,8"
+                                Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="0,8"
                                 FontFamily="Global User Interface" FontSize="13"/>
                     </StackPanel>
 
                     <StackPanel x:Name="StackPanelToolsBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
-                                Margin="0,0,25,0" Visibility="Collapsed">
+                                Margin="0,0,22,0" Visibility="Collapsed">
                         <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
-                                Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="5,8"
+                                Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="0,8"
                                 FontFamily="Global User Interface" FontSize="13"/>
                     </StackPanel>
 
-                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="25,5,0,5" >
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="22,5,0,5" >
                         <Grid HorizontalAlignment="Right">
 
                             <ToggleButton x:Name="BtnProfileMenu" Tag="{Binding ProfileId}"
@@ -331,6 +331,7 @@
                                                     Height="80" 
                                                     BorderBrush="#70594D7B" 
                                                     BorderThickness="2"
+                                                    CornerRadius="5"
                                                     Grid.Row="0"
                                                     Margin="5,0"
                                                     HorizontalAlignment="Right"

@@ -107,7 +107,7 @@
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="#00F0DFF5"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
                             <Setter Property="Foreground" Value="#DDF5F5F5"/>
                             <Setter Property="Opacity" Value="0.5"/>
@@ -337,6 +337,45 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MenuButtonStyle_SidebarList" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="MainBorder" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#00000000"
+                        BorderThickness="0.7"
+                        CornerRadius="4" 
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ToggleButtonStyle_Common" TargetType="ToggleButton">
         <Setter Property="Background" Value="#FF221E2F"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
@@ -474,7 +513,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Border x:Name="ProfileAvatar" 
                                 BorderBrush="#70594D7B" 
-                                BorderThickness="1.5" CornerRadius="3"
+                                BorderThickness="1.5" CornerRadius="4"
                                 MinHeight="40" MinWidth="40" Margin="0,0,0,0">
 
                             <Border.Background>
@@ -1627,16 +1666,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridRow">
                     <Border x:Name="RowBorder" 
-                        Background="{TemplateBinding Background}" 
-                        CornerRadius="2"
-                        BorderThickness="0.7"
-                        Margin="4,1">
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="2"
+                            BorderThickness="0.7"
+                            Margin="4,1">
                         <SelectiveScrollingGrid>
                             <SelectiveScrollingGrid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </SelectiveScrollingGrid.ColumnDefinitions>
-                            <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            <DataGridCellsPresenter Grid.Column="1" 
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}" 
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </SelectiveScrollingGrid>
                     </Border>
                     <ControlTemplate.Triggers>
