@@ -9,16 +9,6 @@
 
     <UserControl.Resources>
 
-        <ResourceDictionary>
-
-            <local:PathToImageConverter x:Key="ImageConverter"/>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid>
@@ -142,7 +132,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Title" 
-                                                Binding="{Binding AppTitle}" Width="200" />
+                                                Binding="{Binding AppTitle}" Width="300" />
                             <DataGridTextColumn Header="Category" 
                                                 Binding="{Binding AppCategoryName}" Width="100" />
                             <DataGridTextColumn Header="Last Launched" 
@@ -239,7 +229,7 @@
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
                         <ToggleButton x:Name="BtnAddNewToCategory" Content="✚  Add to Category"
-                                      Style="{StaticResource ToggleButtonStyle_PrimaryA}"
+                                      Style="{StaticResource ToggleButtonStyle_Primary}"
                                       Click="BtnAddNewToCategory_Checked"
                                       Margin="10,0,12,0"
                                       VerticalAlignment="Center"

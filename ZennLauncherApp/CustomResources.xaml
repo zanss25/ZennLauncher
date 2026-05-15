@@ -7,7 +7,7 @@
     <Style x:Key="HeaderTitleStyle" TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="#7FC9B5FF" />
+        <Setter Property="Foreground" Value="{StaticResource TitleBrush}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Margin" Value="0,1,0,0" />
@@ -82,15 +82,15 @@
     </Style>
 
     <Style x:Key="MenuButtonStyle_Common" TargetType="Button">
-        <Setter Property="Background" Value="#FF272237"/>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Background" Value="{StaticResource BtnCommonBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#00000000"
+                            BorderBrush="{StaticResource BtnCommonBorderBrush}"
                             BorderThickness="0.7"
                             CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
@@ -100,23 +100,23 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF372f4C"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#80594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnCommonHoverBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderHoverBrush}"/>
                             <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#00F0DFF5"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnDisabledBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnCommonPressedBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
                         
                     </ControlTemplate.Triggers>
@@ -128,8 +128,8 @@
 
     <Style x:Key="MenuButtonStyle_Popup" TargetType="Button">
         <!-- Used in "Profile Menu" Popup at MainWindow -->
-        <Setter Property="Background" Value="#00221E2F"/>
-        <Setter Property="Foreground" Value="#BBFFFFFF"/>
+        <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -137,7 +137,7 @@
                     
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#00000000"
+                            BorderBrush="{StaticResource BtnPopupBorderBrush}"
                             BorderThickness="0.7"
                             CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
@@ -148,21 +148,21 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#666A59A0"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#80594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnPopupHoverBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPopupPressedBrush}"/>
                             <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#446A59A0"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnPopupPressedBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPopupBorderPressedBrush}"/>
                             <Setter Property="Foreground" Value="#AAF5F5F5"/>
                         </Trigger>
                         
@@ -173,17 +173,17 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyle_PrimaryA" TargetType="Button">
+    <Style x:Key="MenuButtonStyle_Primary" TargetType="Button">
         <!-- Used in "Apply" and "Ok" buttons -->
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#DFF49348" Offset="0"/>
-                    <GradientStop Color="#DFEB6337" Offset="1"/>
+                    <GradientStop Color="{StaticResource BtnPrimary_A}" Offset="0"/>
+                    <GradientStop Color="{StaticResource BtnPrimary_B}" Offset="1"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="FontFamily" Value="Global Sans Serif"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
@@ -198,7 +198,7 @@
 
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#00000000"
+                            BorderBrush="{StaticResource BtnPrimaryBorderBrush}"
                             BorderThickness="0.7"
                             CornerRadius="4" 
                             Padding="{TemplateBinding Padding}"
@@ -213,27 +213,34 @@
                             <Setter TargetName="MainBorder" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="#FFF49348" Offset="0"/>
-                                        <GradientStop Color="#DDEB6337" Offset="1"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_B}" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#20F69550"/>
-                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnDisabledBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#CC351610"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#DDEE8952"/>
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_B}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -243,10 +250,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MenuButtonStyle_PrimaryB" TargetType="Button">
+    <Style x:Key="MenuButtonStyle_Secondary" TargetType="Button">
         <!-- Used in "Apply" and "Ok" buttons -->
-        <Setter Property="Background" Value="#FF46405C"/>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Background" Value="{StaticResource BtnSecondaryBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="FontFamily" Value="Global Sans Serif"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
@@ -261,7 +268,7 @@
                     
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#00000000"
+                            BorderBrush="{StaticResource BtnSecondaryBorderBrush}"
                             BorderThickness="0.7"
                             CornerRadius="4" 
                             Padding="{TemplateBinding Padding}"
@@ -273,22 +280,23 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF574E72"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#AA594D7B"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnSecondaryHoverBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnSecondaryBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
-                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnDisabledBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnSecondaryPressedBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnSecondaryBorderPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
                         
                     </ControlTemplate.Triggers>
@@ -338,15 +346,15 @@
     </Style>
 
     <Style x:Key="MenuButtonStyle_SidebarList" TargetType="Button">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
 
                     <Border x:Name="MainBorder" 
                         Background="{TemplateBinding Background}"
-                        BorderBrush="#00000000"
+                        BorderBrush="{StaticResource BtnPopupBorderBrush}"
                         BorderThickness="0.7"
                         CornerRadius="4" 
                         Padding="{TemplateBinding Padding}">
@@ -356,17 +364,17 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -377,15 +385,15 @@
     </Style>
 
     <Style x:Key="ToggleButtonStyle_Common" TargetType="ToggleButton">
-        <Setter Property="Background" Value="#FF221E2F"/>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Background" Value="{StaticResource BtnCommonBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
 
                     <Border x:Name="MainBorder" 
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#00000000"
+                            BorderBrush="{StaticResource BtnCommonBorderBrush}"
                             BorderThickness="0.7"
                             CornerRadius="4" 
                             Padding="{TemplateBinding Padding}">
@@ -395,30 +403,30 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#AA3D3454"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#80594D7B"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnCommonHoverBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnDisabledBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF221E2C"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnCommonPressedBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="MainBorder" Property="Background" Value="#BB211739"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
@@ -429,16 +437,16 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToggleButtonStyle_PrimaryA" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonStyle_Primary" TargetType="ToggleButton">
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#DFF49348" Offset="0"/>
-                    <GradientStop Color="#DFEB6337" Offset="1"/>
+                    <GradientStop Color="{StaticResource BtnPrimary_A}" Offset="0"/>
+                    <GradientStop Color="{StaticResource BtnPrimary_B}" Offset="1"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="FontFamily" Value="Global Sans Serif"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
@@ -452,7 +460,7 @@
 
                     <Border x:Name="MainBorder" 
                         Background="{TemplateBinding Background}"
-                        BorderBrush="#00000000"
+                        BorderBrush="{StaticResource BtnPrimaryBorderBrush}"
                         BorderThickness="0.7"
                         CornerRadius="4" 
                         Padding="{TemplateBinding Padding}">
@@ -465,34 +473,48 @@
                             <Setter TargetName="MainBorder" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="#FFF49348" Offset="0"/>
-                                        <GradientStop Color="#DDEB6337" Offset="1"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_B}" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#20F69550"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#20F0DFF5"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00000000"/>
-                            <Setter Property="Foreground" Value="#DDF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnDisabledBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#CC351610"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#DDEE8952"/>
+                            <Setter TargetName="MainBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_B}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderPressedBrush}"/>
                             <Setter Property="Foreground" Value="#AAF5F5F5"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#CC351610"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#DDEE8952"/>
-                            <Setter Property="Foreground" Value="#CCF5F5F5"/>
+                            <Setter TargetName="MainBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryPressed_B}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
@@ -505,7 +527,7 @@
 
     <Style x:Key="ToggleButtonStyle_ProfileMenu" TargetType="ToggleButton">
         <Setter Property="Background" Value="#00221E2F"/>
-        <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -547,8 +569,8 @@
 
                         <Border>
                             <Path x:Name="ArrowUp"
-                                  Stroke="#CCF5F5F5"
-                                  Fill="#CCF5F5F5"
+                                  Stroke="{StaticResource TextCommonBrush}"
+                                  Fill="{StaticResource TextCommonBrush}"
                                   StrokeThickness="1" 
                                   VerticalAlignment="Center"
                                   Data="M 0.6,4 L 6,4 L 3.36,0.6 Z"
@@ -561,25 +583,25 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="MainBorder" Property="Background" Value="#003D3454"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
-                            <Setter TargetName="ArrowUp" Property="Stroke" Value="#FFFFFFFF"/>
-                            <Setter TargetName="ArrowUp" Property="Fill" Value="#FFFFFFFF"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
+                            <Setter TargetName="ArrowUp" Property="Stroke" Value="{StaticResource TextCommonActiveBrush}"/>
+                            <Setter TargetName="ArrowUp" Property="Fill" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="MainBorder" Property="Background" Value="#00221E2C"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
-                            <Setter Property="Foreground" Value="#AAF5F5F5"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="MainBorder" Property="Background" Value="#00211739"/>
                             <Setter TargetName="MainBorder" Property="BorderBrush" Value="#00594D7B"/>
-                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
-                            <Setter TargetName="ArrowUp" Property="Stroke" Value="#FFFFFFFF"/>
-                            <Setter TargetName="ArrowUp" Property="Fill" Value="#FFFFFFFF"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
+                            <Setter TargetName="ArrowUp" Property="Stroke" Value="{StaticResource TextCommonActiveBrush}"/>
+                            <Setter TargetName="ArrowUp" Property="Fill" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
@@ -865,8 +887,8 @@
     </Style>
 
     <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="#66111111"/>
-        <Setter Property="BorderBrush" Value="#66C9B5FF"/>
+        <Setter Property="Background" Value="{StaticResource ListBoxBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -913,15 +935,15 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B4B3E68"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource ListBoxItemBackgroundHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B4B3E68"/>
-                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#BB9083B3"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource ListBoxItemBackgroundHoverBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{StaticResource ListBoxItemBorderSelectedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                     
@@ -950,17 +972,16 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B4B3E68"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource ListBoxItemBackgroundHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B4B3E68"/>
-                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#BB9083B3"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource ListBoxItemBackgroundHoverBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{StaticResource ListBoxItemBorderSelectedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                         </Trigger>
-                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -968,7 +989,7 @@
     </Style>
 
     <Style x:Key="ListBoxItemStyleC" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
         <Setter Property="Foreground" Value="#99FFFFFF"/>
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Margin" Value="0,2,0,0"/>
@@ -1223,9 +1244,9 @@
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
 
                                 <Border x:Name="DropDownBorder"
-                                        Background="#F02B2245"
+                                        Background="{StaticResource PopupBackgroundBrush}"
                                         BorderThickness="1"
-                                        BorderBrush="#FF594D7B"
+                                        BorderBrush="{StaticResource PopupBorderBrush}"
                                         CornerRadius="4"/>
 
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True"
@@ -1244,11 +1265,11 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsDropDownOpen" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="#90FFFFFF"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
 
@@ -1372,13 +1393,13 @@
     </Style>
 
     <Style x:Key="TextBoxStyle" TargetType="TextBox">
-        <Setter Property="Background" Value="#FF272237"/>
-        <Setter Property="Foreground" Value="#9FFFFFFF"/>
-        <Setter Property="BorderBrush" Value="#70594D7B"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="8,5"/>
-        <Setter Property="CaretBrush" Value="#FF937BD1"/>
-        <Setter Property="SelectionBrush" Value="#FF937BD1"/>
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1397,19 +1418,19 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundHoverBrush_1}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderHoverBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF937BD1"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundActiveBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
                             <Setter TargetName="MainBorder" Property="BorderThickness" Value="1.1"/>
 
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.3"/>
                             <Setter Property="Foreground" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -1420,15 +1441,14 @@
     </Style>
 
     <Style x:Key="TextBoxStyleB" TargetType="TextBox">
-        <Setter Property="Background" Value="#FF272237"/>
-        <Setter Property="Foreground" Value="#99FFFFFF"/>
-        <Setter Property="BorderBrush" Value="#70594D7B"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="8,5"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="CaretBrush" Value="#FF937BD1"/>
-        <Setter Property="SelectionBrush" Value="#FF937BD1"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -1446,18 +1466,18 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#22937BD1"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundHoverBrush_2}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderHoverBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF937BD1"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundActiveBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
                             <Setter TargetName="MainBorder" Property="BorderThickness" Value="1"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.3"/>
                             <Setter Property="Foreground" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -1468,14 +1488,13 @@
     </Style>
 
     <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
-        <Setter Property="Background" Value="#FF272237"/>
-        <Setter Property="Foreground" Value="#99FFFFFF"/>
-        <Setter Property="BorderBrush" Value="#70594D7B"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="8,5"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="CaretBrush" Value="#FF937BD1"/>
-        <Setter Property="SelectionBrush" Value="#FF937BD1"/>
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1494,36 +1513,36 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundHoverBrush_1}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderHoverBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF937BD1"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundActiveBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
                             <Setter TargetName="MainBorder" Property="BorderThickness" Value="1"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.3"/>
                             <Setter Property="Foreground" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style x:Key="PasswordBoxStyleB" TargetType="PasswordBox">
-        <Setter Property="Background" Value="#FF272237"/>
-        <Setter Property="Foreground" Value="#99FFFFFF"/>
-        <Setter Property="BorderBrush" Value="#70594D7B"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="8,5"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="CaretBrush" Value="#FF937BD1"/>
-        <Setter Property="SelectionBrush" Value="#FF937BD1"/>
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1542,23 +1561,22 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#22937BD1"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF594D7B"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundHoverBrush_2}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderHoverBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="MainBorder" Property="Background" Value="#FF211C2F"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#FF937BD1"/>
-                            <Setter TargetName="MainBorder" Property="BorderThickness" Value="1.1"/>
-
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource TextBoxBackgroundActiveBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderThickness" Value="1"/>
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.3"/>
                             <Setter Property="Foreground" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1754,7 +1772,7 @@
     </Style>
 
     <Style x:Key="ContextMenuItemStyle_Primary" TargetType="MenuItem">
-        <Setter Property="Foreground" Value="#A6FFFFFF"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="Padding" Value="10,6"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1768,8 +1786,8 @@
 
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#DFF49348" Offset="0"/>
-                                <GradientStop Color="#DFEB6337" Offset="1"/>
+                                <GradientStop Color="{StaticResource BtnPrimary_A}" Offset="0"/>
+                                <GradientStop Color="{StaticResource BtnPrimary_B}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
                         
@@ -1795,7 +1813,7 @@
                                        Text="{TemplateBinding InputGestureText}"
                                        VerticalAlignment="Center"
                                        Margin="5,0"
-                                       Foreground="#88FFFFFF"
+                                       Foreground="{StaticResource TextCommonBrush}"
                                        FontSize="11"/>
                         </Grid>
                     </Border>
@@ -1805,13 +1823,13 @@
                             <Setter TargetName="ItemBorder" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="#FFF49348" Offset="0"/>
-                                        <GradientStop Color="#DDEB6337" Offset="1"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_A}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BtnPrimaryHover_B}" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#20F69550"/>
-                            <Setter Property="Foreground" Value="#FFF5F5F5"/>
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{StaticResource BtnPrimaryBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

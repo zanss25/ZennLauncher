@@ -6,17 +6,9 @@
              xmlns:local="clr-namespace:ZennLauncherApp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <UserControl.Resources>
-
-        <ResourceDictionary>
-            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
-            
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-
+        
     </UserControl.Resources>
 
     <Grid>

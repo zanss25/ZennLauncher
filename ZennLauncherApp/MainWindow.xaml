@@ -17,15 +17,6 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-
-            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
 
     </Window.Resources>
 
@@ -39,12 +30,12 @@
                     <TranslateTransform X="0.3" Y="0.3"/>
                 </TransformGroup>
             </LinearGradientBrush.RelativeTransform>
-            <GradientStop Color="#FF221E2D"/>
-            <GradientStop Color="#FF251E39" Offset="0.898"/>
+            <GradientStop Color="{StaticResource WindowBackground_2A}"/>
+            <GradientStop Color="{StaticResource WindowBackground_2B}" Offset="0.898"/>
         </LinearGradientBrush>
     </Window.Background>
 
-    <Border BorderThickness="2, 40, 2, 10">
+    <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <LinearGradientBrush.RelativeTransform>
@@ -105,196 +96,152 @@
                     
                     <TextBlock.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#A89083B3"/>
-                            <GradientStop Color="#A8B6A0ED" Offset="1"/>
+                            <GradientStop Color="{StaticResource LogoColor_A}"/>
+                            <GradientStop Color="{StaticResource LogoColor_B}" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
 
             </StackPanel>
 
-            <StackPanel x:Name="SidebarPanel" HorizontalAlignment="Left" 
-                        Width="230" Grid.RowSpan="2" Grid.Column="0">
+            <Border x:Name="SidebarPanel" HorizontalAlignment="Left" 
+                        Width="230" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"
+                        Background="{StaticResource WindowBackgroundBrush_1}">
 
-                <StackPanel.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF1A1820"/>
-                        <GradientStop Color="#FF1A1820" Offset="1"/>
-                    </LinearGradientBrush>
-                </StackPanel.Background>
-
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
+                <Border.Style>
+                    <Style TargetType="Border">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
                                          Value="Maximized">
-                                <Setter Property="Margin" Value="5,0,0,0"/>
+                                <Setter Property="Margin" Value="5,0,0,5"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </StackPanel.Style>
+                </Border.Style>
 
-                <Button x:Name="BtnSidebarCollapse" HorizontalAlignment="Left"
-                        FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf0c9;" 
-                        FontSize="16" FontWeight="Light" Padding="19,5" Margin="5,5"
-                        Background="Transparent"
-                        Click="BtnSidebarCollapse_Click">
+                <Grid VerticalAlignment="Stretch">
 
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Common}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                        </Style>
-                    </Button.Style>
+                    <StackPanel VerticalAlignment="Top" Grid.Row="0">
+                        <Button x:Name="BtnSidebarCollapse" HorizontalAlignment="Left"
+                                FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf0c9;" 
+                                FontSize="16" FontWeight="Light" Padding="19,5" Margin="5,5"
+                                Background="Transparent"
+                                Click="BtnSidebarCollapse_Click">
 
-                </Button>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Common}">
 
-                <ListBox x:Name="SidebarNavList"
-                         SelectionChanged="SidebarNavList_SelectionChanged" 
-                         Style="{StaticResource ListBoxStyle}" Width="Auto" 
-                         Background="Transparent" BorderBrush="Transparent" 
-                         Margin="5,0">
+                                </Style>
+                            </Button.Style>
 
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel x:Name="DisplayPanel" Orientation="Horizontal" Margin="0">
+                        </Button>
 
-                                <StackPanel.Style>
-                                    <Style TargetType="StackPanel">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
-                                                <Setter Property="HorizontalAlignment" Value="Left"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </StackPanel.Style>
+                        <ListBox x:Name="SidebarNavList"
+                                 SelectionChanged="SidebarNavList_SelectionChanged" 
+                                 Style="{StaticResource ListBoxStyle}" Width="Auto" 
+                                 Background="Transparent" BorderBrush="Transparent" 
+                                 Margin="5,0">
 
-                                <TextBlock Text="{Binding DisplayIcon}" 
-                                           FontFamily="./Assets/Fonts/#Font Awesome 7 Free" 
-                                           FontSize="16" 
-                                           Width="30" 
-                                           VerticalAlignment="Center" 
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel x:Name="DisplayPanel" Orientation="Horizontal" Margin="0">
 
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
-                                                    <Setter Property="Width" Value="Auto"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
+                                                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
 
-                                </TextBlock>
+                                        <TextBlock Text="{Binding DisplayIcon}" 
+                                                   FontFamily="./Assets/Fonts/#Font Awesome 7 Free" 
+                                                   FontSize="16" 
+                                                   Width="30" 
+                                                   VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center">
 
-                                <TextBlock Text="{Binding DisplayName}" 
-                                           FontFamily="Bahnschrift Light" 
-                                           FontSize="15"
-                                           Margin="10,0,0,0"
-                                           VerticalAlignment="Center"
-                                           x:Name="ItemText">
-                                    
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                    
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
+                                                            <Setter Property="Width" Value="Auto"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
 
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle_Primary}">
-                            <Setter Property="Tag" Value="{Binding ItemTag}"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
+                                        </TextBlock>
 
-            </StackPanel>
+                                        <TextBlock Text="{Binding DisplayName}" 
+                                                   FontFamily="Bahnschrift Light" 
+                                                   FontSize="15"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   x:Name="ItemText">
 
-            <ContentControl x:Name="ContentSlot" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Tag, ElementName=SidebarPanel}" Value="Collapsed">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
 
-            <Border Grid.Row="2" Grid.ColumnSpan="4" 
-                    BorderThickness="0,0.9,0,0"
-                    Margin="0,0,0,0">
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
 
-                <Border.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FF332C48"/>
-                        <GradientStop Color="#FF594D79" Offset="0.5"/>
-                        <GradientStop Color="#FF332C48" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
-
-                <DockPanel VerticalAlignment="Center" MinHeight="20" LastChildFill="False">
-                    <DockPanel.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <LinearGradientBrush.RelativeTransform>
-                                <TransformGroup>
-                                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
-                                </TransformGroup>
-                            </LinearGradientBrush.RelativeTransform>
-                            <GradientStop Color="#FF2A243B"/>
-                            <GradientStop Color="#FF2A243B" Offset="1"/>
-                            <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                        </LinearGradientBrush>
-                    </DockPanel.Background>
-
-                    <StackPanel x:Name="StackPanelGamesBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
-                                Margin="0,0,22,0" Visibility="Collapsed">
-                        <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
-                                Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="0,8"
-                                FontFamily="Global User Interface" FontSize="13"/>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle_Primary}">
+                                    <Setter Property="Tag" Value="{Binding ItemTag}"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
                     </StackPanel>
 
-                    <StackPanel x:Name="StackPanelToolsBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
-                                Margin="0,0,22,0" Visibility="Collapsed">
-                        <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
-                                Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="0,8"
-                                FontFamily="Global User Interface" FontSize="13"/>
-                    </StackPanel>
 
-                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="22,5,0,5" >
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="12,5,0,12"
+                                    Grid.Row="1" VerticalAlignment="Bottom">
                         <Grid HorizontalAlignment="Right">
 
                             <ToggleButton x:Name="BtnProfileMenu" Tag="{Binding ProfileId}"
-                                          Content="{Binding ProfileName, StringFormat='{}{0} ...'}"
-                                          FontFamily="Global User Interface" FontSize="13" 
-                                          BorderThickness="0" Padding="10">
+                                              Content="{Binding ProfileName, StringFormat='{}{0} ...'}"
+                                              FontFamily="Global User Interface" FontSize="13" 
+                                              BorderThickness="0" Padding="10">
                                 <ToggleButton.Style>
                                     <Style TargetType="ToggleButton" BasedOn="{StaticResource ToggleButtonStyle_ProfileMenu}">
-                     
+
                                     </Style>
                                 </ToggleButton.Style>
                             </ToggleButton>
 
                             <Popup IsOpen="{Binding IsChecked, ElementName=BtnProfileMenu}" 
-                                   PlacementTarget="{Binding ElementName=BtnProfileMenu}"
-                                   Placement="Top"
-                                   StaysOpen="False"
-                                   AllowsTransparency="True"
-                                   PopupAnimation="Fade"
-                                   HorizontalOffset="0"
-                                   VerticalOffset="-5">
+                                       PlacementTarget="{Binding ElementName=BtnProfileMenu}"
+                                       Placement="Top"
+                                       StaysOpen="False"
+                                       AllowsTransparency="True"
+                                       PopupAnimation="Fade"
+                                       HorizontalOffset="0"
+                                       VerticalOffset="-5">
 
                                 <Border Background="#F22B2245" 
-                                        CornerRadius="5" 
-                                        BorderBrush="#FF594D7B"
-                                        BorderThickness="1"
-                                        Width="300" Height="Auto"
-                                        Margin="0,0,0,10">
+                                            CornerRadius="5" 
+                                            BorderBrush="#FF594D7B"
+                                            BorderThickness="1"
+                                            Width="300" Height="Auto"
+                                            Margin="0,0,0,10">
 
                                     <DockPanel Margin="10" HorizontalAlignment="Stretch">
                                         <Grid>
@@ -307,45 +254,45 @@
 
                                             <StackPanel Grid.Row="0" Margin="10,5">
                                                 <TextBlock Text="{Binding ProfileName}"
-                                                           Foreground="White"
-                                                           FontSize="17"
-                                                           FontWeight="Bold"/>
+                                                               Foreground="White"
+                                                               FontSize="17"
+                                                               FontWeight="Bold"/>
                                                 <TextBlock Text=""
-                                                           Foreground="WhiteSmoke"
-                                                           Margin="0,5,0,5"
-                                                           FontSize="11"
-                                                           VerticalAlignment="Bottom">
-                                            
-                                                <Hyperlink Click="LinkProfileSettings_Click"
-                                                           Style="{StaticResource HyperlinkStyle}">
+                                                               Foreground="WhiteSmoke"
+                                                               Margin="0,5,0,5"
+                                                               FontSize="11"
+                                                               VerticalAlignment="Bottom">
+        
+                                                        <Hyperlink Click="LinkProfileSettings_Click"
+                                                                   Style="{StaticResource HyperlinkStyle}">
 
-                                                           Profile Settings
-                                                </Hyperlink>
+                                                                   Profile Settings
+                                                        </Hyperlink>
 
                                                 </TextBlock>
 
                                             </StackPanel>
 
                                             <Border x:Name="ProfileMenuAvatar" 
-                                                    Width="80" 
-                                                    Height="80" 
-                                                    BorderBrush="#70594D7B" 
-                                                    BorderThickness="2"
-                                                    CornerRadius="5"
-                                                    Grid.Row="0"
-                                                    Margin="5,0"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Top">
+                                                        Width="80" 
+                                                        Height="80" 
+                                                        BorderBrush="#70594D7B" 
+                                                        BorderThickness="2"
+                                                        CornerRadius="5"
+                                                        Grid.Row="0"
+                                                        Margin="5,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top">
                                                 <Border.Background>
                                                     <ImageBrush>
                                                         <ImageBrush.ImageSource>
                                                             <Binding Path="ProfileId"  
-                                                                     Converter="{StaticResource ProfileImgConv}"
-                                                                     ConverterParameter="85">
+                                                                         Converter="{StaticResource ProfileImgConv}"
+                                                                         ConverterParameter="85">
                                                                 <Binding.TargetNullValue>
                                                                     <BitmapImage UriSource="/default_avatar.jpg" 
-                                                                                 DecodePixelWidth="85"
-                                                                                 CacheOption="OnLoad"/>
+                                                                                     DecodePixelWidth="85"
+                                                                                     CacheOption="OnLoad"/>
                                                                 </Binding.TargetNullValue>
                                                             </Binding>
                                                         </ImageBrush.ImageSource>
@@ -356,18 +303,18 @@
 
                                             <StackPanel Grid.Row="1" Margin="0,10,0,0">
                                                 <Separator VerticalAlignment="Bottom"
-                                                           Margin="0,5,0,10"
-                                                           Background="#55594D7B"/>
+                                                               Margin="0,5,0,10"
+                                                               Background="#55594D7B"/>
                                                 <Button x:Name="BtnSettings"
-                                                        Style="{StaticResource MenuButtonStyle_Popup}"
-                                                        Content="Settings"
-                                                        Click="BtnSettings_Click"
-                                                        MinHeight="35"/>
+                                                            Style="{StaticResource MenuButtonStyle_Popup}"
+                                                            Content="Settings"
+                                                            Click="BtnSettings_Click"
+                                                            MinHeight="35"/>
                                                 <Button x:Name="BtnLogOut"
-                                                        Style="{StaticResource MenuButtonStyle_Popup}"
-                                                        Content="Sign out"
-                                                        Click="BtnLogOut_Click"
-                                                        MinHeight="35"/>
+                                                            Style="{StaticResource MenuButtonStyle_Popup}"
+                                                            Content="Sign out"
+                                                            Click="BtnLogOut_Click"
+                                                            MinHeight="35"/>
                                             </StackPanel>
 
                                         </Grid>
@@ -379,9 +326,80 @@
                             </Popup>
                         </Grid>
                     </StackPanel>
-                    
-                </DockPanel>
+
+                </Grid>
+
             </Border>
+
+            <ContentControl x:Name="ContentSlot" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+            <Border Grid.Row="2" Grid.ColumnSpan="4" 
+                    BorderThickness="0,0.9,0,0"
+                    Margin="0,0,0,0">
+
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#00332C48"/>
+                        <GradientStop Color="#00594D79" Offset="0.5"/>
+                        <GradientStop Color="#00332C48" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+
+            </Border>
+
+            <StackPanel x:Name="StackPanelGamesBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
+                        Margin="0,0,35,20" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="3" 
+                        Visibility="Collapsed">
+
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                         Value="Maximized">
+                                <Setter Property="Margin" Value="0,0,40,25"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <Grid>
+                    <Button Style="{StaticResource MenuButtonStyle_Primary}"
+                            Background="{StaticResource WindowBackgroundBrush_3}"
+                            Content="✚  Add a Game" Margin="0"/>
+                    <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle_Primary}" 
+                            Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="0"
+                            FontFamily="Global User Interface" FontSize="13"/>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel x:Name="StackPanelToolsBtns" DockPanel.Dock="Right" Orientation="Horizontal" 
+                        Margin="0,0,35,20" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="3"  
+                        Visibility="Collapsed">
+
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                         Value="Maximized">
+                                <Setter Property="Margin" Value="0,0,40,25"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Grid>
+                    <Button Style="{StaticResource MenuButtonStyle_Primary}"
+                            Background="{StaticResource WindowBackgroundBrush_3}"
+                            Content="✚  Add a Game" Margin="0"/>
+                    <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle_Primary}" 
+                            Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="0"
+                            FontFamily="Global User Interface" FontSize="13"/>
+                </Grid>
+            </StackPanel>
 
             <Border Grid.Row="1" Grid.Column="0" Panel.ZIndex="99" Visibility="Collapsed"
                     BorderThickness="3" MaxWidth="25" Margin="0,-3,0,0">
@@ -419,7 +437,7 @@
                 </Border.Background>
             </Border>
 
-            <Border Grid.Row="2" Grid.ColumnSpan="4" Panel.ZIndex="99" BorderThickness="3"
+            <Border Grid.Row="2" Grid.ColumnSpan="4" Panel.ZIndex="99" BorderThickness="3" Visibility="Collapsed"
                      MaxHeight="25" Margin="0,-68,-2,0" IsHitTestVisible="False">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

@@ -8,7 +8,8 @@
         Title="Profile Selection" 
         Height="400" Width="620"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40"
@@ -17,21 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
     </Window.Resources>
-
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -88,8 +76,8 @@
                     
                     <TextBlock.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#A89083B3"/>
-                            <GradientStop Color="#A8B6A0ED" Offset="1"/>
+                            <GradientStop Color="{StaticResource LogoColor_A}"/>
+                            <GradientStop Color="{StaticResource LogoColor_B}" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                     
@@ -107,7 +95,7 @@
                            FontSize="25" Foreground="#FFF5F5F5" FontWeight="DemiBold"/>
 
                 <Button x:Name="BtnCreateNewProfile_Empty" Content="Create New Profile" Grid.Row="0"
-                        Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_PrimaryA}"
+                        Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_Primary}"
                         Margin="0,5" Padding="15,8,15,8" MinWidth="125" MaxWidth="200" 
                         FontFamily="Global Sans Serif" FontSize="12" 
                         BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
@@ -172,7 +160,7 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnCreateNewProfile" Content="Create New Profile" Grid.Row="0"
-                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_PrimaryB}"
+                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_Secondary}"
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" FontFamily="Global Sans Serif" 
                                 FontSize="12" BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
 
@@ -297,10 +285,10 @@
                         </PasswordBox>
 
                         <Button x:Name="BtnLogIn" Content="Sign in" Grid.Column="1" Grid.Row="0"
-                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle_PrimaryA}" 
+                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle_Primary}" 
                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                                 Margin="5,0,0,0" Padding="15,8,15,8" MinWidth="30"
-                                FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B" 
+                                FontFamily="Global Sans Serif" FontSize="12" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Center"
                                 IsDefault="True"/>
                     </DockPanel>

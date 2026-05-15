@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Create New Profile" Height="410" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -17,19 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -166,7 +156,7 @@
 
             <DockPanel x:Name="BottomStackPanel" Margin="10,10,10,0" Grid.Row="4">
                 <Button x:Name="BtnCreateProfile" Content="Create" Click="BtnCreateProfile_Click" 
-                        Style="{StaticResource MenuButtonStyle_PrimaryA}" HorizontalAlignment="Left" 
+                        Style="{StaticResource MenuButtonStyle_Primary}" HorizontalAlignment="Left" 
                         Margin="10,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
                         FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"
                         IsDefault="True"/>

@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Settings"
         MinHeight="655" MinWidth="900"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -16,19 +17,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -132,7 +122,7 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnApply" Content="Apply" Grid.Row="1"
-                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle_PrimaryB}" 
+                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle_Secondary}" 
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
                                 FontFamily="Global Sans Serif" FontSize="12" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Bottom"

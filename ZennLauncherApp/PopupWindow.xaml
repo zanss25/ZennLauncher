@@ -8,7 +8,8 @@
         ResizeMode="NoResize"
         SizeToContent="Height"
         Title="PopupWindow" MinHeight="195" MinWidth="420" MaxWidth="450"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -17,19 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -89,7 +79,7 @@
 
             <DockPanel Margin="10,10,10,0" Grid.Row="4">
                 <Button x:Name="BtnOk" Content="Ok" Click="BtnOk_Click" 
-                        Style="{StaticResource MenuButtonStyle_PrimaryB}" Margin="10,10,10,25" Padding="15,8,15,8" 
+                        Style="{StaticResource MenuButtonStyle_Secondary}" Margin="10,10,10,25" Padding="15,8,15,8" 
                         MinWidth="150" MaxWidth="200" BorderThickness="0,0,0,0" HorizontalAlignment="Center"
                         FontFamily="Global Sans Serif" FontSize="12" 
                         VerticalAlignment="Bottom" IsDefault="True"/>
