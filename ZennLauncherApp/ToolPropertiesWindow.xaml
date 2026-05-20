@@ -32,9 +32,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Grid Margin="5,0,5,0">
@@ -71,7 +71,10 @@
         </StackPanel>
 
         <StackPanel Margin="10,10,10,0" Grid.Row="0">
-            <TextBlock Text="TITLE/DESCRIPTION" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="TITLE/DESCRIPTION" Padding="10" 
+                           FontFamily="{StaticResource FontTitle}"
+                           Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
             
             <TextBox Name="InputToolTitle" Margin="10,5,10,5"
                      Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
@@ -81,7 +84,10 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,10,0" Grid.Row="1">
-            <TextBlock Text="TARGET" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <TextBlock Text="TARGET" Padding="10" 
+                       FontFamily="{StaticResource FontTitle}"
+                       Foreground="{StaticResource TextWindowBrush}" 
+                       FontWeight="Bold"/>
 
             <Grid Margin="10,5,10,5">
                 <Grid.ColumnDefinitions>
@@ -97,7 +103,6 @@
                 <Button x:Name="BtnBrowseTarget" 
                         Grid.Column="1"
                         Content="Browse"
-                        FontSize="13"
                         Style="{StaticResource MenuButtonStyle_Common}"
                         Click="BtnBrowseTarget_Click" 
                         Margin="6,0,0,0" 
@@ -108,7 +113,11 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,10,0" Grid.Row="2">
-            <TextBlock Text="START IN" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <TextBlock Text="START IN" Padding="10" 
+                       FontFamily="{StaticResource FontTitle}"
+                       Foreground="{StaticResource TextWindowBrush}" 
+                       FontWeight="Bold"/>
+            
             <Grid Margin="10,5,10,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -123,7 +132,6 @@
                 <Button x:Name="BtnBrowseStartIn" 
                         Grid.Column="1"
                         Content="Browse" 
-                        FontSize="13"
                         Style="{StaticResource MenuButtonStyle_Common}"
                         Click="BtnBrowseStartIn_Click" 
                         Margin="6,0,0,0" 
@@ -134,7 +142,10 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,10,0" Grid.Row="3">
-            <TextBlock Text="LAUNCH OPTIONS" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+            <TextBlock Text="LAUNCH OPTIONS" Padding="10" 
+                       FontFamily="{StaticResource FontTitle}"
+                       Foreground="{StaticResource TextWindowBrush}" 
+                       FontWeight="Bold"/>
             <TextBox Name="InputToolLaunchOptions" Margin="10,5,10,5"
                      Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
         </StackPanel>
@@ -143,66 +154,43 @@
                 <Button x:Name="BtnSaveToolInfo" Content="Add" Click="BtnSaveToolInfo_Click" 
                         Style="{StaticResource MenuButtonStyle_Secondary}" HorizontalAlignment="Left"
                         Margin="10,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
-                        FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"
-                        IsDefault="True"/>
+                        VerticalAlignment="Bottom" IsDefault="True"/>
             </DockPanel>
 
             <DockPanel Margin="0,10,20,0" Grid.RowSpan="4" Grid.Column="1">
                 <StackPanel HorizontalAlignment="Left">
 
-                    <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                    <TextBlock Text=" " Padding="6"/>
                     <Border x:Name="PreviewIcon" 
                             Width="80" 
                             Height="80" 
+                            Background="{StaticResource CoverGridBrush}"
                             BorderBrush="#70594D7B" 
-                            BorderThickness="2">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
-                                <LinearGradientBrush.RelativeTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                        <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </LinearGradientBrush.RelativeTransform>
-                                <GradientStop Color="#FF342C49"/>
-                                <GradientStop Color="#FF342C49" Offset="1"/>
-                                <GradientStop Color="#FF403659" Offset="0.5"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                            BorderThickness="1">
                     </Border>
 
                     <Button x:Name="BtnChangeIcon" Content="Change" Click="BtnChangeIcon_Click" 
                             Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,0,10" Padding="8" 
-                            BorderThickness="0,0,0,0" FontFamily="Global Sans Serif" FontSize="13" />
+                            BorderThickness="0,0,0,0"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
 
-                    <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                    <TextBlock Text=" " Padding="6"/>
                     <Border x:Name="PreviewCover" 
                             Width="150" 
                             Height="225" 
+                            Background="{StaticResource CoverGridBrush}"
                             BorderBrush="#70594D7B" 
-                            BorderThickness="2">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
-                                <GradientStop Color="#FF342C49"/>
-                                <GradientStop Color="#FF342C49" Offset="1"/>
-                                <GradientStop Color="#FF403659" Offset="0.5"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                            BorderThickness="1">
                     </Border>
                     
                     <UniformGrid Columns="2">
                         <Button x:Name="BtnChangeCover" Content="Change" Click="BtnChangeCover_Click" 
-                                Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,3,10" Padding="8"  
-                                FontFamily="Global Sans Serif" FontSize="13" 
+                                Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,3,10" Padding="8"   
                                 BorderThickness="0,0,0,0"/>
                         <Button x:Name="BtnResetCover" Content="Reset" Click="BtnResetCover_Click" 
-                                Style="{StaticResource MenuButtonStyle_Common}" Margin="3,10,0,10" Padding="8"  
-                                FontFamily="Global Sans Serif" FontSize="13" 
+                                Style="{StaticResource MenuButtonStyle_Common}" Margin="3,10,0,10" Padding="8"    
                                 BorderThickness="0,0,0,0"/>
                     </UniformGrid>
 

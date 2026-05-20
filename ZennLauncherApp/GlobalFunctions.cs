@@ -32,7 +32,7 @@ namespace ZennLauncherApp
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 
         public int build = 10310;
-        public string version = "0.3.1 Beta (Indev)";
+        public string version = "0.3.1 Beta (Indev 1)";
 
         public string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 

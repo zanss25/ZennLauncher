@@ -63,9 +63,7 @@
                        Grid.Column="1" Grid.RowSpan="2"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       Foreground="WhiteSmoke"
-                       FontSize="22"
-                       FontWeight="Bold"/>
+                       Style="{StaticResource SettingsTitleText}"/>
 
             <Button x:Name="BtnEditProfile"
                     Margin="20,0" MinHeight="25" MaxHeight="35" Padding="10"
@@ -105,7 +103,7 @@
                         
                     </ItemsControl.ItemsPanel>
                     
-                        <Border x:Name="ResetPasswordBorder" BorderBrush="#22FFFFFF" 
+                        <Border x:Name="ResetPasswordBorder" BorderBrush="{StaticResource BorderCommonBrush}" 
                                 BorderThickness="0,1,0,0" Padding="0,13" Visibility="Visible">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
@@ -115,11 +113,12 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Reset Password" Grid.Column="0" 
-                                           VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                           VerticalAlignment="Center" 
+                                           Style="{StaticResource OptionNameText}"/>
 
                                 <TextBlock Text="Reset or change your current password" Grid.Column="1"
                                            HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                           Margin="15,0" Foreground="#55FFFFFF"/>
+                                           Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                                 <Button x:Name="BtnResetPass" Content="Reset Password" 
                                         Click="BtnResetPass_Click" Grid.Column="2"
@@ -129,7 +128,7 @@
                             </Grid>
                         </Border>
 
-                    <Border x:Name="AddPasswordBorder" BorderBrush="#22FFFFFF" 
+                    <Border x:Name="AddPasswordBorder" BorderBrush="{StaticResource BorderCommonBrush}" 
                             BorderThickness="0,1,0,0" Padding="0,13" Visibility="Collapsed">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -139,11 +138,12 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Add New Password" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Add a new password to your profile" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <Button x:Name="BtnAddPass" Content="Add Password" 
                                     Click="BtnAddPass_Click" Grid.Column="2"
@@ -153,7 +153,8 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                             <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -162,11 +163,12 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Backup Profile" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Backup current profile as .zip file" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <Button x:Name="BtnExportBackup" Content="Backup Profile" 
                                     Click="BtnExportBackup_Click" Grid.Column="2"
@@ -176,7 +178,8 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -185,11 +188,11 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Delete Profile" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Delete current profile permanently" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <Button x:Name="BtnDeleteProfile" Content="Delete Profile" 
                                     Click="BtnDeleteProfile_Click" Grid.Column="2"

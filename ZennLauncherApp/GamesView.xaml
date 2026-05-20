@@ -47,7 +47,7 @@
 
             <TextBlock Text="✖   No games found" FontSize="14" FontWeight="Regular"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Foreground="#70F5F5F5"/>
+                       FontFamily="{StaticResource FontCommon}" Foreground="#70F5F5F5"/>
         </Border>
 
         <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" 
@@ -71,7 +71,6 @@
                                 <Viewbox Width="140" Stretch="Uniform">
                                     <Button Width="149" Height="223" 
                                             BorderBrush="#00000000"
-                                            Foreground="WhiteSmoke"
                                             Style="{StaticResource CoverButtonStyle}"
                                             MouseDoubleClick="BtnApps_MouseDoubleClick"
                                             Tag="{Binding}"
@@ -124,7 +123,7 @@
                                                            TextAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
-                                                           Foreground="WhiteSmoke" />
+                                                           Foreground="{StaticResource TextCommonActiveBrush}" />
 
                                             </StackPanel>
 
@@ -180,6 +179,7 @@
 
                         <TextBlock IsHitTestVisible="False" 
                                    Text="🔍  Search games" 
+                                   FontFamily="{StaticResource FontCommon}"
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left" 
                                    Margin="20,0,0,0" 
@@ -208,12 +208,6 @@
                               SelectionChanged="ComboCategories_Changed"
                               PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" 
-                                             Color="#FF272237" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" 
-                                             Color="#FF272237" />
-                        </ComboBox.Resources>
 
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
@@ -226,7 +220,8 @@
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
-                    <TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF" 
+                    <TextBlock Text="Sort by" Margin="10,10,0,10"
+                               FontFamily="{StaticResource FontCommon}" Foreground="#66FFFFFF" 
                                HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                     <ComboBox x:Name="ComboSortBy" 
@@ -235,13 +230,6 @@
                               SelectionChanged="ComboSortBy_Changed"
                               PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
-
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" 
-                                             Color="#FF272237" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" 
-                                             Color="#FF272237" />
-                        </ComboBox.Resources>
 
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">

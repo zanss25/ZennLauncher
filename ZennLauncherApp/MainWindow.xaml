@@ -46,9 +46,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -90,7 +90,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"
                         Grid.ColumnSpan="2" MinWidth="55" MinHeight="40">
 
-                <TextBlock Text="ZENN" FontWeight="Bold" 
+                <TextBlock Text="ZENN" FontWeight="Bold" FontFamily="{StaticResource FontLogo}"
                            VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                            FontSize="17" Margin="0,0,0,5">
                     
@@ -182,8 +182,6 @@
                                         </TextBlock>
 
                                         <TextBlock Text="{Binding DisplayName}" 
-                                                   FontFamily="Bahnschrift Light" 
-                                                   FontSize="15"
                                                    Margin="10,0,0,0"
                                                    VerticalAlignment="Center"
                                                    x:Name="ItemText">
@@ -218,7 +216,7 @@
 
                             <ToggleButton x:Name="BtnProfileMenu" Tag="{Binding ProfileId}"
                                               Content="{Binding ProfileName, StringFormat='{}{0} ...'}"
-                                              FontFamily="Global User Interface" FontSize="13" 
+                                              FontFamily="{StaticResource FontSidebar}" FontSize="17" 
                                               BorderThickness="0" Padding="10">
                                 <ToggleButton.Style>
                                     <Style TargetType="ToggleButton" BasedOn="{StaticResource ToggleButtonStyle_ProfileMenu}">
@@ -236,9 +234,9 @@
                                        HorizontalOffset="0"
                                        VerticalOffset="-5">
 
-                                <Border Background="#F22B2245" 
+                                <Border Background="{StaticResource PopupBackgroundBrush}" 
                                             CornerRadius="5" 
-                                            BorderBrush="#FF594D7B"
+                                            BorderBrush="{StaticResource PopupBorderBrush}"
                                             BorderThickness="1"
                                             Width="300" Height="Auto"
                                             Margin="0,0,0,10">
@@ -254,9 +252,8 @@
 
                                             <StackPanel Grid.Row="0" Margin="10,5">
                                                 <TextBlock Text="{Binding ProfileName}"
-                                                               Foreground="White"
-                                                               FontSize="17"
-                                                               FontWeight="Bold"/>
+                                                           Style="{StaticResource SettingsTitleText}"
+                                                           FontSize="18"/>
                                                 <TextBlock Text=""
                                                                Foreground="WhiteSmoke"
                                                                Margin="0,5,0,5"
@@ -307,6 +304,7 @@
                                                                Background="#55594D7B"/>
                                                 <Button x:Name="BtnSettings"
                                                             Style="{StaticResource MenuButtonStyle_Popup}"
+                                                            
                                                             Content="Settings"
                                                             Click="BtnSettings_Click"
                                                             MinHeight="35"/>
@@ -372,8 +370,7 @@
                             Background="{StaticResource WindowBackgroundBrush_3}"
                             Content="✚  Add a Game" Margin="0"/>
                     <Button x:Name="BtnAddNewGame" Style="{StaticResource MenuButtonStyle_Primary}" 
-                            Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="0"
-                            FontFamily="Global User Interface" FontSize="13"/>
+                            Content="✚  Add a Game" Click="BtnAddNewGame_Click" Margin="0"/>
                 </Grid>
             </StackPanel>
 
@@ -394,10 +391,9 @@
                 <Grid>
                     <Button Style="{StaticResource MenuButtonStyle_Primary}"
                             Background="{StaticResource WindowBackgroundBrush_3}"
-                            Content="✚  Add a Game" Margin="0"/>
+                            Content="✚  Add a Tool" Margin="0"/>
                     <Button x:Name="BtnAddNewTool" Style="{StaticResource MenuButtonStyle_Primary}" 
-                            Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="0"
-                            FontFamily="Global User Interface" FontSize="13"/>
+                            Content="✚  Add a Tool" Click="BtnAddNewTool_Click" Margin="0"/>
                 </Grid>
             </StackPanel>
 

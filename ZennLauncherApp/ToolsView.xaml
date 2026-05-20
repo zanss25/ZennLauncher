@@ -71,7 +71,6 @@
 								<Viewbox Width="140" Stretch="Uniform">
 									<Button Width="149" Height="223"
                                             BorderBrush="#00000000"
-                                            Foreground="WhiteSmoke"
                                             Style="{StaticResource CoverButtonStyle}"
                                             MouseDoubleClick="BtnApps_MouseDoubleClick"
                                             Tag="{Binding}"
@@ -119,7 +118,7 @@
                                                            TextAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
-                                                           Foreground="WhiteSmoke" />
+                                                           Foreground="{StaticResource TextCommonActiveBrush}" />
 
 											</StackPanel>
 
@@ -174,6 +173,7 @@
 
 						<TextBlock IsHitTestVisible="False"
                                    Text="🔍  Search tools"
+                                   FontFamily="{StaticResource FontCommon}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="20,0,0,0"
@@ -196,18 +196,14 @@
 
 				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="1,0.5">
 
-					<ComboBox x:Name="ComboCategories"
+                    <ComboBox x:Name="ComboCategories"
                               Width="230" MinWidth="125" MaxWidth="250" Margin="0,7,10,7"
                               Style="{StaticResource ComboBoxStyle}"
                               SelectionChanged="ComboCategories_Changed"
                               PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
-						<ComboBox.Resources>
-							<SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
-							<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
-						</ComboBox.Resources>
 
-						<ComboBox.ItemContainerStyle>
+                        <ComboBox.ItemContainerStyle>
 							<Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
 
 							</Style>
@@ -218,22 +214,18 @@
 
 				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
-					<TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF"
+					<TextBlock Text="Sort by" Margin="10,10,0,10"
+                               FontFamily="{StaticResource FontCommon}" Foreground="#66FFFFFF"
                                HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-					<ComboBox x:Name="ComboSortBy"
+                    <ComboBox x:Name="ComboSortBy"
                               MinWidth="135" Margin="10,7,10,7"
                               Style="{StaticResource ComboBoxStyle}"
                               SelectionChanged="ComboSortBy_Changed"
                               PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
 
-						<ComboBox.Resources>
-							<SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
-							<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
-						</ComboBox.Resources>
-
-						<ComboBox.ItemContainerStyle>
+                        <ComboBox.ItemContainerStyle>
 							<Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
 								<Setter Property="Tag" Value="{Binding SortByTag}"/>
 							</Style>

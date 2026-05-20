@@ -50,14 +50,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Folders"
-                               Grid.Column="1" Grid.Row="0"
-                               VerticalAlignment="Center"
-                               Foreground="WhiteSmoke"
-                               FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                   Grid.Column="1" Grid.Row="0"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource SettingsTitleText}" 
+                                   HorizontalAlignment="Left"/>
 
                     </Grid>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" BorderThickness="0,1,0,0" Padding="0,13" Margin="0,0,0,5">
                         <Grid HorizontalAlignment="Stretch">
 
                             <Grid.ColumnDefinitions>
@@ -72,11 +72,12 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Games Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the default folder directory when selecting games executable" 
                                        Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0"  HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+                                       VerticalAlignment="Center" Margin="15,0,0,10" 
+                                       Style="{StaticResource OptionDescText}"/>
 
                             <TextBox x:Name="InputGamesDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
@@ -127,11 +128,12 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Tools Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the default folder directory when selecting tools executable" 
                                        Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+                                       VerticalAlignment="Center" Margin="15,0,0,10" 
+                                       Style="{StaticResource OptionDescText}"/>
 
                             <TextBox x:Name="InputToolsDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
@@ -182,11 +184,12 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Icons Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the default folder directory when selecting icon files" 
                                        Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+                                       VerticalAlignment="Center" Margin="15,0,0,10" 
+                                       Style="{StaticResource OptionDescText}"/>
 
                             <TextBox x:Name="InputIconsDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
@@ -236,11 +239,12 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Cover Grids Default Directory" Grid.Column="0" Grid.Row="0" Margin="0,0,0,10"
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the default folder directory when selecting cover grid files" 
                                        Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Center" Margin="15,0,0,10" Foreground="#55FFFFFF"/>
+                                       VerticalAlignment="Center" Margin="15,0,0,10" 
+                                       Style="{StaticResource OptionDescText}"/>
 
                             <TextBox x:Name="InputCoversDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"

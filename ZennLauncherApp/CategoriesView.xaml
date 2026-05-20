@@ -76,6 +76,7 @@
                     <DataGrid x:Name="AppsDataGrid" 
                               AutoGenerateColumns="False"
                               Background="Transparent"
+                              FontFamily="{StaticResource FontCommon}"
                               BorderThickness="0"
                               GridLinesVisibility="None"
                               CanUserAddRows="False"
@@ -158,11 +159,11 @@
                             <Button x:Name="BtnSidebarCollapse"
                                     FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf03a;" 
                                     FontSize="16" FontWeight="Light" Padding="0" Margin="10,5,0,5"
-                                    Background="Transparent" MinHeight="20" MinWidth="30" MaxWidth="40"
+                                    MinHeight="20" MinWidth="30" MaxWidth="40"
                                     Click="BtnSidebarCollapse_Click">
 
                                 <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Common}">
+                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Bars}">
 
                                     </Style>
                                 </Button.Style>
@@ -185,7 +186,8 @@
                                           Style="{StaticResource TextBoxStyle}"/>
 
                                 <TextBlock IsHitTestVisible="False" 
-                                           Text="🔍  Search games/tools" 
+                                           Text="🔍  Search games/tools"
+                                           FontFamily="{StaticResource FontCommon}"
                                            VerticalAlignment="Center" 
                                            HorizontalAlignment="Left" 
                                            Margin="20,0,0,0" 
@@ -217,8 +219,8 @@
                                 IsEnabled="False">
 
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MenuButtonStyle_Common}">
-                                    <Setter Property="Background" Value="Transparent"/>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MenuButtonStyle_Bars}">
+                                    
                                 </Style>
                             </Button.Style>
                             
@@ -249,7 +251,8 @@
                                 <StackPanel Margin="5">
                                     <!-- Header Dinamis -->
                                     <TextBlock x:Name="TextPopupHeader" Text="Add to Category" 
-                                               Foreground="Gray" FontSize="10" Margin="10,5"/>
+                                               Foreground="Gray" FontFamily="{StaticResource FontCommon}" 
+                                               FontSize="10" Margin="10,5"/>
 
                                     <!-- Daftar Kategori -->
                                     <ItemsControl x:Name="ListPopupCategories">
@@ -300,7 +303,8 @@
 
                     <TextBlock x:Name="SearchBarCategoriesTextOverlay"
                                IsHitTestVisible="False" Grid.Column="0"
-                               Text="🔍  Search categories" 
+                               Text="🔍  Search categories"
+                               FontFamily="{StaticResource FontCommon}"
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Left" 
                                Margin="20,0,0,0" 
@@ -329,13 +333,12 @@
                     <StackPanel>
                         <StackPanel x:Name="GamesCategories" Margin="15,6,15,10">
                             <Grid Margin="0,0,0,10">
-                                <TextBlock Text="Games" Foreground="#DDF5F5F5" 
+                                <TextBlock Text="Games" Foreground="#DDF5F5F5" FontFamily="{StaticResource FontCommon}" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Bold"/>
                                 <Button x:Name="BtnAddNewCategoryGames"
                                         FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
-                                        Style="{StaticResource MenuButtonStyle_Common}"
-                                        Background="Transparent"
+                                        Style="{StaticResource MenuButtonStyle_Bars}"
                                         Click="BtnAddNewCategoryGames_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
@@ -344,6 +347,7 @@
 
                             <ListBox x:Name="GamesCategoriesList"
                                      Style="{StaticResource ListBoxStyle}"
+                                     FontWeight="Medium"
                                      SelectionChanged="GamesCategoriesList_Changed"
                                      BorderThickness="0.5"
                                      MinHeight="30">
@@ -355,7 +359,8 @@
                                                 <ControlTemplate TargetType="ListBoxItem">
                                                     <Border x:Name="ItemBorder" 
                                                             Background="{TemplateBinding Background}" 
-                                                            CornerRadius="4" Margin="0,1" Padding="10,5">
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                            MinHeight="30">
                                                         
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
@@ -429,11 +434,11 @@
                             <Grid Margin="0,0,0,10">
                                 <TextBlock Text="Tools" Foreground="#DDF5F5F5" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontFamily="{StaticResource FontCommon}"
                                            FontSize="15" FontWeight="Bold"/>
                                 <Button x:Name="BtnAddNewCategoryTools"
                                         FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
-                                        Style="{StaticResource MenuButtonStyle_Common}"
-                                        Background="Transparent"
+                                        Style="{StaticResource MenuButtonStyle_Bars}"
                                         Click="BtnAddNewCategoryTools_Click"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
@@ -443,6 +448,7 @@
                             <ListBox x:Name="ToolsCategoriesList"
                                      Style="{StaticResource ListBoxStyle}"
                                      SelectionChanged="ToolsCategoriesList_Changed"
+                                     FontWeight="Medium"
                                      BorderThickness="0.5"
                                      MinHeight="30">
 
@@ -453,7 +459,8 @@
                                                 <ControlTemplate TargetType="ListBoxItem">
                                                     <Border x:Name="ItemBorder" 
                                                             Background="{TemplateBinding Background}" 
-                                                            CornerRadius="4" Margin="0,1" Padding="10,5">
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                            MinHeight="30">
 
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>

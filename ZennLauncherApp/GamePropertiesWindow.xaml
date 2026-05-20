@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:ZennLauncherApp"
         mc:Ignorable="d"
         Title="Game Properties" 
-        Height="540" Width="667"
+        Height="490" Width="667"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -19,13 +20,6 @@
     <Window.Resources>
 
     </Window.Resources>
-
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -38,9 +32,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -78,9 +72,12 @@
             </StackPanel>
 
             <StackPanel Margin="10,10,10,0" Grid.Row="0">
-                <TextBlock Text="TITLE/SUBTITLE" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
-                
-                <TextBox Name="InputGameTitle" Margin="10,5,10,5" 
+                <TextBlock Text="TITLE/SUBTITLE" Padding="10" 
+                           FontFamily="{StaticResource FontTitle}" 
+                           Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
+
+                <TextBox Name="InputGameTitle" Margin="10,5,10,5"
                          Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
                 
                 <TextBox Name="InputGameSubtitle" Margin="10" 
@@ -88,7 +85,10 @@
             </StackPanel>
 
             <StackPanel Margin="10,0,10,0" Grid.Row="1">
-                <TextBlock Text="TARGET" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="TARGET" Padding="10" 
+                           FontFamily="{StaticResource FontTitle}" 
+                           Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
 
                 <Grid Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
@@ -104,7 +104,6 @@
                     <Button x:Name="BtnBrowseTarget" 
                             Grid.Column="1"
                             Content="Browse"
-                            FontSize="13"
                             Style="{StaticResource MenuButtonStyle_Common}"
                             Click="BtnBrowseTarget_Click" 
                             Margin="6,0,0,0" 
@@ -115,7 +114,10 @@
             </StackPanel>
 
             <StackPanel Margin="10,0,10,0" Grid.Row="2">
-                <TextBlock Text="START IN" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="START IN" Padding="10" 
+                           FontFamily="{StaticResource FontTitle}" 
+                           Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
                 <Grid Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -130,7 +132,6 @@
                     <Button x:Name="BtnBrowseStartIn" 
                             Grid.Column="1"
                             Content="Browse" 
-                            FontSize="13"
                             Style="{StaticResource MenuButtonStyle_Common}"
                             Click="BtnBrowseStartIn_Click" 
                             Margin="6,0,0,0" 
@@ -141,7 +142,10 @@
             </StackPanel>
 
             <StackPanel Margin="10,0,10,0" Grid.Row="3">
-                <TextBlock Text="LAUNCH OPTIONS" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="LAUNCH OPTIONS" Padding="10" 
+                           FontFamily="{StaticResource FontTitle}" 
+                           Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
                 
                 <TextBox Name="InputGameLaunchOptions" Margin="10,5,10,5" 
                          Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
@@ -158,28 +162,14 @@
                     <Border x:Name="PreviewIcon" 
                             Width="80" 
                             Height="80" 
-                            BorderBrush="#70594D7B" 
-                            BorderThickness="2">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
-                                <LinearGradientBrush.RelativeTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                        <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </LinearGradientBrush.RelativeTransform>
-                                <GradientStop Color="#FF342C49"/>
-                                <GradientStop Color="#FF342C49" Offset="1"/>
-                                <GradientStop Color="#FF403659" Offset="0.5"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                            Background="{StaticResource CoverGridBrush}"
+                            BorderBrush="#70594D7B"
+                            BorderThickness="1">
                     </Border>
 
                     <Button x:Name="BtnChangeIcon" Content="Change" Click="BtnChangeIcon_Click" 
                             Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,0,10" Padding="8"
-                            BorderThickness="0,0,0,0" FontFamily="Global Sans Serif" FontSize="13" />
+                            BorderThickness="0,0,0,0"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
@@ -187,26 +177,19 @@
                     <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
                     <Border x:Name="PreviewCover" 
                             Width="150" 
-                            Height="225" 
-                            BorderBrush="#70594D7B" 
-                            BorderThickness="2">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
-                                <GradientStop Color="#FF342C49"/>
-                                <GradientStop Color="#FF342C49" Offset="1"/>
-                                <GradientStop Color="#FF403659" Offset="0.5"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                            Height="225"
+                            Background="{StaticResource CoverGridBrush}"
+                            BorderBrush="#70594D7B"
+                            BorderThickness="1">
+
                     </Border>
 
                     <UniformGrid Columns="2">
                         <Button x:Name="BtnChangeCover" Content="Change" Click="BtnChangeCover_Click" 
                                 Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,3,10" Padding="8" 
-                                FontFamily="Global Sans Serif" FontSize="13"  
                                 BorderThickness="0,0,0,0"/>
                         <Button x:Name="BtnResetCover" Content="Reset" Click="BtnResetCover_Click" 
                                 Style="{StaticResource MenuButtonStyle_Common}" Margin="3,10,0,10" Padding="8" 
-                                FontFamily="Global Sans Serif" FontSize="13"  
                                 BorderThickness="0,0,0,0"/>
                     </UniformGrid>
                 </StackPanel>
@@ -220,20 +203,16 @@
                 </Grid.ColumnDefinitions>
                 
                 <CheckBox x:Name="CheckBoxSteamGameFeature" Content="Enable Steam Game Feature"
-                          Style="{StaticResource CheckBoxStyle}"
-                          IsEnabled="False"
-                          Visibility="Visible" Grid.Column="0"
-                          Margin="20,15" Foreground="#CCFFFFFF" 
-                          VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                          Style="{StaticResource CheckBoxStyle}" IsEnabled="False" Visibility="Collapsed" 
+                          Grid.Column="0" Margin="20,15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-                <TextBlock x:Name="TextBlockSteamId" Text="No ID Selected" Grid.Column="1"
-                           Margin="20,15" Foreground="#44FFFFFF"/>
+                <TextBlock x:Name="TextBlockSteamId" Text="No ID Selected" IsEnabled="False" Visibility="Collapsed" 
+                           Grid.Column="1" Margin="20,15" Foreground="{StaticResource TextCommonDisabledBrush}"/>
 
                 <Button x:Name="BtnSaveGameInfo" Content="Add" Click="BtnSaveGameInfo_Click" Grid.Column="0"
                         Style="{StaticResource MenuButtonStyle_Secondary}" HorizontalAlignment="Left" 
                         Margin="20,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
-                        FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"
-                        IsDefault="True"/>
+                        VerticalAlignment="Bottom" IsDefault="True"/>
                 
             </Grid>
 

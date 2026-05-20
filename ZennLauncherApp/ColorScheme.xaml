@@ -10,20 +10,23 @@
     <Color x:Key="TitleColor">#7FC9B5FF</Color>
     <Color x:Key="BorderColor_A">#FF2A243B</Color>
     <Color x:Key="BorderColor_B">#FF2E2741</Color>
+    <Color x:Key="TitleBackgroundA">#FF2A243B</Color>
+    <Color x:Key="TitleBackgroundB">#FF2E2741</Color>
 
     <!-- Backgrounds -->
-    <Color x:Key="WindowBackground_1">#FF1A1820</Color>
-    <Color x:Key="WindowBackground_2A">#FF221E2D</Color>
-    <Color x:Key="WindowBackground_2B">#FF251E39</Color>
-    <Color x:Key="WindowBackground_3">#F22B2245</Color>
+    <Color x:Key="WindowBackground_1">#FF1A1420</Color>
+    <Color x:Key="WindowBackground_2A">#FF221A2D</Color>
+    <Color x:Key="WindowBackground_2B">#FF251A39</Color>
+    <Color x:Key="WindowBackground_3">#F22B1E45</Color>
 
     <!-- Texts -->
-    <Color x:Key="TextColorCommon">#A6FFFFFF</Color>
+    <Color x:Key="TextColorCommon">#AAF5F5F5</Color>
+    <Color x:Key="TextColorCommonBrighter">#DDF5F5F5</Color>
     <Color x:Key="TextColorCommonActive">#FFF5F5F5</Color>
     <Color x:Key="TextColorPressed">#AAF5F5F5</Color>
     <Color x:Key="TextColorDisabled">#DDF5F5F5</Color>
     <Color x:Key="TextColorWindow">#A89A8FB9</Color>
-    <Color x:Key="TextColorWindowActive">#FF9A8FB9</Color>
+    <Color x:Key="TextColorWindowBrighter">#FF9A8FB9</Color>
 
     <!-- TextBoxes -->
     <Color x:Key="TextBoxBackground">#FF272237</Color>
@@ -81,6 +84,9 @@
     <Color x:Key="ListBoxBorder">#66C9B5FF</Color>
     <Color x:Key="ListBoxItemBackgroundHover">#6B4B3E68</Color>
     <Color x:Key="ListBoxItemBorderSelected">#BB9083B3</Color>
+    
+    <!-- Borders (Line Separation) -->
+    <Color x:Key="BorderCommon">#22FFFFFF</Color>
 
     <!-- ============================================================
          BRUSHES (Solid & Gradients)
@@ -115,7 +121,7 @@
     <SolidColorBrush x:Key="TextCommonPressedBrush" Color="{StaticResource TextColorPressed}"/>
     <SolidColorBrush x:Key="TextCommonDisabledBrush" Color="{StaticResource TextColorDisabled}"/>
     <SolidColorBrush x:Key="TextWindowBrush" Color="{StaticResource TextColorWindow}"/>
-    <SolidColorBrush x:Key="TextWindowActiveBrush" Color="{StaticResource TextColorWindowActive}"/>
+    <SolidColorBrush x:Key="TextWindowBrighterBrush" Color="{StaticResource TextColorWindowBrighter}"/>
 
     <!-- TextBox Brushes -->
     <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource TextBoxBackground}"/>
@@ -179,5 +185,15 @@
     <SolidColorBrush x:Key="ListBoxBorderBrush" Color="{StaticResource ListBoxBorder}"/>
     <SolidColorBrush x:Key="ListBoxItemBackgroundHoverBrush" Color="{StaticResource ListBoxItemBackgroundHover}"/>
     <SolidColorBrush x:Key="ListBoxItemBorderSelectedBrush" Color="{StaticResource ListBoxItemBorderSelected}"/>
+
+    <!-- Border (Line Separation) Brushes -->
+    <SolidColorBrush x:Key="BorderCommonBrush" Color="{StaticResource BorderCommon}"/>
+
+    <!-- Cover Grid Brushes -->
+    <LinearGradientBrush x:Key="CoverGridBrush" EndPoint="0,0" StartPoint="1,1">
+        <GradientStop Color="#FF342C49"/>
+        <GradientStop Color="#FF342C49" Offset="1"/>
+        <GradientStop Color="#FF403659" Offset="0.5"/>
+    </LinearGradientBrush>
 
 </ResourceDictionary>

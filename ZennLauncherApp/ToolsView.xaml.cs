@@ -215,15 +215,17 @@ namespace ZennLauncherApp
                 {
                     if (System.IO.File.Exists(tool.ToolTarget))
                     {
-                        Process.Start("explorer.exe", $"/select,\"{tool.ToolTarget}\"");
+                        string folderPath = System.IO.Path.GetDirectoryName(tool.ToolTarget);
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = folderPath,
+                            UseShellExecute = true
+                        });
                     }
                     else
                     {
-                        string dir = System.IO.Path.GetDirectoryName(tool.ToolTarget);
-                        if (System.IO.Directory.Exists(dir))
-                        {
-                            Process.Start("explorer.exe", dir);
-                        }
+                        MessageBox.Show("Directory or file not found.", "Error",
+                                            MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)

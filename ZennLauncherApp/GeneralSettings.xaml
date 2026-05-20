@@ -50,12 +50,13 @@
                         <TextBlock Text="General"
                                    Grid.Column="1" Grid.Row="0"
                                    VerticalAlignment="Center"
-                                   Foreground="WhiteSmoke"
-                                   FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                   Style="{StaticResource SettingsTitleText}" 
+                                   HorizontalAlignment="Left"/>
 
                     </Grid>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             
                             <Grid.ColumnDefinitions>
@@ -65,18 +66,18 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Default Starting View" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Choose which tab is displayed when the launcher starts" Grid.Column="1"
-                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboDefaultStartingTab"
                                       MinWidth="125" Grid.Column="2"
                                       MinHeight="30" Padding="10,8"
-                                      Style="{StaticResource ComboBoxStyleB}"
+                                      Style="{StaticResource ComboBoxStyle}"
                                       SelectionChanged="ComboDefaultStartingTab_Changed"
-                                      Background="#31A896DD" BorderBrush="#FF594D7B" 
                                       HorizontalAlignment="Right">
 
                                 <ComboBox.ItemContainerStyle>
@@ -89,7 +90,8 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -97,19 +99,19 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Default Games Sort Option" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                            <TextBlock Text="Default Games Sort Option" Grid.Column="0"  
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set games default sorting method (e.g., Alphabetical)" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboGamesSortOption"
                                       MinWidth="125" Grid.Column="2"
                                       MinHeight="30" Padding="10,8"
-                                      Style="{StaticResource ComboBoxStyleB}"
+                                      Style="{StaticResource ComboBoxStyle}"
                                       SelectionChanged="ComboGamesSortOption_Changed"
-                                      Background="#31A896DD" BorderBrush="#FF594D7B" 
                                       HorizontalAlignment="Right">
 
                                 <ComboBox.ItemContainerStyle>
@@ -123,7 +125,8 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -132,18 +135,18 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Default Tools Sort Option" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set tools default sorting method (e.g., Alphabetical)" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboToolsSortOption"
                                       MinWidth="125" Grid.Column="2"
                                       MinHeight="30" Padding="10,8"
-                                      Style="{StaticResource ComboBoxStyleB}"
+                                      Style="{StaticResource ComboBoxStyle}"
                                       SelectionChanged="ComboToolsSortOption_Changed"
-                                      Background="#31A896DD" BorderBrush="#FF594D7B" 
                                       HorizontalAlignment="Right">
 
                                 <ComboBox.ItemContainerStyle>
@@ -157,7 +160,8 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" 
+                            BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -166,18 +170,18 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Games Post-Launch Action" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the launcher’s visibility once a game is running" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboGamesLaunch"
                                       MinWidth="125" Grid.Column="2"
                                       MinHeight="30" Padding="10,8"
-                                      Style="{StaticResource ComboBoxStyleB}"
+                                      Style="{StaticResource ComboBoxStyle}"
                                       SelectionChanged="ComboGamesLaunch_Changed"
-                                      Background="#31A896DD" BorderBrush="#FF594D7B" 
                                       HorizontalAlignment="Right">
 
                                 <ComboBoxItem Content="Hide to Background" Tag="HideLauncher"/>
@@ -195,7 +199,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -204,18 +208,18 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Tools Post-Launch Action" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Set the launcher’s visibility once a tool is running" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboToolsLaunch"
                                       MinWidth="125" Grid.Column="2"
                                       MinHeight="30" Padding="10,8"
-                                      Style="{StaticResource ComboBoxStyleB}"
+                                      Style="{StaticResource ComboBoxStyle}"
                                       SelectionChanged="ComboToolsLaunch_Changed"
-                                      Background="#31A896DD" BorderBrush="#FF594D7B" 
                                       HorizontalAlignment="Right">
 
                                 <ComboBoxItem Content="Hide to Background" Tag="HideLauncher"/>
@@ -233,7 +237,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                    <Border BorderBrush="{StaticResource BorderCommonBrush}" BorderThickness="0,1,0,0" Padding="0,13">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -242,18 +246,18 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Startup on Windows Login" Grid.Column="0" 
-                                       VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center" 
+                                       Style="{StaticResource OptionNameText}"/>
 
                             <TextBlock Text="Automatically start the launcher at Windows login" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Margin="15,0" Foreground="#55FFFFFF"/>
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <CheckBox x:Name="CheckBoxStartupOnWindows" Content="" 
                                       Grid.Column="2" MaxHeight="30" Padding="10,8"
                                       Click="CheckBoxStartupOnWindows_Click"
                                       Style="{StaticResource CheckBoxStyle}"
-                                      Foreground="#CCFFFFFF"  HorizontalAlignment="Right"
-                                      IsEnabled="False"/>
+                                      HorizontalAlignment="Right" IsEnabled="False"/>
                         </Grid>
                     </Border>
 

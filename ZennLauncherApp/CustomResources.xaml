@@ -8,6 +8,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{StaticResource TitleBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontTitle}"/>
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Margin" Value="0,1,0,0" />
@@ -84,6 +85,9 @@
     <Style x:Key="MenuButtonStyle_Common" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource BtnCommonBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -126,10 +130,60 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MenuButtonStyle_Bars" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="MainBorder" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{StaticResource BtnCommonBorderBrush}"
+                        BorderThickness="0.7"
+                        CornerRadius="4" 
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="{StaticResource BtnCommonHoverBrush}"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="MainBorder" Property="Background" Value="Transparent"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource BtnCommonBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MenuButtonStyle_Popup" TargetType="Button">
         <!-- Used in "Profile Menu" Popup at MainWindow -->
         <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -184,7 +238,8 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
-        <Setter Property="FontFamily" Value="Global Sans Serif"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
         <Setter Property="MinWidth" Value="125"/>
@@ -254,7 +309,8 @@
         <!-- Used in "Apply" and "Ok" buttons -->
         <Setter Property="Background" Value="{StaticResource BtnSecondaryBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
-        <Setter Property="FontFamily" Value="Global Sans Serif"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
         <Setter Property="MinWidth" Value="125"/>
@@ -310,6 +366,9 @@
         <!-- Used in buttons at "SettingsWindow" User Control instances -->
         <Setter Property="Background" Value="#FF353144"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -348,6 +407,9 @@
     <Style x:Key="MenuButtonStyle_SidebarList" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -387,6 +449,9 @@
     <Style x:Key="ToggleButtonStyle_Common" TargetType="ToggleButton">
         <Setter Property="Background" Value="{StaticResource BtnCommonBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -447,7 +512,8 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
-        <Setter Property="FontFamily" Value="Global Sans Serif"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,8,15,8"/>
         <Setter Property="MinWidth" Value="125"/>
@@ -528,6 +594,9 @@
     <Style x:Key="ToggleButtonStyle_ProfileMenu" TargetType="ToggleButton">
         <Setter Property="Background" Value="#00221E2F"/>
         <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontSidebar}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -615,6 +684,9 @@
     <Style x:Key="MenuButtonStyle_ProfileMenu" TargetType="Button">
         <Setter Property="Background" Value="#00221E2F"/>
         <Setter Property="Foreground" Value="#CCF5F5F5"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -639,6 +711,7 @@
     </Style>
 
     <Style x:Key="HyperlinkStyle" TargetType="Hyperlink">
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="Foreground" Value="#A89A8FB9"/>
         <Setter Property="TextDecorations" Value="None"/>
         <Style.Triggers>
@@ -653,7 +726,9 @@
     <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Background" Value="#FF18161f"/>
         <Setter Property="BorderBrush" Value="#FF594d7b"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="TextBlock.FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="6,0,0,0"/>
 
@@ -917,6 +992,8 @@
     <Style x:Key="ListBoxItemStyle_Primary" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#99FFFFFF"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontSidebar}"/>
+        <Setter Property="FontSize" Value="17"/>
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Margin" Value="0,2,0,1"/>
         <Setter Property="Template">
@@ -955,6 +1032,9 @@
     <Style x:Key="ListBoxItemStyle_Common" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#99FFFFFF"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Margin" Value="2,2,2,0"/>
         <Setter Property="Template">
@@ -991,6 +1071,7 @@
     <Style x:Key="ListBoxItemStyleC" TargetType="ListBoxItem">
         <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
         <Setter Property="Foreground" Value="#99FFFFFF"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Margin" Value="0,2,0,0"/>
         <Setter Property="Template">
@@ -1036,8 +1117,9 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
         <Setter Property="BorderBrush" Value="#FF221E2F"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -1072,12 +1154,15 @@
         </Setter>
     </Style>
 
+    <FontWeight x:Key="ComboBoxFontWeight">Medium</FontWeight>
+
     <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
         <Setter Property="Padding" Value="10,6"/>
-        <Setter Property="Foreground" Value="#76FFFFFF"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="{StaticResource ComboBoxFontWeight}"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="MinWidth" Value="200"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1085,7 +1170,7 @@
                     
                     <Border x:Name="ItemBorder"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="Transparent"
+                            BorderBrush="{StaticResource BtnPopupBorderBrush}"
                             BorderThickness="0"
                             CornerRadius="3"
                             Margin="2,0"
@@ -1097,16 +1182,17 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#666A59A0"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BtnPopupHoverBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BtnPopupBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
                         </Trigger>
 
                         <Trigger Property="IsHighlighted" Value="True">
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#FF666666"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                     
@@ -1117,38 +1203,43 @@
 
     <Style x:Key="ComboBoxItemStyleB" TargetType="ComboBoxItem">
         <Setter Property="Padding" Value="10,6"/>
-        <Setter Property="Foreground" Value="#A6FFFFFF"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="Background" Value="{StaticResource BtnPopupBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="{StaticResource ComboBoxFontWeight}"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">
-                    
+
                     <Border x:Name="ItemBorder"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="Transparent"
+                            BorderBrush="{StaticResource BtnPopupBorderBrush}"
                             BorderThickness="0"
-                            CornerRadius="4"
-                            Margin="2,0"
-                            Padding="4,5">
+                            CornerRadius="3"
+                            Margin="0,0"
+                            Padding="4,8">
                         <ContentPresenter HorizontalAlignment="Left" 
-                          VerticalAlignment="Center"/>
+                                  VerticalAlignment="Center"
+                                  Margin="4,0"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="#30A896DD"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BtnPopupHoverBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BtnPopupBorderHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="WhiteSmoke"/>
                         </Trigger>
 
                         <Trigger Property="IsHighlighted" Value="True">
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#FF666666"/> 
+                            <Setter Property="Foreground" Value="{StaticResource TextCommonDisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1156,10 +1247,11 @@
 
     <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
         <Setter Property="Background" Value="#35A896DD"/>
-        <Setter Property="Foreground" Value="#76FFFFFF"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
         <Setter Property="BorderBrush" Value="#FF594D7B"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="10,5"/>
         <Setter Property="MaxDropDownHeight" Value="400"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemStyle}"/>
@@ -1191,7 +1283,7 @@
 
                                             <Path x:Name="Arrow"
                                                   Grid.Column="1"
-                                                  Fill="#90FFFFFF"
+                                                  Fill="{StaticResource TextCommonBrush}"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Data="M0,0 L4,4 L8,0 Z" />
@@ -1201,7 +1293,8 @@
 
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="Border" Property="Background" Value="#AB6A59A0"/>
-                                            <Setter TargetName="Arrow" Property="Fill" Value="#FFFFFFFF"/>
+                                            <Setter TargetName="Arrow" Property="Fill" 
+                                                    Value="{StaticResource TextCommonActiveBrush}"/>
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
 
@@ -1213,7 +1306,8 @@
                                         <Trigger Property="IsChecked" Value="True">
                                             <Setter TargetName="Border" Property="Background" Value="#BB211739"/>
                                             <Setter TargetName="Border" Property="BorderBrush" Value="#FF594D7B"/>
-                                            <Setter TargetName="Arrow" Property="Fill" Value="#90FFFFFF"/>
+                                            <Setter TargetName="Arrow" Property="Fill" 
+                                                    Value="{StaticResource TextCommonActiveBrush}"/>
                                         </Trigger>
 
                                     </ControlTemplate.Triggers>
@@ -1280,13 +1374,18 @@
 
     <Style x:Key="ComboBoxStyleB" TargetType="ComboBox">
         <Setter Property="Background" Value="#35A896DD"/>
-        <Setter Property="Foreground" Value="#A6FFFFFF"/>
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="BorderBrush" Value="#FF594D7B"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="MaxDropDownHeight" Value="400"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
-                    
+
                     <Grid>
                         <ToggleButton x:Name="ToggleButton"
                                       Background="{TemplateBinding Background}"
@@ -1299,7 +1398,8 @@
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">
                                     <Border x:Name="Border" 
-                                            Background="{TemplateBinding Background}" 
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="#60A896DD"
                                             BorderThickness="0.7"
                                             CornerRadius="4">
                                         <Grid>
@@ -1310,30 +1410,31 @@
 
                                             <Path x:Name="Arrow"
                                                   Grid.Column="1"
-                                                  Fill="#90FFFFFF"
+                                                  Fill="{StaticResource TextCommonBrush}"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Data="M0,0 L4,4 L8,0 Z" />
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
-                                        
+
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#70A896DD"/>
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="#80594D7B"/>
-                                            <Setter TargetName="Arrow" Property="Fill" Value="#FFFFFFFF"/>
+                                            <Setter TargetName="Border" Property="Background" Value="#AB6A59A0"/>
+                                            <Setter TargetName="Arrow" Property="Fill" 
+                                            Value="{StaticResource TextCommonActiveBrush}"/>
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
 
                                         <Trigger Property="IsPressed" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#CC262135"/>
+                                            <Setter TargetName="Border" Property="Background" Value="#CC2B2245"/>
                                             <Setter TargetName="Border" Property="BorderBrush" Value="#FF594D7B"/>
                                         </Trigger>
 
                                         <Trigger Property="IsChecked" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#DD1D1B26"/>
+                                            <Setter TargetName="Border" Property="Background" Value="#BB211739"/>
                                             <Setter TargetName="Border" Property="BorderBrush" Value="#FF594D7B"/>
-                                            <Setter TargetName="Arrow" Property="Fill" Value="#90FFFFFF"/>
+                                            <Setter TargetName="Arrow" Property="Fill" 
+                                            Value="{StaticResource TextCommonActiveBrush}"/>
                                         </Trigger>
 
                                     </ControlTemplate.Triggers>
@@ -1342,13 +1443,13 @@
                         </ToggleButton>
 
                         <ContentPresenter Name="ContentSite"
-                                          IsHitTestVisible="False" 
-                                          Content="{TemplateBinding SelectionBoxItem}"
-                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                          Margin="10,0,30,0"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Left" />
+                                  IsHitTestVisible="False" 
+                                  Content="{TemplateBinding SelectionBoxItem}"
+                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                  Margin="12,0,30,0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"/>
 
                         <Popup Name="Popup"
                                Placement="Bottom"
@@ -1364,26 +1465,32 @@
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
 
                                 <Border x:Name="DropDownBorder"
-                                        Background="#F0262135"
+                                        Background="{StaticResource PopupBackgroundBrush}"
                                         BorderThickness="1"
-                                        BorderBrush="#FF565165"
-                                        CornerRadius="0,0,3,3"/>
+                                        BorderBrush="{StaticResource PopupBorderBrush}"
+                                        CornerRadius="4"/>
 
-                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True"
+                                              Padding="4">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+
+                                    <ScrollViewer.Resources>
+                                        <Style TargetType="ScrollBar" BasedOn="{StaticResource SimpleScrollBar}"/>
+                                    </ScrollViewer.Resources>
                                 </ScrollViewer>
 
                             </Grid>
                         </Popup>
+
                     </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsDropDownOpen" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="#90FFFFFF"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{StaticResource TextCommonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
 
@@ -1400,6 +1507,7 @@
         <Setter Property="Padding" Value="8,5"/>
         <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1449,6 +1557,7 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="CaretBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource TextBoxBorderActiveBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -1741,16 +1850,22 @@
                                               HorizontalAlignment="Center"
                                               Margin="5,0"/>
 
-                            <ContentPresenter Grid.Column="1"
-                                              ContentSource="Header"
-                                              VerticalAlignment="Center"
-                                              Margin="5,0"/>
+                            <ContentPresenter Name="PART_Header" ContentSource="Header" Visibility="Collapsed"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{TemplateBinding Header}"
+                                       FontFamily="{StaticResource FontCommon}" 
+                                       FontSize="12"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       VerticalAlignment="Center"
+                                       Margin="5,0"/>
 
                             <TextBlock Grid.Column="2"
                                        Text="{TemplateBinding InputGestureText}"
+                                       FontFamily="{StaticResource FontCommon}"
+                                       Foreground="#88FFFFFF"
                                        VerticalAlignment="Center"
                                        Margin="5,0"
-                                       Foreground="#88FFFFFF"
                                        FontSize="11"/>
                         </Grid>
                     </Border>
@@ -1804,16 +1919,22 @@
                                               HorizontalAlignment="Center"
                                               Margin="5,0"/>
 
-                            <ContentPresenter Grid.Column="1"
-                                              ContentSource="Header"
-                                              VerticalAlignment="Center"
-                                              Margin="5,0"/>
+                            <ContentPresenter Name="PART_Header" ContentSource="Header" Visibility="Collapsed"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{TemplateBinding Header}"
+                                       FontFamily="{StaticResource FontCommon}" 
+                                       FontSize="12"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       VerticalAlignment="Center"
+                                       Margin="5,0"/>
 
                             <TextBlock Grid.Column="2"
                                        Text="{TemplateBinding InputGestureText}"
+                                       FontFamily="{StaticResource FontCommon}"
+                                       Foreground="#88FFFFFF"
                                        VerticalAlignment="Center"
                                        Margin="5,0"
-                                       Foreground="{StaticResource TextCommonBrush}"
                                        FontSize="11"/>
                         </Grid>
                     </Border>
@@ -1918,6 +2039,23 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="SettingsTitleText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+
+    <Style x:Key="OptionNameText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextCommonActiveBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
+    </Style>
+
+    <Style x:Key="OptionDescText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextCommonBrush}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontCommon}"/>
     </Style>
 
 </ResourceDictionary>
