@@ -26,6 +26,7 @@ namespace ZennLauncherApp
         public int AppId => ToolId;
         public string AppIconPath => ToolIconPath;
         public string AppTitle => ToolTitle;
+        public string AppDesc => ToolDesc;
         public int AppCategoryId => ToolCategoryId;
         public string AppCategoryName => ToolCategoryName;
         public string AppLastLaunched => ToolLastLaunched;

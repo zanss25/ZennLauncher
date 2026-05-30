@@ -35,6 +35,10 @@ namespace ZennLauncherApp
 
         private bool isSidebarCollapsed = true;
 
+        private UserControl _cachedGamesView;
+        private UserControl _cachedToolsView;
+        private UserControl _cachedCategoriesView;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -303,14 +307,43 @@ namespace ZennLauncherApp
             }
         }
 
-        private void OnTabChanged(TabModel selectedTab)
+        private async void OnTabChanged(TabModel selectedTab)
         {
-            if (selectedTab.TargetView != null)
-            {
-                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+            if (selectedTab.TargetView == null) return;
 
-                ContentSlot.Content = view;
+            // Tampilkan loading indicator dulu (opsional tapi bagus)
+            ContentSlot.Content = null;
+
+            // Biarkan UI render dulu sebelum buat view baru
+            await Task.Yield();
+
+            UserControl view;
+
+            // Cache GamesView & ToolsView supaya gak dibuat ulang tiap klik
+            if (selectedTab.TargetView == typeof(GamesView))
+            {
+                if (_cachedGamesView == null)
+                    _cachedGamesView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedGamesView;
             }
+            else if (selectedTab.TargetView == typeof(ToolsView))
+            {
+                if (_cachedToolsView == null)
+                    _cachedToolsView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedToolsView;
+            }
+            else if (selectedTab.TargetView == typeof(CategoriesView))
+            {
+                if (_cachedCategoriesView == null)
+                    _cachedCategoriesView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedCategoriesView;
+            }
+            else
+            {
+                view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+            }
+
+            ContentSlot.Content = view;
         }
 
         private void SidebarNavList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -77,10 +77,10 @@
                            Foreground="{StaticResource TextWindowBrush}" 
                            FontWeight="Bold"/>
 
-                <TextBox Name="InputGameTitle" Margin="10,5,10,5"
-                         Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
-                
-                <TextBox Name="InputGameSubtitle" Margin="10" 
+                <TextBox Name="InputGameTitle"
+                         Style="{StaticResource TextBoxStyleB}" Margin="10,5,10,5" Padding="5,0,0,0"/>
+
+                <TextBox Name="InputGameSubtitle" Margin="10"
                          Style="{StaticResource TextBoxStyleB}" Padding="5,0,0,0"/>
             </StackPanel>
 
@@ -96,7 +96,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Name="InputGameTarget" 
+                    <TextBox Name="InputGameTarget"
                              Grid.Column="0"
                              Style="{StaticResource TextBoxStyleB}"
                              Padding="5,0,0,0"/>

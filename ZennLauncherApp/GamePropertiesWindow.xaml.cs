@@ -45,6 +45,8 @@ namespace ZennLauncherApp
                 FillDataToFields();
                 BtnSaveGameInfo.Content = "Save";
             }
+
+            DataContext = game ?? new GameModel();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -58,7 +60,6 @@ namespace ZennLauncherApp
             InputGameSubtitle.Text = _existingGame.GameSubtitle;
             InputGameTarget.Text = _existingGame.GameTarget;
             InputGameStartIn.Text = System.IO.Path.GetDirectoryName(InputGameTarget.Text);
-            InputGameLaunchOptions.Text = _existingGame.GameLaunchOptions;
 
             _gameIconPath = _existingGame.GameIconPath;
             _gameCoverPath = _existingGame.GameCoverPath;

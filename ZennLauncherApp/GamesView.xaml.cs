@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static ZennLauncherApp.GlobalFunctions;
 
 namespace ZennLauncherApp
 {
@@ -34,17 +36,43 @@ namespace ZennLauncherApp
         List<CategoryModel> allCategoriesList = new List<CategoryModel>();
 
         public GamesView()
-        {            
+        {
             InitializeComponent();
-
-            LoadGamesList();
-            LoadCategoriesList();
 
             ComboSortBy.ItemsSource = GlobalFunctions.Instance.SortOptions;
             ComboSortBy.DisplayMemberPath = "DisplayName";
             ComboSortBy.SelectedIndex = 0;
 
+            // Jangan load di constructor, pakai Loaded event
+            this.Loaded += GamesView_Loaded;
+        }
+
+        private async void GamesView_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Jalankan DB query di background thread
+            var games = await Task.Run(() => db.GetAllGames("title", true));
+            var categories = await Task.Run(() => db.GetAllCategories(1));
+
+            // Update UI di UI thread
+            allGamesList = games ?? new List<GameModel>();
+
+            CategoryModel allCategory = new CategoryModel
+            {
+                CategoryId = 0,
+                CategoryName = "All Games"
+            };
+
+            allCategoriesList = categories ?? new List<CategoryModel>();
+            allCategoriesList.Insert(0, allCategory);
+
+            ComboCategories.ItemsSource = allCategoriesList;
+            ComboCategories.DisplayMemberPath = "CategoryName";
+            ComboCategories.SelectedIndex = 0;
+
+            ContainerBtnApps.ItemsSource = allGamesList;
+
             LoadDefaultSortOptions();
+            ApplyFilters();
         }
 
         private void LoadDefaultSortOptions()
@@ -123,59 +151,107 @@ namespace ZennLauncherApp
             ComboCategories.SelectedIndex = 0;
         }
 
-        private void LaunchGame(IAppItem launchedApp)
+        private void GetChildProcesses(int parentId, List<Process> results)
         {
-            if (launchedApp != null)
+            // Menggunakan WMI untuk mencari proses yang ParentProcessId-nya cocok
+            string query = $"SELECT ProcessId FROM Win32_Process WHERE ParentProcessId = {parentId}";
+            using (var searcher = new ManagementObjectSearcher(query))
+            using (var collection = searcher.Get())
             {
-                func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
-                db.UpdateAppAtLaunch(launchedApp, 1);
-
-                if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
-                        == ProfileGeneralSettings.LaunchActions.HideLauncher
-                        && !Keyboard.IsKeyDown(Key.LeftShift))
+                foreach (var obj in collection)
                 {
-                    Application.Current.MainWindow.Hide();
-
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
-                    func.runningProcess.EnableRaisingEvents = true;
-                    func.runningProcess.Exited += (s, ev) =>
+                    int childId = Convert.ToInt32(obj["ProcessId"]);
+                    try
                     {
-                        this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
-                    };
-                }
-                else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
-                            == ProfileGeneralSettings.LaunchActions.CloseLauncher
-                            && !Keyboard.IsKeyDown(Key.LeftShift))
-                {
-                    Application.Current.MainWindow.Close();
-                }
-                else
-                {
+                        var childProc = Process.GetProcessById(childId);
+                        results.Add(childProc);
+                        // Rekursif: Cari anak dari anak ini juga (untuk launcher bertingkat)
+                        GetChildProcesses(childId, results);
+                    }
+                    catch (ArgumentException)
+                    {
 
+                    }
+                    finally
+                    {
+                        obj.Dispose();
+                    }
                 }
             }
-            else
+        }
+
+        private void LaunchApp(IAppItem launchedApp)
+        {
+            if (launchedApp == null)
             {
                 PopupWindow popup = new PopupWindow("Game doesn't exist",
                                                      "No game found at this menu",
                                                      "Ok", false);
+                return;
             }
+
+            var result = func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
+
+            if (result != LaunchResult.Success)
+                return;
+
+            db.UpdateAppAtLaunch(launchedApp, 1);
+
+            var launchAction = ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction;
+            bool shiftHeld = Keyboard.IsKeyDown(Key.LeftShift);
+
+            if (launchAction == ProfileGeneralSettings.LaunchActions.HideLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Hide();
+
+                int rootId = func.runningProcess.Id;
+
+                // Gunakan Task.Run agar tidak memblokir UI thread
+                Task.Run(async () =>
+                {
+                    bool isGameRunning = true;
+
+                    while (isGameRunning)
+                    {
+                        await Task.Delay(3000); // Cek setiap 3 detik agar hemat CPU
+
+                        List<Process> familyTree = new List<Process>();
+
+                        // 1. Cek apakah proses utama masih ada
+                        try { familyTree.Add(Process.GetProcessById(rootId)); } catch { }
+
+                        // 2. Cari semua anak-anaknya
+                        try { GetChildProcesses(rootId, familyTree); } catch { }
+
+                        // 3. Filter hanya proses yang masih aktif
+                        if (familyTree.Count == 0)
+                        {
+                            isGameRunning = false;
+                        }
+                    }
+
+                    this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
+                });
+            }
+            else if (launchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Close();
+            }
+
         }
 
         private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             var game = btn.DataContext as GameModel;
-            LaunchGame(game);
+            LaunchApp(game);
         }
 
         private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
             var game = menuItem.DataContext as GameModel;
-            LaunchGame(game);
+            LaunchApp(game);
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)

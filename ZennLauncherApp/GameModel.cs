@@ -28,6 +28,7 @@ namespace ZennLauncherApp
         public int AppId => GameId;
         public string AppIconPath => GameIconPath;
         public string AppTitle => GameTitle;
+        public string AppDesc => GameSubtitle;
         public int AppCategoryId => GameCategoryId;
         public string AppCategoryName => GameCategoryName;
         public string AppLastLaunched => GameLastLaunched;

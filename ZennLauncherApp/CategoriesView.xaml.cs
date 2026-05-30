@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using static System.Collections.Specialized.BitVector32;
+using static ZennLauncherApp.GlobalFunctions;
 
 namespace ZennLauncherApp
 {
@@ -384,8 +385,14 @@ namespace ZennLauncherApp
 
             int sectionId = AppCurrentSectionChecker();
 
-            var availableCategories = db.GetAllCategories(sectionId)
-                                        .Where(c => c.CategoryId != 0).ToList();
+            var allCats = db.GetAllCategories(sectionId);
+
+            if (allCats == null)
+            {
+                allCats = new List<CategoryModel>();
+            }
+
+            var availableCategories = allCats.Where(c => c.CategoryId != 0).ToList();
 
             if (selectedApps.Count == 1)
             {
@@ -523,58 +530,54 @@ namespace ZennLauncherApp
             return currentSectionId;
         }
 
-        private void LaunchApp(IAppItem launchedApp, int currentSectionId)
+        private void LaunchApp(IAppItem launchedApp, int currentSelectionId)
         {
-            if (launchedApp != null)
+            if (launchedApp == null)
             {
-                db.UpdateAppAtLaunch(launchedApp, currentSectionId);
-                func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
-
-                ProfileGeneralSettings.LaunchActions AppCurrentLaunchOption 
-                    = ProfileGeneralSettings.LaunchActions.DoNothing;
-                if (currentSectionId == 1)
-                {
-                    AppCurrentLaunchOption 
-                        = ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction;
-                }
-                if (currentSectionId == 2)
-                {
-                    AppCurrentLaunchOption 
-                        = ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction;
-                }
-
-                if (AppCurrentLaunchOption
-                    == ProfileGeneralSettings.LaunchActions.HideLauncher
-                    && !Keyboard.IsKeyDown(Key.LeftShift))
-                {
-                    Application.Current.MainWindow.Hide();
-
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
-                    func.runningProcess.EnableRaisingEvents = true;
-                    func.runningProcess.Exited += (s, ev) =>
-                    {
-                        this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
-                    };
-                }
-                else if (((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction
-                            == ProfileGeneralSettings.LaunchActions.CloseLauncher
-                            && !Keyboard.IsKeyDown(Key.LeftShift))
-                {
-                    Application.Current.MainWindow.Close();
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                PopupWindow popup = new PopupWindow("App doesn't exist",
+                PopupWindow popup = new PopupWindow("Game doesn't exist",
                                                      "No game found at this menu",
                                                      "Ok", false);
+                return;
             }
+
+            var result = func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
+
+            if (result != LaunchResult.Success)
+                return;
+
+            db.UpdateAppAtLaunch(launchedApp, 1);
+
+            ProfileGeneralSettings.LaunchActions launchAction = ProfileGeneralSettings.LaunchActions.DoNothing;
+
+            if (currentSelectionId == 1)
+            {
+                launchAction = ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction;
+            }
+            else if (currentSelectionId == 2)
+            {
+                launchAction = ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction;
+            }
+
+            bool shiftHeld = Keyboard.IsKeyDown(Key.LeftShift);
+
+            if (launchAction == ProfileGeneralSettings.LaunchActions.HideLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Hide();
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                func.runningProcess.EnableRaisingEvents = true;
+                func.runningProcess.Exited += (s, ev) =>
+                {
+                    this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
+                };
+            }
+            else if (launchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Close();
+            }
+
         }
 
         private void AppsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

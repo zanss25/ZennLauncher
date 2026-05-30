@@ -11,6 +11,7 @@ namespace ZennLauncherApp
         int AppId { get; }
         string AppIconPath { get; }
         string AppTitle { get; }
+        string AppDesc { get; }
         int AppCategoryId { get; }
         string AppCategoryName { get; }
         string AppLastLaunched { get; }

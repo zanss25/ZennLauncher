@@ -32,7 +32,7 @@ namespace ZennLauncherApp
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 
         public int build = 10310;
-        public string version = "0.3.1 Beta (Indev 1)";
+        public string version = "0.3.1 Beta (Indev)";
 
         public string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -65,7 +65,14 @@ namespace ZennLauncherApp
 
         }
 
-        public void LaunchFile(string filePath, string args)
+        public enum LaunchResult
+        {
+            Success,
+            CancelledByUser,  // UAC cancel atau user cancel
+            Failed
+        }
+
+        public LaunchResult LaunchFile(string filePath, string args)
         {
             try
             {
@@ -77,22 +84,30 @@ namespace ZennLauncherApp
                 };
 
                 runningProcess = Process.Start(startInfo);
+
+                // Kalau null, berarti UAC di-cancel atau proses gagal start
+                if (runningProcess == null)
+                {
+                    return LaunchResult.CancelledByUser;
+                }
+
+                return LaunchResult.Success;
             }
             catch (Win32Exception ex)
             {
-                // Kode error 1223 adalah kode standar Windows untuk "User Cancelled"
-                if (ex.NativeErrorCode == 1223)
+                if (ex.NativeErrorCode == 1223) // User cancelled UAC
                 {
-                    Debug.WriteLine("User gak jadi.");
+                    Debug.WriteLine("User cancelled UAC.");
+                    return LaunchResult.CancelledByUser;
                 }
-                else
-                {
-                    MessageBox.Show("Launch failed: " + ex.Message);
-                }
+
+                MessageBox.Show("Launch failed: " + ex.Message);
+                return LaunchResult.Failed;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("System error: " + ex.Message);
+                return LaunchResult.Failed;
             }
         }
 
