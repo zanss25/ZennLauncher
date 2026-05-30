@@ -43,7 +43,10 @@ namespace ZennLauncherApp
                 _existingGame = game;
                 _isEditMode = true;
                 FillDataToFields();
+                BtnSaveGameInfo.Content = "Save";
             }
+
+            DataContext = game ?? new GameModel();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -57,7 +60,6 @@ namespace ZennLauncherApp
             InputGameSubtitle.Text = _existingGame.GameSubtitle;
             InputGameTarget.Text = _existingGame.GameTarget;
             InputGameStartIn.Text = System.IO.Path.GetDirectoryName(InputGameTarget.Text);
-            InputGameLaunchOptions.Text = _existingGame.GameLaunchOptions;
 
             _gameIconPath = _existingGame.GameIconPath;
             _gameCoverPath = _existingGame.GameCoverPath;
@@ -87,7 +89,7 @@ namespace ZennLauncherApp
         private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe; *.lnk; *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Game Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir))
@@ -200,8 +202,8 @@ namespace ZennLauncherApp
             LinearGradientBrush defaultBgBrush = new LinearGradientBrush();
             var color1 = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF342C49");
             var color2 = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF403659");
-            System.Windows.Point point1 = new System.Windows.Point(0.5, 0);
-            System.Windows.Point point2 = new System.Windows.Point(0.5, 1);
+            System.Windows.Point point1 = new System.Windows.Point(0, 0);
+            System.Windows.Point point2 = new System.Windows.Point(1, 1);
 
             defaultBgBrush.StartPoint = point1;
             defaultBgBrush.EndPoint = point2;
@@ -322,8 +324,8 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    PopupWindow popup = new PopupWindow("Confirm Edit",
-                                                        $"Confirm editing \"{InputGameTitle.Text}\"?",
+                    PopupWindow popup = new PopupWindow("Edit Game Properties",
+                                                        $"Confirm your edits to \"{InputGameTitle.Text}\"?",
                                                         "Confirm", true);
 
                     popup.ShowDialog();

@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Settings"
         MinHeight="655" MinWidth="900"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -16,19 +17,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -41,9 +31,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -87,15 +77,18 @@
             </StackPanel>
 
             <StackPanel Margin="10,10,10,0" Grid.Row="0">
-                <TextBlock Text="ZENN LAUNCHER" Padding="5,5,10,0" FontSize="22" FontWeight="Bold">
+                <TextBlock Text="ZENN LAUNCHER" Padding="5,5,10,0" 
+                           FontFamily="{StaticResource FontLogo}" 
+                           FontSize="22" FontWeight="Bold">
                     <TextBlock.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#B29083B3"/>
-                            <GradientStop Color="#B2B6A0ED" Offset="1"/>
+                            <GradientStop Color="{StaticResource LogoColor_A}"/>
+                            <GradientStop Color="{StaticResource LogoColor_B}" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock x:Name="TextVersionDisplay" Text="Version" Padding="5,0,10,0" Foreground="#A89A8FB9" 
+                <TextBlock x:Name="TextVersionDisplay" Text="Version" Padding="5,0,10,0" 
+                           Foreground="{StaticResource TextWindowBrush}" 
                            FontWeight="SemiBold"/>
             </StackPanel>
 
@@ -105,10 +98,9 @@
                          SelectionChanged="SidebarSettingsList_SelectionChanged"
                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Style="{StaticResource ListBoxStyle}"
-                         FontFamily="Segoe UI" FontSize="13" 
-                         Margin="0,15" FontWeight="Regular">
+                         Margin="0,15">
                     <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleB}">
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle_Common}">
                             <Setter Property="Height" Value="35"/>
                             <Setter Property="Padding" Value="10,0"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -132,9 +124,8 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnApply" Content="Apply" Grid.Row="1"
-                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyleC}" 
+                                Click="BtnApply_Click" Style="{StaticResource MenuButtonStyle_Secondary}" 
                                 Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
-                                FontFamily="Global Sans Serif" FontSize="12" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Bottom"
                                 IsEnabled="False"/>
 

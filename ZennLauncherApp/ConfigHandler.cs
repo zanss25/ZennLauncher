@@ -11,7 +11,7 @@ namespace ZennLauncherApp
 
         private readonly GlobalFunctions func = GlobalFunctions.Instance;
 
-        public string globalConfigPath => System.IO.Path.Combine(func.dataPath, "config.json");
+        public string GlobalConfigPath => System.IO.Path.Combine(func.dataPath, "config.json");
         public string GlobalConfigDefaultPath => System.IO.Path.Combine(func.rootPath, "config_default.json");
         public string ProfileConfigDefaultPath => System.IO.Path.Combine(func.rootPath, "profile_config_default.json");
 
@@ -42,7 +42,6 @@ namespace ZennLauncherApp
                 return null;
             }
         }
-
 
         public ConfigHandler()
         {
@@ -92,12 +91,12 @@ namespace ZennLauncherApp
             var options = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(globalData, options);
 
-            File.WriteAllText(globalConfigPath, json);
+            File.WriteAllText(GlobalConfigPath, json);
         }
 
         public GlobalConfigModel LoadGlobalConfig()
         {
-            if (!File.Exists(globalConfigPath))
+            if (!File.Exists(GlobalConfigPath))
             {
                 var defaultGlobalConfig = new GlobalConfigModel
                 {
@@ -115,12 +114,12 @@ namespace ZennLauncherApp
 
                 string jsonString = JsonSerializer.Serialize(defaultGlobalConfig, options);
 
-                File.WriteAllText(globalConfigPath, jsonString);
+                File.WriteAllText(GlobalConfigPath, jsonString);
 
                 return defaultGlobalConfig;
             }
 
-            string json = File.ReadAllText(globalConfigPath);
+            string json = File.ReadAllText(GlobalConfigPath);
             var existingGlobalConfig = JsonSerializer.Deserialize<GlobalConfigModel>(json);
             SaveGlobalConfig(existingGlobalConfig);
 

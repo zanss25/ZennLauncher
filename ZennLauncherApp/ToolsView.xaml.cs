@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static ZennLauncherApp.GlobalFunctions;
 
 namespace ZennLauncherApp
 {
@@ -30,16 +32,20 @@ namespace ZennLauncherApp
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-
         List<ToolModel> allToolsList = new List<ToolModel>();
+        List<CategoryModel> allCategoriesList = new List<CategoryModel>();
+
         public ToolsView()
         {
             InitializeComponent();
 
             LoadToolsList();
-            ComboSortByTools.ItemsSource = func.SortOptions;
-            ComboSortByTools.DisplayMemberPath = "DisplayName";
-            ComboSortByTools.SelectedIndex = 0;
+            LoadCategoriesList();
+
+            ComboSortBy.ItemsSource = func.SortOptions;
+            ComboSortBy.DisplayMemberPath = "DisplayName";
+            ComboSortBy.SelectedIndex = 0;
+
             LoadDefaultSortOptions();
         }
 
@@ -51,7 +57,8 @@ namespace ZennLauncherApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex, "ToolsView Load Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex, "ToolsView Load Error", 
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             string defaultSortOption = ((App)Application.Current).CurrentProfileCfg?.General?.ToolsDefaultSortOption;
@@ -66,11 +73,11 @@ namespace ZennLauncherApp
 
             if (targetSortObject != null)
             {
-                ComboSortByTools.SelectedItem = targetSortObject;
+                ComboSortBy.SelectedItem = targetSortObject;
             }
             else
             {
-                ComboSortByTools.SelectedIndex = 0;
+                ComboSortBy.SelectedIndex = 0;
             }
         }
 
@@ -84,64 +91,143 @@ namespace ZennLauncherApp
             {
                 allToolsList = db.GetAllTools(_sortBy, _ascending);
 
-                ContainerBtnTools.ItemsSource = null;
-                ContainerBtnTools.ItemsSource = allToolsList;
+                ContainerBtnApps.ItemsSource = null;
+                ContainerBtnApps.ItemsSource = allToolsList;
             }
         }
 
-        private void BtnTools_MouseDoubleClick(object sender, RoutedEventArgs e)
+        public void LoadCategoriesList()
         {
-            Button btn = sender as Button;
+            int _categoriesCount = 0;
+            _categoriesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM categories WHERE section_id = 2");
 
-            var tool = btn.DataContext as ToolModel;
-
-            if (tool != null)
+            CategoryModel allCategory = new CategoryModel
             {
-                string filePath = tool.ToolTarget;
-                string args = tool.ToolLaunchOptions;
+                CategoryId = 0,
+                CategoryName = "All Tools",
+                CategoryDesc = "Display all tools from your library"
+            };
 
-                func.LaunchFile(filePath, args);
+            allCategoriesList = new List<CategoryModel>();
 
-                string query = "UPDATE tools SET last_launched = datetime('now', 'localtime') WHERE id = @id";
-
-                var args_ = new Dictionary<string, object>
+            if (_categoriesCount > 0)
+            {
+                var dbResult = db.GetAllCategories(2);
+                if (dbResult != null)
                 {
-                    { "@id", tool.ToolId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query, args_);
-
-                string query__ = "UPDATE tools SET launch_times = launch_times + 1 WHERE id = @id";
-
-                var args__ = new Dictionary<string, object>
-                {
-                    { "@id", tool.ToolId }
-                };
-
-                db.ExecuteQuery(db.ConnectionProfile, query__, args__);
-
-                if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                        == ProfileGeneralSettings.LaunchActions.HideLauncher 
-                        && !Keyboard.IsKeyDown(Key.LeftShift))
-                {
-                    Application.Current.MainWindow.Hide();
-
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
-                    func.runningProcess.EnableRaisingEvents = true;
-                    func.runningProcess.Exited += (s, ev) =>
-                    {
-                        this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
-                    };
-                }
-                else if (((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction 
-                            == ProfileGeneralSettings.LaunchActions.CloseLauncher 
-                            && !Keyboard.IsKeyDown(Key.LeftShift))
-                {
-                    Application.Current.MainWindow.Close();
+                    allCategoriesList = dbResult;
                 }
             }
+
+            allCategoriesList.Insert(0, allCategory);
+
+            ComboCategories.ItemsSource = null; // Reset binding
+            ComboCategories.ItemsSource = allCategoriesList;
+            ComboCategories.DisplayMemberPath = "CategoryName";
+            ComboCategories.SelectedIndex = 0;
+        }
+
+        private void GetChildProcesses(int parentId, List<Process> results)
+        {
+            // Menggunakan WMI untuk mencari proses yang ParentProcessId-nya cocok
+            string query = $"SELECT ProcessId FROM Win32_Process WHERE ParentProcessId = {parentId}";
+            using (var searcher = new ManagementObjectSearcher(query))
+            using (var collection = searcher.Get())
+            {
+                foreach (var obj in collection)
+                {
+                    int childId = Convert.ToInt32(obj["ProcessId"]);
+                    try
+                    {
+                        var childProc = Process.GetProcessById(childId);
+                        results.Add(childProc);
+                        // Rekursif: Cari anak dari anak ini juga (untuk launcher bertingkat)
+                        GetChildProcesses(childId, results);
+                    }
+                    catch (ArgumentException)
+                    {
+
+                    }
+                    finally
+                    {
+                        obj.Dispose();
+                    }
+                }
+            }
+        }
+
+        private void LaunchApp(IAppItem launchedApp)
+        {
+            if (launchedApp == null)
+            {
+                PopupWindow popup = new PopupWindow("Tool doesn't exist",
+                                                     "No tool found at this menu",
+                                                     "Ok", false);
+                return;
+            }
+
+            var result = func.LaunchFile(launchedApp.AppTarget, launchedApp.AppLaunchOptions);
+
+            if (result != LaunchResult.Success)
+                return;
+
+            db.UpdateAppAtLaunch(launchedApp, 1);
+
+            var launchAction = ((App)Application.Current).CurrentProfileCfg.General.ToolsLaunchAction;
+            bool shiftHeld = Keyboard.IsKeyDown(Key.LeftShift);
+
+            if (launchAction == ProfileGeneralSettings.LaunchActions.HideLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Hide();
+
+                int rootId = func.runningProcess.Id;
+
+                // Gunakan Task.Run agar tidak memblokir UI thread
+                Task.Run(async () =>
+                {
+                    bool isGameRunning = true;
+
+                    while (isGameRunning)
+                    {
+                        await Task.Delay(3000); // Cek setiap 3 detik agar hemat CPU
+
+                        List<Process> familyTree = new List<Process>();
+
+                        // 1. Cek apakah proses utama masih ada
+                        try { familyTree.Add(Process.GetProcessById(rootId)); } catch { }
+
+                        // 2. Cari semua anak-anaknya
+                        try { GetChildProcesses(rootId, familyTree); } catch { }
+
+                        // 3. Filter hanya proses yang masih aktif
+                        if (familyTree.Count == 0)
+                        {
+                            isGameRunning = false;
+                        }
+                    }
+
+                    this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
+                });
+            }
+            else if (launchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher && !shiftHeld)
+            {
+                Application.Current.MainWindow.Close();
+            }
+
+        }
+
+        private void BtnApps_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            var tool = btn.DataContext as ToolModel;
+            LaunchApp(tool);
+        }
+
+        private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var tool = menuItem.DataContext as ToolModel;
+            LaunchApp(tool);
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
@@ -154,13 +240,9 @@ namespace ZennLauncherApp
             if (edit.ShowDialog() == true)
             {
                 LoadToolsList();
-                ComboSortByTools_Changed(ComboSortByTools, null);
+                ApplyFilters();
             }
-            else
-            {
-                LoadToolsList();
-                ComboSortByTools_Changed(ComboSortByTools, null);
-            }
+
             Main.DisableBlurAndOverlay();
         }
 
@@ -183,15 +265,17 @@ namespace ZennLauncherApp
                 {
                     if (System.IO.File.Exists(tool.ToolTarget))
                     {
-                        Process.Start("explorer.exe", $"/select,\"{tool.ToolTarget}\"");
+                        string folderPath = System.IO.Path.GetDirectoryName(tool.ToolTarget);
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = folderPath,
+                            UseShellExecute = true
+                        });
                     }
                     else
                     {
-                        string dir = System.IO.Path.GetDirectoryName(tool.ToolTarget);
-                        if (System.IO.Directory.Exists(dir))
-                        {
-                            Process.Start("explorer.exe", dir);
-                        }
+                        MessageBox.Show("Directory or file not found.", "Error",
+                                            MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)
@@ -209,56 +293,117 @@ namespace ZennLauncherApp
             Main.EnableBlurAndOverlay();
             if (selectedTool != null)
             {
-                PopupWindow popup = new PopupWindow("Confirm Delete",
-                                                     $"Are you sure you want to remove \"{selectedTool.ToolTitle}\"?",
-                                                     "Delete Tool", true);
+                PopupWindow popup = new PopupWindow("Remove Tool",
+                                                     $"Are you sure you want to remove \"{selectedTool.ToolTitle}\" from your library?",
+                                                     "Remove", true);
 
                 popup.ShowDialog();
                 if (popup.DialogResult == true)
                 {
                     DBHandler db = DBHandler.Instance;
-                    db.DeleteTool(selectedTool.ToolId);
+                    db.DeleteApp(selectedTool.ToolId, selectedTool.TargetTable);
                     
                     LoadToolsList();
-                    ComboSortByTools_Changed(ComboSortByTools, null);
+                    ApplyFilters();
                 }
             }
 
             Main.DisableBlurAndOverlay();
         }
 
-        private void SearchBarTools_Changed(object sender, TextChangedEventArgs e)
+        private void SearchBar_Changed(object sender, TextChangedEventArgs e)
         {
-            string query = SearchBarTools.Text.ToLower().Trim();
-
-            if (string.IsNullOrEmpty(query))
-            {
-                ContainerBtnTools.ItemsSource = allToolsList;
-                return;
-            }
-
-            var filteredList = allToolsList.Where(g =>
-                g.ToolTitle.ToLower().Contains(query) ||
-                (g.ToolDesc != null && g.ToolDesc.ToLower().Contains(query))
-            ).ToList();
-
-            ContainerBtnTools.ItemsSource = filteredList;
+            ApplyFilters();
         }
 
-        public void ComboSortByTools_Changed(object sender, SelectionChangedEventArgs e)
+        public void ComboCategories_Changed(object sender, SelectionChangedEventArgs e)
         {
-            if (db == null || ComboSortByTools.SelectedItem == null) return;
+            ApplyFilters();
+        }
 
-            var selectedItem = (SortCriterion)ComboSortByTools.SelectedItem;
-            string sortBy = selectedItem.SortByTag.ToString();
-            bool asc = true;
+        public void ComboSortBy_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
 
-            if (sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times")
+        public void ApplyFilters()
+        {
+            if (allToolsList == null) return;
+
+            // --- 1. AMBIL INPUT ---
+            var selectedCategory = ComboCategories.SelectedItem as CategoryModel;
+            string searchQuery = SearchBar.Text.ToLower().Trim();
+
+            var selectedSortItem = (SortCriterion)ComboSortBy.SelectedItem;
+            if (selectedSortItem == null) return;
+
+            string sortBy = selectedSortItem.SortByTag.ToString();
+            bool asc = !(sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times");
+
+            // --- 2. FILTERING (Kategori & Search) ---
+            var query = allToolsList.Where(tools =>
             {
-                asc = false;
+                bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
+                                     || tools.ToolCategoryId == selectedCategory.CategoryId;
+
+                bool matchSearch = string.IsNullOrEmpty(searchQuery)
+                                   || tools.ToolTitle.ToLower().Contains(searchQuery);
+
+                return matchCategory && matchSearch;
+            });
+
+            // --- 3. SORTING (LINQ) ---
+            IOrderedEnumerable<ToolModel> sortedData;
+
+            switch (sortBy)
+            {
+                case "last_launched":
+                    sortedData = query.OrderByDescending(t => t.ToolLastLaunched);
+                    break;
+                case "launch_times":
+                    sortedData = query.OrderByDescending(t => t.ToolLaunchTimes);
+                    break;
+                case "id":
+                    sortedData = query.OrderByDescending(t => t.ToolId);
+                    break;
+                default: // "title"
+                    sortedData = query.OrderBy(t => t.ToolTitle);
+                    break;
             }
 
-            ContainerBtnTools.ItemsSource = db.GetAllTools(sortBy, asc);
+            // --- 4. UPDATE UI ---
+            ContainerBtnApps.ItemsSource = sortedData.ToList();
+
+            if (!sortedData.Any())
+            {
+                NoAppsAvailable.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NoAppsAvailable.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if (!comboBox.IsDropDownOpen)
+            {
+                if (e.Delta > 0)
+                {
+                    if (comboBox.SelectedIndex > 0)
+                        comboBox.SelectedIndex--;
+                }
+                else if (e.Delta < 0)
+                {
+                    if (comboBox.SelectedIndex < comboBox.Items.Count - 1)
+                        comboBox.SelectedIndex++;
+                }
+
+                // Tandai event sebagai handled agar tidak men-scroll halaman utama
+                e.Handled = true;
+            }
         }
 
     }

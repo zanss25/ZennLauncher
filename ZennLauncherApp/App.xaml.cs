@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -22,8 +23,30 @@ namespace ZennLauncherApp
         public GlobalConfigModel CurrentGlobalCfg;
         public ProfileConfigModel CurrentProfileCfg;
 
+        private static Mutex _mutex = null;
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
+            const string appName = "ZennLauncherApp-29484735857748";
+            bool createdNew;
+
+            // Mencoba mengambil kepemilikan Mutex
+            _mutex = new Mutex(true, appName, out createdNew);
+
+            if (!createdNew)
+            {
+                MessageBox.Show("Zenn Launcher app is already running!",
+                                "Zenn Launcher",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+
+                // Tutup instance yang baru
+                Application.Current.Shutdown();
+                return;
+            }
+
             base.OnStartup(e);
 
             db.GlobalDBInitialize();
@@ -38,6 +61,17 @@ namespace ZennLauncherApp
             {
                 LoadProfileData(); 
             }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Lepaskan Mutex saat aplikasi benar-benar ditutup
+            if (_mutex != null)
+            {
+                _mutex.ReleaseMutex();
+                _mutex.Dispose();
+            }
+            base.OnExit(e);
         }
 
         public bool CheckIsKeepLoggedIn()

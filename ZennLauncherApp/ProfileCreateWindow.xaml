@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Create New Profile" Height="410" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -17,19 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -42,9 +32,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -79,13 +69,12 @@
                         MinWidth="55" MinHeight="40">
 
                 <TextBlock x:Name="TitleTextBlock" Text="CREATE NEW PROFILE" 
-                           VerticalAlignment="Center" HorizontalAlignment="Center" 
-                           Foreground="#7FC9B5FF" FontWeight="Bold" FontSize="15" />
+                           Style="{StaticResource HeaderTitleStyle}"/>
 
             </StackPanel>
 
             <StackPanel Margin="10,10,10,0" Grid.Row="1">
-                <TextBlock Text="PROFILE NAME" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="PROFILE NAME" Padding="10" Foreground="{StaticResource TextWindowBrush}" FontWeight="Bold"/>
 
                 <Grid Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
@@ -102,7 +91,8 @@
             </StackPanel>
 
             <StackPanel x:Name="PasswordStackPanel" Margin="10,0,10,0" Grid.Row="2" Visibility="Visible">
-                <TextBlock Text="PASSWORD" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="PASSWORD" Padding="10" Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
                 <Grid Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -118,7 +108,8 @@
                             <Style TargetType="PasswordBox" BasedOn="{StaticResource PasswordBoxStyleB}">
                                 <Setter Property="IsEnabled" Value="True"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=CheckBoxDontUsePass}" Value="True">
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=CheckBoxDontUsePass}" 
+                                                 Value="True">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -131,7 +122,8 @@
             </StackPanel>
 
             <StackPanel x:Name="ConfirmPasswordStackPanel" Margin="10,0,10,0" Grid.Row="3" Visibility="Visible">
-                <TextBlock Text="CONFIRM PASSWORD" Padding="10" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                <TextBlock Text="CONFIRM PASSWORD" Padding="10" Foreground="{StaticResource TextWindowBrush}" 
+                           FontWeight="Bold"/>
                 <Grid Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -147,7 +139,8 @@
                             <Style TargetType="PasswordBox" BasedOn="{StaticResource PasswordBoxStyleB}">
                                 <Setter Property="IsEnabled" Value="True"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecked, ElementName=CheckBoxDontUsePass}" Value="True">
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=CheckBoxDontUsePass}" 
+                                                 Value="True">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -160,22 +153,21 @@
 
                 <CheckBox x:Name="CheckBoxDontUsePass" Content="Don't use password" Visibility="Visible"
                           Style="{StaticResource CheckBoxStyle}"
-                          Grid.Column="0" Margin="10,15" Foreground="#CCFFFFFF"/>
+                          Grid.Column="0" Margin="10,15" Foreground="{StaticResource TextCommonBrush}"/>
 
             </StackPanel>
 
             <DockPanel x:Name="BottomStackPanel" Margin="10,10,10,0" Grid.Row="4">
                 <Button x:Name="BtnCreateProfile" Content="Create" Click="BtnCreateProfile_Click" 
-                        Style="{StaticResource MenuButtonStyleC}" HorizontalAlignment="Left" 
+                        Style="{StaticResource MenuButtonStyle_Primary}" HorizontalAlignment="Left" 
                         Margin="10,10,10,25" Padding="15,8,15,8" MinWidth="125" BorderThickness="0,0,0,0"
-                        FontFamily="Global Sans Serif" FontSize="12" VerticalAlignment="Bottom"
-                        IsDefault="True"/>
+                        FontSize="12" VerticalAlignment="Bottom" IsDefault="True"/>
             </DockPanel>
 
             <DockPanel Margin="10,10,20,0" Grid.RowSpan="4" Grid.Column="1">
                 <StackPanel HorizontalAlignment="Center">
 
-                    <TextBlock Text=" " Padding="6" Foreground="#A89A8FB9" FontWeight="Bold"/>
+                    <TextBlock Text=" " Padding="6" FontWeight="Bold"/>
                     <Border x:Name="PreviewAvatar" 
                             Width="80" 
                             Height="80" 
@@ -194,11 +186,11 @@
                     </Border>
 
                     <Button x:Name="BtnChangeAvatar" Content="Change" Click="BtnChangeAvatar_Click" 
-                            Style="{StaticResource MenuButtonStyle}" Margin="0,10,0,5" Padding="8" 
-                            FontFamily="Global Sans Serif" FontSize="13" BorderThickness="0,0,0,0"/>
+                            Style="{StaticResource MenuButtonStyle_Common}" Margin="0,10,0,5" Padding="8" 
+                            BorderThickness="0,0,0,0"/>
                     <Button x:Name="BtnResetAvatar" Content="Reset" Click="BtnResetAvatar_Click" 
-                            Style="{StaticResource MenuButtonStyle}" Margin="0,0,0,10" Padding="8"
-                            FontFamily="Global Sans Serif" FontSize="13" BorderThickness="0,0,0,0"/>
+                            Style="{StaticResource MenuButtonStyle_Common}" Margin="0,0,0,10" Padding="8"
+                            BorderThickness="0,0,0,0"/>
                 </StackPanel>
             </DockPanel>
         </Grid>

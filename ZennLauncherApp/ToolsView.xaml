@@ -9,193 +9,232 @@
 
     <UserControl.Resources>
 
-        <ResourceDictionary>
-            
-            <local:PathToImageConverter x:Key="ImageConverter"/>
-            
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            
-        </ResourceDictionary>
-
     </UserControl.Resources>
 
-    <Grid>
+	<Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
+		<Border x:Name="NoAppsAvailable" Visibility="Hidden"
+                Grid.Row="1" VerticalAlignment="Top"
+                Height="50" Width="Auto" MaxWidth="600" Margin="0,100"
+                CornerRadius="5" BorderThickness="1">
 
-            <ScrollViewer.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBarEdge}"/>
-            </ScrollViewer.Resources>
+			<Border.Background>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+					<GradientStop Color="#0019171f" Offset="0"/>
+					<GradientStop Color="#0019171f" Offset="0.1"/>
+					<GradientStop Color="#FF19171f" Offset="0.4"/>
+					<GradientStop Color="#FF19171f" Offset="0.6"/>
+					<GradientStop Color="#0019171f" Offset="0.9"/>
+					<GradientStop Color="#0019171f" Offset="1"/>
+				</LinearGradientBrush>
+			</Border.Background>
 
-            <StackPanel Margin="80,90,80,68">
-                <ItemsControl x:Name="ContainerBtnTools">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+			<Border.BorderBrush>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+					<GradientStop Color="#00342D47" Offset="0"/>
+					<GradientStop Color="#00342D47" Offset="0.1"/>
+					<GradientStop Color="#DD453C5F" Offset="0.5"/>
+					<GradientStop Color="#00342D47" Offset="0.9"/>
+					<GradientStop Color="#00342D47" Offset="1"/>
+				</LinearGradientBrush>
+			</Border.BorderBrush>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="12">
-                                <Button Width="149" Height="223" 
-                                        BorderBrush="#00000000"
-                                        Foreground="WhiteSmoke"
-                                        Style="{StaticResource CoverButtonStyle}"
-                                        MouseDoubleClick="BtnTools_MouseDoubleClick"
-                                        Tag="{Binding}"
-                                        Cursor="Hand">
+			<TextBlock Text="✖   No tools found" FontSize="14" FontWeight="Regular"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="#70F5F5F5"/>
+		</Border>
 
-                                    <Button.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FF342C49"/>
-                                            <GradientStop Color="#FF342C49" Offset="1"/>
-                                            <GradientStop Color="#FF403659" Offset="0.5"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
+		<ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2"
+                      VerticalScrollBarVisibility="Auto">
 
-                                    <Button.ContextMenu>
-                                        <ContextMenu Style="{StaticResource ContextMenuStyle}">
-                                            
-                                            <MenuItem Header="Edit Properties" 
-                                                      Click="MenuItemEdit_Click"
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
+			<ScrollViewer.Resources>
+				<Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBarEdge}"/>
+			</ScrollViewer.Resources>
 
-                                            <MenuItem Header="Open File Location" 
-                                                      Click="MenuOpenDir_Click"
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
+			<Grid Margin="40,90,20,68" HorizontalAlignment="Left">
+				<ItemsControl x:Name="ContainerBtnApps" HorizontalAlignment="Stretch">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal"/>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
 
-                                            <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
-                                            <MenuItem Header="Delete Tool" 
-                                                      Foreground="#FFFF3F3F" 
-                                                      Click="MenuItemDelete_Click" 
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid Margin="10,8" HorizontalAlignment="Stretch">
+								<Viewbox Width="140" Stretch="Uniform">
+									<Button Width="149" Height="223"
+                                            BorderBrush="#00000000"
+                                            Style="{StaticResource CoverButtonStyle}"
+                                            MouseDoubleClick="BtnApps_MouseDoubleClick"
+                                            Tag="{Binding}"
+                                            Cursor="Hand">
 
-                                    <Grid>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+										<Button.ContextMenu>
+											<ContextMenu Style="{StaticResource ContextMenuStyle}">
 
-                                            <Image Source="{Binding ToolIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}" 
-                                                   Width="92" 
-                                                   Height="92" />
-                                            
-                                            <TextBlock Text="{Binding ToolTitle}"
-                                                   FontSize="12"
-                                                   Margin="10"
-                                                   TextWrapping="Wrap"
-                                                   TextAlignment="Center"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="WhiteSmoke" />
+                                                <MenuItem Header="LAUNCH" 
+														  Click="MenuItemLaunch_Click"
+														  Tag="{Binding}"
+														  Style="{StaticResource ContextMenuItemStyle_Primary}"
+														  TextBlock.FontWeight="DemiBold"/>
+                                                
+												<MenuItem Header="Edit Properties"
+                                                          Click="MenuItemEdit_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-                                        </StackPanel>
+												<MenuItem Header="Open File Location"
+                                                          Click="MenuOpenDir_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-                                        <Image Source="{Binding ToolCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
-                                               Width="149" 
-                                               Height="223" 
-                                               Stretch="UniformToFill"/>
-                                    </Grid>
-                                </Button>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
+												<Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
-        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="70" 
+												<MenuItem Header="Delete Tool"
+                                                          Click="MenuItemDelete_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+											</ContextMenu>
+										</Button.ContextMenu>
+
+										<Grid>
+											<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+												<Image Source="{Binding ToolIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}"
+                                                       Width="92"
+                                                       Height="92" />
+
+												<TextBlock Text="{Binding ToolTitle}"
+                                                           FontSize="12"
+                                                           Margin="10"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{StaticResource TextCommonActiveBrush}" />
+
+											</StackPanel>
+
+											<Image Source="{Binding ToolCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}"
+                                                   Width="149"
+                                                   Height="223"
+                                                   Stretch="UniformToFill"/>
+										</Grid>
+									</Button>
+								</Viewbox>
+
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Grid>
+		</ScrollViewer>
+
+		<DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="70"
                    MaxHeight="100" Margin="0,-2,0,0" IsHitTestVisible="False">
 
-            <DockPanel.Effect>
-                <BlurEffect/>
-            </DockPanel.Effect>
+			<DockPanel.Effect>
+				<BlurEffect/>
+			</DockPanel.Effect>
 
-            <DockPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#00161616" Offset="1"/>
-                    <GradientStop Color="#FF342D47" Offset="0"/>
-                </LinearGradientBrush>
-            </DockPanel.Background>
+			<DockPanel.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#00161616" Offset="1"/>
+					<GradientStop Color="#FF342D47" Offset="0"/>
+				</LinearGradientBrush>
+			</DockPanel.Background>
 
-        </DockPanel>
+		</DockPanel>
 
-        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="41" 
-                MaxHeight="100" Margin="32,15,32,10" CornerRadius="3" Background="#BF372D51">
+		<Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0"
+                MinHeight="43" MaxHeight="100" Margin="32,18,32,10" CornerRadius="6"
+                Background="#CF372D51" BorderThickness="0.5" BorderBrush="#CC574D71">
 
-            <DockPanel>
+			<DockPanel>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" MinHeight="30" Margin="0,0.3">
-                    <Grid>
-                        <TextBox  x:Name="SearchBarTools" 
-                                  TextChanged="SearchBarTools_Changed" 
+				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" MinHeight="30" Margin="0,0.3">
+					<Grid>
+						<TextBox  x:Name="SearchBar"
+                                  TextChanged="SearchBar_Changed"
                                   MinWidth="280"
                                   MaxWidth="280"
-                                  VerticalContentAlignment="Center" 
+                                  VerticalContentAlignment="Center"
                                   MinHeight="25"
-                                  Margin="10,7,10,7" 
+                                  Margin="10,6,12,6"
                                   Padding="5,0,0,0"
                                   Style="{StaticResource TextBoxStyle}"/>
 
-                        <TextBlock IsHitTestVisible="False" 
-                                   Text="Search tools..." 
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" 
-                                   Margin="20,0,0,0" 
-                                   Foreground="#50FFFFFF">
+						<TextBlock IsHitTestVisible="False"
+                                   Text="🔍  Search tools"
+                                   FontFamily="{StaticResource FontCommon}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="20,0,0,0"
+                                   Foreground="#30FFFFFF">
 
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=SearchBarTools}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock">
+									<Setter Property="Visibility" Value="Collapsed"/>
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+											<Setter Property="Visibility" Value="Visible"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
 
-                        </TextBlock>
-                    </Grid>
-                </StackPanel>
+						</TextBlock>
+					</Grid>
+				</StackPanel>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="1,0.5">
 
-                    <TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF" 
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                    <ComboBox x:Name="ComboSortByTools" 
-                              Width="125" Margin="10,7,10,7" 
+                    <ComboBox x:Name="ComboCategories"
+                              Width="230" MinWidth="125" MaxWidth="250" Margin="0,7,10,7"
                               Style="{StaticResource ComboBoxStyle}"
-                              SelectionChanged="ComboSortByTools_Changed"
+                              SelectionChanged="ComboCategories_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
 
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
-                        </ComboBox.Resources>
+                        <ComboBox.ItemContainerStyle>
+							<Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
+
+							</Style>
+						</ComboBox.ItemContainerStyle>
+
+					</ComboBox>
+				</StackPanel>
+
+				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+
+					<TextBlock Text="Sort by" Margin="10,10,0,10"
+                               FontFamily="{StaticResource FontCommon}" Foreground="#66FFFFFF"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                    <ComboBox x:Name="ComboSortBy"
+                              MinWidth="135" Margin="10,7,10,7"
+                              Style="{StaticResource ComboBoxStyle}"
+                              SelectionChanged="ComboSortBy_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
+                              SelectedIndex="0" MinHeight="25">
 
                         <ComboBox.ItemContainerStyle>
-                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
-                                <Setter Property="Tag" Value="{Binding SortByTag}"/>
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
+							<Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
+								<Setter Property="Tag" Value="{Binding SortByTag}"/>
+							</Style>
+						</ComboBox.ItemContainerStyle>
 
-                    </ComboBox>
-                </StackPanel>
+					</ComboBox>
+				</StackPanel>
 
-            </DockPanel>
-        </Border>
-    </Grid>
+			</DockPanel>
+		</Border>
+	</Grid>
 </UserControl>

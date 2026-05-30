@@ -21,6 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{5FAB02AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Elements", "UI Elements", "{87E2B9CC-420D-4D2C-87CF-49CF790FC774}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fonts", "Fonts", "{A892AA1D-4A8F-4408-941F-0BD40C838399}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Brands-Regular-400.otf = Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Brands-Regular-400.otf
+		Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Free-Regular-400.otf = Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Free-Regular-400.otf
+		Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Free-Solid-900.otf = Assets\Fonts\fontawesome-free-7.2.0-desktop\otfs\Font Awesome 7 Free-Solid-900.otf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +52,7 @@ Global
 		{0EBF100A-E660-4DD3-8C83-36646D436092} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5FAB02AB-5D35-455B-B42C-BA92C5698123} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{87E2B9CC-420D-4D2C-87CF-49CF790FC774} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A892AA1D-4A8F-4408-941F-0BD40C838399} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBB27E03-19A4-4707-9D57-C8E2B6252449}

@@ -9,16 +9,6 @@
 
     <UserControl.Resources>
 
-        <ResourceDictionary>
-
-            <local:PathToImageConverter x:Key="ImageConverter"/>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid>
@@ -29,14 +19,46 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
+        <Border x:Name="NoAppsAvailable" Visibility="Hidden"
+                Grid.Row="1" VerticalAlignment="Top"
+                Height="50" Width="Auto" MaxWidth="600" Margin="0,100"
+                CornerRadius="5" BorderThickness="1">
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0019171f" Offset="0"/>
+                    <GradientStop Color="#0019171f" Offset="0.1"/>
+                    <GradientStop Color="#FF19171f" Offset="0.4"/>
+                    <GradientStop Color="#FF19171f" Offset="0.6"/>
+                    <GradientStop Color="#0019171f" Offset="0.9"/>
+                    <GradientStop Color="#0019171f" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#00342D47" Offset="0"/>
+                    <GradientStop Color="#00342D47" Offset="0.1"/>
+                    <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                    <GradientStop Color="#00342D47" Offset="0.9"/>
+                    <GradientStop Color="#00342D47" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <TextBlock Text="✖   No games found" FontSize="14" FontWeight="Regular"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="{StaticResource FontCommon}" Foreground="#70F5F5F5"/>
+        </Border>
+
+        <ScrollViewer x:Name="ContentViewer" Grid.RowSpan="2" 
+                      VerticalScrollBarVisibility="Auto">
 
             <ScrollViewer.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBarEdge}"/>
             </ScrollViewer.Resources>
-
-            <StackPanel Margin="80,90,80,68">
-                <ItemsControl x:Name="ContainerBtnGames">
+        
+            <Grid Margin="40,90,20,68" HorizontalAlignment="Left">
+                <ItemsControl x:Name="ContainerBtnApps" HorizontalAlignment="Stretch">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
@@ -45,75 +67,79 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="12">
-                                <Button Width="149" Height="223" 
-                                        BorderBrush="#00000000"
-                                        Foreground="WhiteSmoke"
-                                        Style="{StaticResource CoverButtonStyle}"
-                                        MouseDoubleClick="BtnGames_MouseDoubleClick"
-                                        Tag="{Binding}"
-                                        Cursor="Hand">
+                            <Grid Margin="10,8" HorizontalAlignment="Stretch">
+                                <Viewbox Width="140" Stretch="Uniform">
+                                    <Button Width="149" Height="223" 
+                                            BorderBrush="#00000000"
+                                            Style="{StaticResource CoverButtonStyle}"
+                                            MouseDoubleClick="BtnApps_MouseDoubleClick"
+                                            Tag="{Binding}"
+                                            Cursor="Hand">
 
-                                    <Button.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FF342C49"/>
-                                            <GradientStop Color="#FF342C49" Offset="1"/>
-                                            <GradientStop Color="#FF403659" Offset="0.5"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
+                                        <Button.ContextMenu>
+                                            <ContextMenu Style="{StaticResource ContextMenuStyle}">
 
-                                    <Button.ContextMenu>
-                                        <ContextMenu Style="{StaticResource ContextMenuStyle}">
-                                            
-                                            <MenuItem Header="Edit Properties" 
-                                                      Click="MenuItemEdit_Click"
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
+                                                <MenuItem x:Name="MenuItemLaunch"
+                                                          Header="LAUNCH" 
+                                                          Click="MenuItemLaunch_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Primary}"
+                                                          TextBlock.FontWeight="DemiBold"/>
+                                                
+                                                <MenuItem x:Name="MenuItemEdit"
+                                                          Header="Edit Properties" 
+                                                          Click="MenuItemEdit_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-                                            <MenuItem Header="Open File Location" 
-                                                      Click="MenuOpenDir_Click"
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
+                                                <MenuItem x:Name="MenuOpenDir"
+                                                          Header="Open File Location" 
+                                                          Click="MenuOpenDir_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-                                            <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
-                                            
-                                            <MenuItem Header="Delete Game" 
-                                                      Foreground="#FFFF3F3F" 
-                                                      Click="MenuItemDelete_Click" 
-                                                      Tag="{Binding}"
-                                                      Style="{StaticResource ContextMenuItemStyle}"/>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
+                                                <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
-                                    <Grid>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <MenuItem x:Name="MenuItemDelete"
+                                                          Header="Delete Game" 
+                                                          Click="MenuItemDelete_Click" 
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-                                            <Image Source="{Binding GameIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}" 
-                                                   Width="92" 
-                                                   Height="92" />
+                                            </ContextMenu>
+                                        </Button.ContextMenu>
 
-                                            <TextBlock Text="{Binding GameTitle}"
-                                                       FontSize="12"
-                                                       Margin="10"
-                                                       TextWrapping="Wrap"
-                                                       TextAlignment="Center"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Foreground="WhiteSmoke" />
+                                        <Grid>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                                        </StackPanel>
+                                                <Image Source="{Binding GameIconPath, Converter={StaticResource ImageConverter}, ConverterParameter=112}" 
+                                                       Width="92" 
+                                                       Height="92" />
 
-                                        <Image Source="{Binding GameCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
-                                               Width="149" 
-                                               Height="223" 
-                                               Stretch="UniformToFill"/>
-                                    </Grid>
-                                </Button>
+                                                <TextBlock Text="{Binding GameTitle}"
+                                                           FontSize="12"
+                                                           Margin="10"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{StaticResource TextCommonActiveBrush}" />
+
+                                            </StackPanel>
+
+                                            <Image Source="{Binding GameCoverPath, Converter={StaticResource ImageConverter}, ConverterParameter=253}" 
+                                                   Width="149" 
+                                                   Height="223" 
+                                                   Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Button>
+                                </Viewbox>
+                                
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </StackPanel>
+            </Grid>
         </ScrollViewer>
 
         <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="70" 
@@ -123,7 +149,7 @@
                 <BlurEffect/>
             </DockPanel.Effect>
 
-        <DockPanel.Background>
+            <DockPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#00161616" Offset="1"/>
                     <GradientStop Color="#FF342D47" Offset="0"/>
@@ -132,35 +158,38 @@
 
         </DockPanel>
 
-        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" MinHeight="41" 
-           MaxHeight="100" Margin="32,15,32,10" CornerRadius="3" Background="#BF372D51">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" 
+                MinHeight="43" MaxHeight="100" Margin="32,18,32,10" CornerRadius="6" 
+                Background="#CF372D51" BorderThickness="0.5" BorderBrush="#CC574D71">
 
             <DockPanel>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" MinHeight="30" Margin="0,0.3">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                            MinHeight="30" Margin="0,0.3">
                     <Grid>
-                        <TextBox  x:Name="SearchBarGames" 
-                                  TextChanged="SearchBarGames_Changed" 
+                        <TextBox  x:Name="SearchBar" 
+                                  TextChanged="SearchBar_Changed" 
                                   MinWidth="280"
                                   MaxWidth="280"
                                   VerticalContentAlignment="Center" 
                                   MinHeight="25"
-                                  Margin="10,7,10,7" 
+                                  Margin="10,6,12,6" 
                                   Padding="5,0,0,0"
                                   Style="{StaticResource TextBoxStyle}"/>
 
                         <TextBlock IsHitTestVisible="False" 
-                                   Text="Search games..." 
+                                   Text="🔍  Search games" 
+                                   FontFamily="{StaticResource FontCommon}"
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left" 
                                    Margin="20,0,0,0" 
-                                   Foreground="#50FFFFFF">
+                                   Foreground="#30FFFFFF">
 
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=SearchBarGames}" Value="">
+                                        <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -171,21 +200,36 @@
                     </Grid>
                 </StackPanel>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="1,0.5">
 
-                    <TextBlock Text="Sort by" Margin="10,10,0,10" Foreground="#66FFFFFF" 
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                    <ComboBox x:Name="ComboSortByGames" 
-                              Width="125" Margin="10,7,10,7" 
+                    <ComboBox x:Name="ComboCategories" 
+                              Width="230" MinWidth="125" MaxWidth="250" Margin="0,7,10,7" 
                               Style="{StaticResource ComboBoxStyle}"
-                              SelectionChanged="ComboSortByGames_Changed"
+                              SelectionChanged="ComboCategories_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
                               SelectedIndex="0" MinHeight="25">
 
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF272237" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF272237" />
-                        </ComboBox.Resources>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">
+                                
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+
+                    <TextBlock Text="Sort by" Margin="10,10,0,10"
+                               FontFamily="{StaticResource FontCommon}" Foreground="#66FFFFFF" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                    <ComboBox x:Name="ComboSortBy" 
+                              MinWidth="135" Margin="10,7,10,7" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              SelectionChanged="ComboSortBy_Changed"
+                              PreviewMouseWheel="ComboBox_PreviewMouseWheel"
+                              SelectedIndex="0" MinHeight="25">
 
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemStyle}">

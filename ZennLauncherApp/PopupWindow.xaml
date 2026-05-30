@@ -8,7 +8,8 @@
         ResizeMode="NoResize"
         SizeToContent="Height"
         Title="PopupWindow" MinHeight="195" MinWidth="420" MaxWidth="450"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" 
@@ -17,19 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+    </Window.Resources>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -42,9 +32,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -82,17 +72,17 @@
 
             </StackPanel>
 
-            <StackPanel x:Name="InputStackPanel" Margin="0,25,0,1" Grid.Row="1" VerticalAlignment="Center">
+            <StackPanel x:Name="InputStackPanel" Margin="10,25,10,1" Grid.Row="1" VerticalAlignment="Center">
                 <TextBlock x:Name="MessageTextBlock" Text="MessageTextBlock: DefaultMessage" TextWrapping="Wrap"
-                           FontSize="13" Padding="10" HorizontalAlignment="Center" Foreground="#FF9A8FB9"/>
+                           FontSize="13" Padding="10" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource FontCommon}" Foreground="{StaticResource TextWindowBrighterBrush}"/>
             </StackPanel>
 
             <DockPanel Margin="10,10,10,0" Grid.Row="4">
                 <Button x:Name="BtnOk" Content="Ok" Click="BtnOk_Click" 
-                        Style="{StaticResource MenuButtonStyleC}" Margin="10,10,10,25" Padding="15,8,15,8" 
+                        Style="{StaticResource MenuButtonStyle_Secondary}" Margin="10,10,10,25" Padding="15,8,15,8" 
                         MinWidth="150" MaxWidth="200" BorderThickness="0,0,0,0" HorizontalAlignment="Center"
-                        FontFamily="Global Sans Serif" FontSize="12" 
-                        VerticalAlignment="Bottom" IsDefault="True"/>
+                        FontSize="12" VerticalAlignment="Bottom" IsDefault="True"/>
             </DockPanel>
         </Grid>
     </Border>

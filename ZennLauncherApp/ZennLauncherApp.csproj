@@ -77,7 +77,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>zenn_icon_v0_1beta.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3A04A2B770BE19609B9557B180EA0BF085569683</ManifestCertificateThumbprint>
@@ -92,15 +92,18 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net-Next, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.Net-Next.4.1.0\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    <Reference Include="BCrypt-Net-Next, Version=4.2.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.2.0\lib\net48\BCrypt-Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="craftersmine.SteamGridDB.Net, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\craftersmine.SteamGridDB.Net.1.1.7\lib\netstandard2.0\craftersmine.SteamGridDB.Net.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.5\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.7, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.7\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Sqlite, Version=10.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.10.0.5\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    <Reference Include="Microsoft.Data.Sqlite, Version=10.0.7.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.10.0.7\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.5.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.5\lib\net48\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -108,14 +111,17 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.5.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.5\lib\net48\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2, Version=3.0.2.2801, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.config.e_sqlite3.3.0.2\lib\net471\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.core, Version=3.0.2.2801, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.core.3.0.2\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=3.0.3.3048, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.config.e_sqlite3.3.0.3\lib\net471\SQLitePCLRaw.batteries_v2.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=3.0.2.2801, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.3.0.2\lib\net471\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.core, Version=3.0.3.3048, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.3.0.3\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=3.0.3.3048, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.3.0.3\lib\net471\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -124,12 +130,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.10.0.5\lib\net462\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\packages\System.Drawing.Common.10.0.7\lib\net462\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Pipelines, Version=10.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Pipelines.10.0.5\lib\net462\System.IO.Pipelines.dll</HintPath>
+    <Reference Include="System.IO.Pipelines, Version=10.0.0.7, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.10.0.7\lib\net462\System.IO.Pipelines.dll</HintPath>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
     </Reference>
@@ -141,14 +148,14 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.Cryptography.ProtectedData, Version=10.0.0.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.ProtectedData.10.0.5\lib\net462\System.Security.Cryptography.ProtectedData.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.ProtectedData, Version=10.0.0.7, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.ProtectedData.10.0.7\lib\net462\System.Security.Cryptography.ProtectedData.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=10.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.10.0.5\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=10.0.0.7, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.10.0.7\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=10.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.10.0.5\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=10.0.0.7, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.10.0.7\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.6.3\lib\net462\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -180,6 +187,7 @@
     <Compile Include="CategoriesSettings.xaml.cs">
       <DependentUpon>CategoriesSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CategoryModel.cs" />
     <Compile Include="ConfigHandler.cs" />
     <Compile Include="FoldersSettings.xaml.cs">
       <DependentUpon>FoldersSettings.xaml</DependentUpon>
@@ -192,6 +200,7 @@
     </Compile>
     <Compile Include="GlobalConfigModel.cs" />
     <Compile Include="GlobalFunctions.cs" />
+    <Compile Include="IAppItem.cs" />
     <Compile Include="InputBoxPopup.xaml.cs">
       <DependentUpon>InputBoxPopup.xaml</DependentUpon>
     </Compile>
@@ -229,8 +238,8 @@
     </Compile>
     <Compile Include="DBHandler.cs" />
     <Compile Include="GameModel.cs" />
-    <Compile Include="RelicsHistoryView.xaml.cs">
-      <DependentUpon>RelicsHistoryView.xaml</DependentUpon>
+    <Compile Include="BoardsView.xaml.cs">
+      <DependentUpon>BoardsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="WindowHelper.cs" />
@@ -242,11 +251,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ColorScheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FoldersSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FontFamilies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -324,7 +341,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RelicsHistoryView.xaml">
+    <Page Include="BoardsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -351,6 +368,63 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\Font Awesome 7 Brands-Regular-400.otf" />
+    <Resource Include="Assets\Fonts\Font Awesome 7 Free-Regular-400.otf" />
+    <Resource Include="Assets\Fonts\Font Awesome 7 Free-Solid-900.otf" />
+    <Resource Include="Assets\Fonts\BebasNeue-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Inter_18pt-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Inter_18pt-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Inter_18pt-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Inter_18pt-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\Inter_24pt-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Inter_24pt-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Inter_24pt-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Inter_24pt-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\Inter_28pt-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Inter_28pt-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Inter_28pt-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Inter_28pt-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\Montserrat-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Montserrat-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Montserrat-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Rajdhani-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Rajdhani-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Black.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-BlackItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-ExtraBold.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-ExtraBoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-ExtraLight.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-ExtraLightItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Italic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Light.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-LightItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-MediumItalic.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\Mulish-SemiBoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-Bold.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-ExtraBold.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-ExtraBoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-ExtraLight.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-ExtraLightItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-Italic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-Light.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-LightItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-Medium.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-MediumItalic.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-Regular.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-SemiBold.ttf" />
+    <Resource Include="Assets\Fonts\PlusJakartaSans-SemiBoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\ShareTech-Regular.ttf" />
+    <Resource Include="Assets\Fonts\SpaceGrotesk-Bold.ttf" />
+    <Resource Include="Assets\Fonts\SpaceGrotesk-Light.ttf" />
+    <Resource Include="Assets\Fonts\SpaceGrotesk-Medium.ttf" />
+    <Resource Include="Assets\Fonts\SpaceGrotesk-Regular.ttf" />
+    <Resource Include="Assets\Fonts\SpaceGrotesk-SemiBold.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -391,6 +465,10 @@
   <ItemGroup>
     <None Include="Assets\Icons\Interface\Settings.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

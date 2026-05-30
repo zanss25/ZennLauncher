@@ -1,0 +1,199 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================================
+         BASE COLORS (Tetap simpan kuncinya untuk referensi)
+         ============================================================ -->
+    <!-- Title Bar -->
+    <Color x:Key="LogoColor_A">#A89083B3</Color>
+    <Color x:Key="LogoColor_B">#A8B6A0ED</Color>
+    <Color x:Key="TitleColor">#7FC9B5FF</Color>
+    <Color x:Key="BorderColor_A">#FF2A243B</Color>
+    <Color x:Key="BorderColor_B">#FF2E2741</Color>
+    <Color x:Key="TitleBackgroundA">#FF2A243B</Color>
+    <Color x:Key="TitleBackgroundB">#FF2E2741</Color>
+
+    <!-- Backgrounds -->
+    <Color x:Key="WindowBackground_1">#FF1A1420</Color>
+    <Color x:Key="WindowBackground_2A">#FF221A2D</Color>
+    <Color x:Key="WindowBackground_2B">#FF251A39</Color>
+    <Color x:Key="WindowBackground_3">#F22B1E45</Color>
+
+    <!-- Texts -->
+    <Color x:Key="TextColorCommon">#AAF5F5F5</Color>
+    <Color x:Key="TextColorCommonBrighter">#DDF5F5F5</Color>
+    <Color x:Key="TextColorCommonActive">#FFF5F5F5</Color>
+    <Color x:Key="TextColorPressed">#AAF5F5F5</Color>
+    <Color x:Key="TextColorDisabled">#DDF5F5F5</Color>
+    <Color x:Key="TextColorWindow">#A89A8FB9</Color>
+    <Color x:Key="TextColorWindowBrighter">#FF9A8FB9</Color>
+
+    <!-- TextBoxes -->
+    <Color x:Key="TextBoxBackground">#FF272237</Color>
+    <Color x:Key="TextBoxBackgroundHover_1">#FF211C2F</Color>
+    <Color x:Key="TextBoxBackgroundHover_2">#FF2A2438</Color>
+    <Color x:Key="TextBoxBackgroundActive">#FF211C2F</Color>
+    <Color x:Key="TextBoxBorder">#70594D7B</Color>
+    <Color x:Key="TextBoxBorderHover">#FF594D7B</Color>
+    <Color x:Key="TextBoxBorderActive">#FF937BD1</Color>
+
+    <!-- Buttons -->
+    <Color x:Key="BtnPrimary_A">#DFF49348</Color>
+    <Color x:Key="BtnPrimary_B">#DFEB6337</Color>
+    <Color x:Key="BtnPrimaryHover_A">#FFF49348</Color>
+    <Color x:Key="BtnPrimaryHover_B">#DFEB6337</Color>
+    <Color x:Key="BtnPrimaryPressed_A">#CC351610</Color>
+    <Color x:Key="BtnPrimaryPressed_B">#CC351610</Color>
+    <Color x:Key="BtnPrimaryBorder_A">#00FFFFFF</Color>
+    <Color x:Key="BtnPrimaryBorder_B">#00FFFFFF</Color>
+    <Color x:Key="BtnPrimaryBorderHover_A">#20F69550</Color>
+    <Color x:Key="BtnPrimaryBorderHover_B">#20F69550</Color>
+    <Color x:Key="BtnPrimaryBorderPressed_A">#DDEE8952</Color>
+    <Color x:Key="BtnPrimaryBorderPressed_B">#DDEE8952</Color>
+
+    <Color x:Key="BtnSecondary">#FF46405C</Color>
+    <Color x:Key="BtnSecondaryHover">#FF574E72</Color>
+    <Color x:Key="BtnSecondaryPressed">#FF221E2C</Color>
+    <Color x:Key="BtnSecondaryBorder">#00FFFFFF</Color>
+    <Color x:Key="BtnSecondaryBorderHover">#AA594D7B</Color>
+    <Color x:Key="BtnSecondaryBorderPressed">#FF594D7B</Color>
+
+    <Color x:Key="BtnPopup">#00FFFFFF</Color>
+    <Color x:Key="BtnPopupHover">#666A59A0</Color>
+    <Color x:Key="BtnPopupPressed">#446A59A0</Color>
+    <Color x:Key="BtnPopupBorder">#00FFFFFF</Color>
+    <Color x:Key="BtnPopupBorderHover">#80594D7B</Color>
+    <Color x:Key="BtnPopupBorderPressed">#FF594D7B</Color>
+
+    <Color x:Key="BtnCommon">#FF221E2F</Color>
+    <Color x:Key="BtnCommonHover">#AA3D3454</Color>
+    <Color x:Key="BtnCommonPressed">#FF221E2C</Color>
+    <Color x:Key="BtnCommonBorder">#00FFFFFF</Color>
+    <Color x:Key="BtnCommonBorderHover">#80594D7B</Color>
+    <Color x:Key="BtnCommonBorderPressed">#FF594D7B</Color>
+
+    <Color x:Key="BtnDisabled">#20F0DFF5</Color>
+    <Color x:Key="BtnDisabledBorder">#00FFFFFF</Color>
+
+    <!-- Popups -->
+    <Color x:Key="PopupBackground">#F02B2245</Color>
+    <Color x:Key="PopupBorder">#FF594D7B</Color>
+    
+    <!-- ListBoxes -->
+    <Color x:Key="ListBoxBackground">#66111111</Color>
+    <Color x:Key="ListBoxBorder">#66C9B5FF</Color>
+    <Color x:Key="ListBoxItemBackgroundHover">#6B4B3E68</Color>
+    <Color x:Key="ListBoxItemBorderSelected">#BB9083B3</Color>
+    
+    <!-- Borders (Line Separation) -->
+    <Color x:Key="BorderCommon">#22FFFFFF</Color>
+
+    <!-- ============================================================
+         BRUSHES (Solid & Gradients)
+         ============================================================ -->
+
+    <!-- Title Bar & Logo Gradients -->
+    <LinearGradientBrush x:Key="LogoBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="{StaticResource LogoColor_A}" Offset="0"/>
+        <GradientStop Color="{StaticResource LogoColor_B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="TitleBrush" Color="{StaticResource TitleColor}"/>
+
+    <LinearGradientBrush x:Key="BorderBrush_Common" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BorderColor_A}" Offset="0"/>
+        <GradientStop Color="{StaticResource BorderColor_B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Background Brushes -->
+    <SolidColorBrush x:Key="WindowBackgroundBrush_1" Color="{StaticResource WindowBackground_1}"/>
+
+    <LinearGradientBrush x:Key="WindowBackgroundBrush_2" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="{StaticResource WindowBackground_2A}" Offset="0"/>
+        <GradientStop Color="{StaticResource WindowBackground_2B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="WindowBackgroundBrush_3" Color="{StaticResource WindowBackground_3}"/>
+
+    <!-- Text Brushes -->
+    <SolidColorBrush x:Key="TextCommonBrush" Color="{StaticResource TextColorCommon}"/>
+    <SolidColorBrush x:Key="TextCommonActiveBrush" Color="{StaticResource TextColorCommonActive}"/>
+    <SolidColorBrush x:Key="TextCommonPressedBrush" Color="{StaticResource TextColorPressed}"/>
+    <SolidColorBrush x:Key="TextCommonDisabledBrush" Color="{StaticResource TextColorDisabled}"/>
+    <SolidColorBrush x:Key="TextWindowBrush" Color="{StaticResource TextColorWindow}"/>
+    <SolidColorBrush x:Key="TextWindowBrighterBrush" Color="{StaticResource TextColorWindowBrighter}"/>
+
+    <!-- TextBox Brushes -->
+    <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource TextBoxBackground}"/>
+    <SolidColorBrush x:Key="TextBoxBackgroundActiveBrush" Color="{StaticResource TextBoxBackgroundActive}"/>
+    <SolidColorBrush x:Key="TextBoxBackgroundHoverBrush_1" Color="{StaticResource TextBoxBackgroundHover_1}"/>
+    <SolidColorBrush x:Key="TextBoxBackgroundHoverBrush_2" Color="{StaticResource TextBoxBackgroundHover_2}"/>
+    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource TextBoxBorder}"/>
+    <SolidColorBrush x:Key="TextBoxBorderHoverBrush" Color="{StaticResource TextBoxBorderHover}"/>
+    <SolidColorBrush x:Key="TextBoxBorderActiveBrush" Color="{StaticResource TextBoxBorderActive}"/>
+
+    <!-- Primary Button Border Brushes -->
+    <LinearGradientBrush x:Key="BtnPrimaryBorderBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BtnPrimaryBorder_A}" Offset="0"/>
+        <GradientStop Color="{StaticResource BtnPrimaryBorder_B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BtnPrimaryBorderHoverBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BtnPrimaryBorderHover_A}" Offset="0"/>
+        <GradientStop Color="{StaticResource BtnPrimaryBorderHover_B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BtnPrimaryBorderPressedBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BtnPrimaryBorderPressed_A}" Offset="0"/>
+        <GradientStop Color="{StaticResource BtnPrimaryBorderPressed_B}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Seondary Button Brushes -->
+    <SolidColorBrush x:Key="BtnSecondaryBrush" Color="{StaticResource BtnSecondary}"/>
+    <SolidColorBrush x:Key="BtnSecondaryHoverBrush" Color="{StaticResource BtnSecondaryHover}"/>
+    <SolidColorBrush x:Key="BtnSecondaryPressedBrush" Color="{StaticResource BtnSecondaryPressed}"/>
+    <SolidColorBrush x:Key="BtnSecondaryBorderBrush" Color="{StaticResource BtnSecondaryBorder}"/>
+    <SolidColorBrush x:Key="BtnSecondaryBorderHoverBrush" Color="{StaticResource BtnSecondaryBorderHover}"/>
+    <SolidColorBrush x:Key="BtnSecondaryBorderPressedBrush" Color="{StaticResource BtnSecondaryBorderPressed}"/>
+
+    <!-- Popup Button Brushes -->
+    <SolidColorBrush x:Key="BtnPopupBrush" Color="{StaticResource BtnPopup}"/>
+    <SolidColorBrush x:Key="BtnPopupHoverBrush" Color="{StaticResource BtnPopupHover}"/>
+    <SolidColorBrush x:Key="BtnPopupPressedBrush" Color="{StaticResource BtnPopupPressed}"/>
+    <SolidColorBrush x:Key="BtnPopupBorderBrush" Color="{StaticResource BtnPopupBorder}"/>
+    <SolidColorBrush x:Key="BtnPopupBorderHoverBrush" Color="{StaticResource BtnPopupBorderHover}"/>
+    <SolidColorBrush x:Key="BtnPopupBorderPressedBrush" Color="{StaticResource BtnPopupBorderPressed}"/>
+
+    <!-- Common Button Brushes -->
+    <SolidColorBrush x:Key="BtnCommonBrush" Color="{StaticResource BtnCommon}"/>
+    <SolidColorBrush x:Key="BtnCommonHoverBrush" Color="{StaticResource BtnCommonHover}"/>
+    <SolidColorBrush x:Key="BtnCommonPressedBrush" Color="{StaticResource BtnCommonPressed}"/>
+    <SolidColorBrush x:Key="BtnCommonBorderBrush" Color="{StaticResource BtnCommonBorder}"/>
+    <SolidColorBrush x:Key="BtnCommonBorderHoverBrush" Color="{StaticResource BtnCommonBorderHover}"/>
+    <SolidColorBrush x:Key="BtnCommonBorderPressedBrush" Color="{StaticResource BtnCommonBorderPressed}"/>
+
+    <!-- Disabled State -->
+    <SolidColorBrush x:Key="BtnDisabledBrush" Color="{StaticResource BtnDisabled}"/>
+    <SolidColorBrush x:Key="BtnDisabledBorderBrush" Color="{StaticResource BtnDisabledBorder}"/>
+
+    <!-- Popup Brushes -->
+    <SolidColorBrush x:Key="PopupBackgroundBrush" Color="{StaticResource PopupBackground}"/>
+    <SolidColorBrush x:Key="PopupBorderBrush" Color="{StaticResource PopupBorder}"/>
+
+    <!-- ListBox Brushes -->
+    <SolidColorBrush x:Key="ListBoxBackgroundBrush" Color="{StaticResource ListBoxBackground}"/>
+    <SolidColorBrush x:Key="ListBoxBorderBrush" Color="{StaticResource ListBoxBorder}"/>
+    <SolidColorBrush x:Key="ListBoxItemBackgroundHoverBrush" Color="{StaticResource ListBoxItemBackgroundHover}"/>
+    <SolidColorBrush x:Key="ListBoxItemBorderSelectedBrush" Color="{StaticResource ListBoxItemBorderSelected}"/>
+
+    <!-- Border (Line Separation) Brushes -->
+    <SolidColorBrush x:Key="BorderCommonBrush" Color="{StaticResource BorderCommon}"/>
+
+    <!-- Cover Grid Brushes -->
+    <LinearGradientBrush x:Key="CoverGridBrush" EndPoint="0,0" StartPoint="1,1">
+        <GradientStop Color="#FF342C49"/>
+        <GradientStop Color="#FF342C49" Offset="1"/>
+        <GradientStop Color="#FF403659" Offset="0.5"/>
+    </LinearGradientBrush>
+
+</ResourceDictionary>

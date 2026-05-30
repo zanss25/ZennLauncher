@@ -9,12 +9,6 @@
 
     <UserControl.Resources>
 
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid>
@@ -65,13 +59,14 @@
                             <TextBlock Text="Advanced"
                                        Grid.Column="1" Grid.Row="0"
                                        VerticalAlignment="Center"
-                                       Foreground="WhiteSmoke"
-                                       FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                       Style="{StaticResource SettingsTitleText}"
+                                       HorizontalAlignment="Left"/>
 
                         </Grid>
 
                         <TextBlock Text="COMING SOON" Grid.Row="1" Margin="0,135,0,135"  
-                                   Foreground="#A89A8FB9" FontSize="25" FontWeight="Bold" 
+                                   Foreground="{StaticResource LogoBrush}" FontFamily="{StaticResource FontLogo}" 
+                                   FontSize="25" FontWeight="Bold" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                     </Grid>

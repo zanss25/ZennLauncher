@@ -43,6 +43,7 @@ namespace ZennLauncherApp
                 _existingTool = tool;
                 _isEditMode = true;
                 FillDataToFields();
+                BtnSaveToolInfo.Content = "Save";
             }
         }
 
@@ -91,7 +92,7 @@ namespace ZennLauncherApp
         private void BtnBrowseTarget_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe; *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe; *.lnk; *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Tool Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))
@@ -204,8 +205,8 @@ namespace ZennLauncherApp
             LinearGradientBrush defaultBgBrush = new LinearGradientBrush();
             var color1 = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF342C49");
             var color2 = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF403659");
-            System.Windows.Point point1 = new System.Windows.Point(0.5, 0);
-            System.Windows.Point point2 = new System.Windows.Point(0.5, 1);
+            System.Windows.Point point1 = new System.Windows.Point(0, 0);
+            System.Windows.Point point2 = new System.Windows.Point(1, 1);
 
             defaultBgBrush.StartPoint = point1;
             defaultBgBrush.EndPoint = point2;
@@ -326,8 +327,8 @@ namespace ZennLauncherApp
 
                 if (_isEditMode)
                 {
-                    PopupWindow popup = new PopupWindow("Confirm Edit",
-                                                        $"Confirm editing \"{InputToolTitle.Text}\"?",
+                    PopupWindow popup = new PopupWindow("Edit Tool Properties",
+                                                        $"Confirm your edits to \"{InputToolTitle.Text}\"?",
                                                         "Confirm", true);
 
                     popup.ShowDialog();

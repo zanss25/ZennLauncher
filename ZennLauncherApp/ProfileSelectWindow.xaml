@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:ZennLauncherApp"
         mc:Ignorable="d"
         Title="Profile Selection" 
-        MinHeight="678" MinWidth="950"
-        WindowStartupLocation="CenterScreen">
+        Height="400" Width="620"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource WindowBackgroundBrush_1}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40"
@@ -16,21 +18,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <local:ProfileImageConverter x:Key="ProfileImgConv"/>
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
     </Window.Resources>
-
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF1A1820"/>
-            <GradientStop Color="#FF18161F" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
 
     <Border BorderThickness="2, 40, 2, 2">
         <Border.BorderBrush>
@@ -43,9 +32,9 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF2A243B"/>
-                <GradientStop Color="#FF2E2741" Offset="0.5"/>
-                <GradientStop Color="#FF2A243B" Offset="1"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}"/>
+                <GradientStop Color="{StaticResource TitleBackgroundB}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource TitleBackgroundA}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
@@ -71,8 +60,6 @@
 
                 <Button Content="—" Click="BtnMinimize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="☐" Click="BtnMaximize_Click" Style="{StaticResource ControlButtonStyle}"
-                        MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
                 <Button Content="✕" Click="BtnClose_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
 
@@ -83,19 +70,36 @@
                         HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"
                         MinWidth="55" MinHeight="40">
 
-                <TextBlock Text="ZENN" FontWeight="Bold" 
+                <TextBlock Text="ZENN" FontWeight="Bold" FontFamily="{StaticResource FontLogo}"
                            VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                            FontSize="17" Margin="0,0,0,5">
                     
                     <TextBlock.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#A89083B3"/>
-                            <GradientStop Color="#A8B6A0ED" Offset="1"/>
+                            <GradientStop Color="{StaticResource LogoColor_A}"/>
+                            <GradientStop Color="{StaticResource LogoColor_B}" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                     
                 </TextBlock>
 
+            </StackPanel>
+
+            <StackPanel x:Name="EmptyProfileWelcome" Visibility="Hidden"
+                        Grid.ColumnSpan="2" Grid.RowSpan="2" 
+                        VerticalAlignment="Top" Margin="0,80">
+                
+                <TextBlock Text="Welcome, Player.." 
+                           Margin="25"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           FontSize="25" Foreground="{StaticResource TextCommonActiveBrush}"
+                           FontFamily="{StaticResource FontLogo}"
+                           FontWeight="DemiBold"/>
+
+                <Button x:Name="BtnCreateNewProfile_Empty" Content="Create New Profile" Grid.Row="0"
+                        Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_Primary}"
+                        Margin="0,5" Padding="15,8,15,8" MinWidth="125" MaxWidth="200" 
+                        BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
             </StackPanel>
 
             <Grid Margin="10,0,10,0" Grid.Row="0" Grid.Column="0">
@@ -104,8 +108,8 @@
                          SelectionChanged="SidebarProfilesList_SelectionChanged"
                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                          Style="{StaticResource ListBoxStyle}"
-                         ItemContainerStyle="{StaticResource ListBoxItemStyle}"
-                         FontFamily="Segoe UI" FontSize="14" FontWeight="Regular" Margin="0,15"
+                         ItemContainerStyle="{StaticResource ListBoxItemStyle_Primary}"
+                         Margin="0,15"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
@@ -137,7 +141,7 @@
 
                                 <TextBlock Text="{Binding ProfileName}" 
                                            VerticalAlignment="Center"
-                                           FontFamily="Segoe UI" FontSize="13"/>
+                                           FontFamily="{StaticResource FontSidebar}" FontSize="16"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -157,9 +161,10 @@
                         </Grid.RowDefinitions>
 
                         <Button x:Name="BtnCreateNewProfile" Content="Create New Profile" Grid.Row="0"
-                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyleC}"
-                                Margin="0,5" Padding="15,8,15,8" MinWidth="125" FontFamily="Global Sans Serif" 
-                                FontSize="12" BorderThickness="0,0,0,0" VerticalAlignment="Bottom"/>
+                                Click="BtnCreateNewProfile_Click" Style="{StaticResource MenuButtonStyle_Secondary}"
+                                Margin="0,5" Padding="15,8,15,8" MinWidth="125" 
+                                FontSize="12" BorderThickness="0,0,0,0" 
+                                VerticalAlignment="Bottom"/>
 
                     </Grid>
                     
@@ -167,7 +172,7 @@
             </StackPanel>
 
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Grid.Column="1" Grid.Row="0">
+                       Grid.Column="1" Grid.RowSpan="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -180,7 +185,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border x:Name="ProfileAvatar"
+                <Border x:Name="ProfileAvatar" Visibility="Collapsed"
                         Grid.ColumnSpan="2" Grid.Row="0"
                         Width="160" Height="160"
                         BorderBrush="#70594D7B"
@@ -219,12 +224,12 @@
 
                 <TextBlock Text="{Binding SelectedItem.ProfileName, 
                                     ElementName=SidebarProfilesList, 
-                                    FallbackValue=''}"
+                                    FallbackValue=''}" Visibility="Collapsed"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.ColumnSpan="2" Grid.Row="1" Margin="0,10,0,25"
-                           Foreground="#B2FFFFFF"
-                           FontFamily="Segoe UI" FontSize="25" FontWeight="Bold"/>
+                           Style="{StaticResource SettingsTitleText}"
+                           FontSize="25" FontWeight="Bold"/>
 
                 <Grid Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -281,18 +286,17 @@
 
                         </PasswordBox>
 
-                        <Button x:Name="BtnLogIn" Content="Login" Grid.Column="1" Grid.Row="0"
-                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle}" 
+                        <Button x:Name="BtnLogIn" Content="Sign in" Grid.Column="1" Grid.Row="0"
+                                Click="BtnLogIn_Click" Style="{StaticResource MenuButtonStyle_Primary}" 
                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                                 Margin="5,0,0,0" Padding="15,8,15,8" MinWidth="30"
-                                FontFamily="Global Sans Serif" FontSize="12" BorderBrush="#FF594D7B" 
                                 BorderThickness="0,0,0,0" VerticalAlignment="Center"
                                 IsDefault="True"/>
                     </DockPanel>
 
-                    <CheckBox x:Name="CheckBoxKeepLoggedIn" Content="Keep logged in"
+                    <CheckBox x:Name="CheckBoxKeepLoggedIn" Content="Remember me"
                               Style="{StaticResource CheckBoxStyle}"
-                              Grid.Row="1" Margin="0,20" Foreground="#CCFFFFFF"/>
+                              Grid.Row="1" Margin="0,20" Foreground="{StaticResource TextCommonBrush}"/>
 
                 </Grid>
 

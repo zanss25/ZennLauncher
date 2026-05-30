@@ -9,12 +9,6 @@
     
     <UserControl.Resources>
 
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CustomResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid>
@@ -58,8 +52,8 @@
                         <TextBlock Text="Appearance"
                                    Grid.Column="1" Grid.Row="0"
                                    VerticalAlignment="Center"
-                                   Foreground="WhiteSmoke"
-                                   FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                   Style="{StaticResource SettingsTitleText}"
+                                   HorizontalAlignment="Left"/>
 
                     </Grid>
 
@@ -73,16 +67,17 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Backdrop Effects" Grid.Column="0" 
-                                           VerticalAlignment="Center" Foreground="#BBFFFFFF"/>
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource OptionNameText}"/>
 
-                            <TextBlock Text="Set the visual style of the background overlay for windows and popups" Grid.Column="1"
-                                           HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                           Margin="15,0" Foreground="#55FFFFFF"/>
+                            <TextBlock Text="Set the visual style of the background overlay for windows and popups" 
+                                       Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
                             <ComboBox x:Name="ComboDialogOverlay"
                                           MinWidth="125" Grid.Column="2"
                                           MinHeight="30" Padding="10,8"
-                                          Style="{StaticResource ComboBoxStyleB}"
+                                          Style="{StaticResource ComboBoxStyle}"
                                           SelectionChanged="ComboDialogOverlay_Changed"
                                           HorizontalAlignment="Right">
 

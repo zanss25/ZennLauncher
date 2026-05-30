@@ -33,6 +33,12 @@ namespace ZennLauncherApp
         private readonly DBHandler db = DBHandler.Instance;
         private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
+        private bool isSidebarCollapsed = true;
+
+        private UserControl _cachedGamesView;
+        private UserControl _cachedToolsView;
+        private UserControl _cachedCategoriesView;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,8 +46,13 @@ namespace ZennLauncherApp
 
             LoadProfileData();
             SidebarNavList.ItemsSource = func.SidebarTabs;
+            if (isSidebarCollapsed)
+            {
+                SidebarPanel.Width = 63;
+                SidebarPanel.Tag = "Collapsed";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Center;
+            }
             LoadDefaultStartingTab();
-
         }
 
         public void LoadProfileData()
@@ -130,23 +141,13 @@ namespace ZennLauncherApp
             this.WindowState = WindowState.Minimized;
         }
 
-        private void LinkProfileInfo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnProfileSettings_Click(object sender, RoutedEventArgs e)
+        private void LinkProfileSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settings = new SettingsWindow("myprofile");
 
             EnableBlurAndOverlay();
             settings.ShowDialog();
             DisableBlurAndOverlay();
-        }
-
-        private void BtnSwitchProfile_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void BtnLogOut_Click(object sender, RoutedEventArgs e)
@@ -199,7 +200,7 @@ namespace ZennLauncherApp
         {
             EnableBlurAndOverlay();
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk, *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Game Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultGamesDir))
@@ -228,14 +229,16 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
+                        gview.LoadGamesList();
+                        gview.ApplyFilters();
                     }
                 }
                 else
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.ComboSortByGames_Changed(gview.ComboSortByGames, null);
+                        gview.LoadGamesList();
+                        gview.ApplyFilters();
                     }
                 }
             }
@@ -247,7 +250,7 @@ namespace ZennLauncherApp
         {
             EnableBlurAndOverlay();
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Supported Program Files (*.exe, *.lnk)|*.exe;*.lnk|All files (*.*)|*.*";
+            openFile.Filter = "Supported Program Files (*.exe, *.lnk, *.url)|*.exe;*.lnk;*.url|All files (*.*)|*.*";
             openFile.Title = "Select Tool Executable";
 
             if (Directory.Exists(((App)Application.Current).CurrentProfileCfg.Folders.DefaultToolsDir))
@@ -274,31 +277,23 @@ namespace ZennLauncherApp
 
                 if (add.ShowDialog() == true)
                 {
-                    if (ContentSlot.Content is ToolsView gview)
+                    if (ContentSlot.Content is ToolsView tview)
                     {
-                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
+                        tview.LoadToolsList();
+                        tview.ApplyFilters();
                     }
                 }
                 else
                 {
-                    if (ContentSlot.Content is ToolsView gview)
+                    if (ContentSlot.Content is ToolsView tview)
                     {
-                        gview.ComboSortByTools_Changed(gview.ComboSortByTools, null);
+                        tview.LoadToolsList();
+                        tview.ApplyFilters();
                     }
                 }
             }
 
             DisableBlurAndOverlay();
-        }
-
-        private void OnTabChanged(TabModel selectedTab)
-        {
-            if (selectedTab.TargetView != null)
-            {
-                var view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
-
-                ContentSlot.Content = view;
-            }
         }
 
         private void RefreshCurrentTab()
@@ -312,6 +307,45 @@ namespace ZennLauncherApp
             }
         }
 
+        private async void OnTabChanged(TabModel selectedTab)
+        {
+            if (selectedTab.TargetView == null) return;
+
+            // Tampilkan loading indicator dulu (opsional tapi bagus)
+            ContentSlot.Content = null;
+
+            // Biarkan UI render dulu sebelum buat view baru
+            await Task.Yield();
+
+            UserControl view;
+
+            // Cache GamesView & ToolsView supaya gak dibuat ulang tiap klik
+            if (selectedTab.TargetView == typeof(GamesView))
+            {
+                if (_cachedGamesView == null)
+                    _cachedGamesView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedGamesView;
+            }
+            else if (selectedTab.TargetView == typeof(ToolsView))
+            {
+                if (_cachedToolsView == null)
+                    _cachedToolsView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedToolsView;
+            }
+            else if (selectedTab.TargetView == typeof(CategoriesView))
+            {
+                if (_cachedCategoriesView == null)
+                    _cachedCategoriesView = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+                view = _cachedCategoriesView;
+            }
+            else
+            {
+                view = Activator.CreateInstance(selectedTab.TargetView) as UserControl;
+            }
+
+            ContentSlot.Content = view;
+        }
+
         private void SidebarNavList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selected = SidebarNavList.SelectedItem as TabModel;
@@ -319,6 +353,23 @@ namespace ZennLauncherApp
             if (selected != null)
             {
                 OnTabChanged(selected);
+
+                StackPanelGamesBtns.Visibility = Visibility.Collapsed;
+                StackPanelToolsBtns.Visibility = Visibility.Collapsed;
+
+                if (selected.ItemTag == "games")
+                {
+                    StackPanelGamesBtns.Visibility = Visibility.Visible;
+                }
+                if (selected.ItemTag == "tools")
+                {
+                    StackPanelToolsBtns.Visibility = Visibility.Visible;
+                }
+                if (selected.ItemTag == "categories")
+                {
+                    
+                }
+
             }
         }
 
@@ -365,5 +416,22 @@ namespace ZennLauncherApp
             }
         }
 
+        private void BtnSidebarCollapse_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isSidebarCollapsed)
+            {
+                SidebarPanel.Width = 63;
+                SidebarPanel.Tag = "Collapsed";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Center;
+                isSidebarCollapsed = true;
+            }
+            else
+            {
+                SidebarPanel.Width = 230;
+                SidebarPanel.Tag = "Expanded";
+                BtnSidebarCollapse.HorizontalAlignment = HorizontalAlignment.Left;
+                isSidebarCollapsed = false;
+            }
+        }
     }
 }

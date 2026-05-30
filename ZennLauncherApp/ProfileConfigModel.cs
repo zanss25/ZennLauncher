@@ -48,7 +48,6 @@ namespace ZennLauncherApp
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public DialogOverlayModes DialogOverlay { get; set; } = DialogOverlayModes.DimWithBlur;
-
     }
 
     public partial class ProfileFoldersSettings

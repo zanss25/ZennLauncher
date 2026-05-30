@@ -6,6 +6,566 @@
              xmlns:local="clr-namespace:ZennLauncherApp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBlock Text="COMING SOON" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                   Margin="0,0,0,135" Foreground="#A89A8FB9" FontSize="25" FontWeight="Bold"/>
+
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0"
+           MinHeight="70" MaxHeight="100" Margin="0,-2,0,0" IsHitTestVisible="False">
+
+            <DockPanel.Effect>
+                <BlurEffect/>
+            </DockPanel.Effect>
+
+            <DockPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#00161616" Offset="1"/>
+                    <GradientStop Color="#FF342D47" Offset="0"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+
+        </DockPanel>
+
+        <Grid Margin="22,16,22,14" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+                <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                        Grid.ColumnSpan="2" Grid.Row="2" MinWidth="200" Margin="0,10,0,0" 
+                        CornerRadius="6" BorderThickness="1">
+
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#7719171f" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#CC342D47" Offset="0"/>
+                            <GradientStop Color="#CC342D47" Offset="0.1"/>
+                            <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                            <GradientStop Color="#CC342D47" Offset="0.9"/>
+                            <GradientStop Color="#CC342D47" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+
+                    <DataGrid x:Name="AppsDataGrid" 
+                              AutoGenerateColumns="False"
+                              Background="Transparent"
+                              FontFamily="{StaticResource FontCommon}"
+                              BorderThickness="0"
+                              GridLinesVisibility="None"
+                              CanUserAddRows="False"
+                              SelectionUnit="FullRow"
+                              SelectionChanged="AppsDataGrid_Changed"
+                              HeadersVisibility="Column"
+                              IsReadOnly="True"
+                              ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                              CellStyle="{StaticResource DataGridCellStyle}"
+                              RowStyle="{StaticResource DataGridRowStyle}"
+                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick">
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>
+                        </DataGrid.Resources>
+
+                        <DataGrid.ContextMenu>
+                            <ContextMenu Style="{StaticResource ContextMenuStyle}">
+
+                                <MenuItem x:Name="MenuItemLaunch"
+                                          Header="LAUNCH" 
+                                          Click="MenuItemLaunch_Click"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Primary}"
+                                          TextBlock.FontWeight="DemiBold"/>
+
+                                <MenuItem x:Name="MenuItemOpenDir"
+                                          Header="Open File Location" 
+                                          Click="MenuOpenDir_Click"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+
+                                <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
+
+                                <MenuItem x:Name="MenuItemDelete"
+                                          Header="Delete App" 
+                                          Click="MenuItemDelete_Click" 
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+
+                        <DataGrid.Columns>
+
+                            <DataGridTemplateColumn Header="" Width="40" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding AppIconPath}" 
+                                               Stretch="Uniform" 
+                                               Width="20" Height="20" 
+                                               Margin="5,0"
+                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Title" 
+                                                Binding="{Binding AppTitle}" Width="300" />
+                            <DataGridTextColumn Header="Category" 
+                                                Binding="{Binding AppCategoryName}" Width="100" />
+                            <DataGridTextColumn Header="Last Launched" 
+                                                Binding="{Binding AppLastLaunched}" Width="130"/>
+                            <DataGridTextColumn Header="Target" 
+                                                Binding="{Binding AppTarget}" Width="Auto"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Border>
+
+                <Border VerticalAlignment="Top" 
+                        MinHeight="43" MaxHeight="100" Margin="0" CornerRadius="6" 
+                        Background="#CF372D51" BorderThickness="0.5" BorderBrush="#CC574D71" Grid.ColumnSpan="2">
+
+                    <DockPanel>
+
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                                    MinHeight="30" Margin="0,0">
+                            
+                            <Button x:Name="BtnSidebarCollapse"
+                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf03a;" 
+                                    FontSize="16" FontWeight="Light" Padding="0" Margin="10,5,0,5"
+                                    MinHeight="20" MinWidth="30" MaxWidth="40"
+                                    Click="BtnSidebarCollapse_Click">
+
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Bars}">
+
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                                    MinHeight="30" Margin="0,0">
+                            <Grid>
+                            
+                            <TextBox  x:Name="SearchBarApps" 
+                                          TextChanged="SearchBarApps_Changed" 
+                                          MinWidth="230"
+                                          MaxWidth="280"
+                                          VerticalContentAlignment="Center" 
+                                          MinHeight="30"
+                                          Margin="10,6,12,6" 
+                                          Padding="5,0,0,0"
+                                          Style="{StaticResource TextBoxStyle}"/>
+
+                                <TextBlock IsHitTestVisible="False" 
+                                           Text="🔍  Search games/tools"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left" 
+                                           Margin="20,0,0,0" 
+                                           Foreground="#30FFFFFF">
+
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=SearchBarApps}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+
+                        <Button x:Name="BtnRemoveFromCategory" Content="🗑️  Remove category"
+                                Click="BtnRemoveFromCategory_Click"
+                                Margin="0,0,0,0"
+                                Padding="6,0"
+                                MinHeight="30"
+                                VerticalAlignment="Center"
+                                IsEnabled="False">
+
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MenuButtonStyle_Bars}">
+                                    
+                                </Style>
+                            </Button.Style>
+                            
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
+
+                        <ToggleButton x:Name="BtnAddNewToCategory" Content="✚  Add to Category"
+                                      Style="{StaticResource ToggleButtonStyle_Primary}"
+                                      Click="BtnAddNewToCategory_Checked"
+                                      Margin="10,0,12,0"
+                                      VerticalAlignment="Center"
+                                      IsEnabled="False"/>
+
+                        <Popup x:Name="PopupCategories" 
+                               IsOpen="{Binding IsChecked, ElementName=BtnAddNewToCategory}" 
+                               PlacementTarget="{Binding ElementName=BtnAddNewToCategory}"
+                               Placement="Top"
+                               StaysOpen="False"
+                               AllowsTransparency="True"
+                               PopupAnimation="Fade"
+                               HorizontalOffset="0"
+                               VerticalOffset="-5">
+
+                            <Border Background="#F02B2245" CornerRadius="4" BorderThickness="1" BorderBrush="#FF594D7B">
+                                <StackPanel Margin="5">
+                                    <!-- Header Dinamis -->
+                                    <TextBlock x:Name="TextPopupHeader" Text="Add to Category" 
+                                               Foreground="Gray" FontFamily="{StaticResource FontCommon}" 
+                                               FontSize="10" Margin="10,5"/>
+
+                                    <!-- Daftar Kategori -->
+                                    <ItemsControl x:Name="ListPopupCategories">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Content="{Binding CategoryName}"
+                                                        Click="BtnCategoryItem_Click"
+                                                        Tag="{Binding CategoryId}"
+                                                        Style="{StaticResource MenuButtonStyle_Popup}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+
+                    </StackPanel>
+
+                    </DockPanel>
+                </Border>
+
+        </Grid>
+
+        <Border x:Name="SidebarCategoriesList"
+                VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
+                MinWidth="200" MaxWidth="200" Margin="22,15,0,15" CornerRadius="6" 
+                Background="#CF372D51" BorderBrush="#CC574D71" BorderThickness="0.5">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox  x:Name="SearchBarCategories" Grid.Column="0"
+                              TextChanged="SearchBarCategories_Changed"
+                              VerticalContentAlignment="Center"
+                              MinHeight="30"
+                              Margin="8,6,8,6" 
+                              Padding="5,0,0,0"
+                              Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock x:Name="SearchBarCategoriesTextOverlay"
+                               IsHitTestVisible="False" Grid.Column="0"
+                               Text="🔍  Search categories"
+                               FontFamily="{StaticResource FontCommon}"
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left" 
+                               Margin="20,0,0,0" 
+                               Foreground="#30FFFFFF">
+
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBarCategories}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+
+                    </TextBlock>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+
+                    <ScrollViewer.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource SimpleScrollBar}"/>
+                    </ScrollViewer.Resources>
+
+                    <StackPanel>
+                        <StackPanel x:Name="GamesCategories" Margin="15,6,15,10">
+                            <Grid Margin="0,0,0,10">
+                                <TextBlock Text="Games" Foreground="#DDF5F5F5" FontFamily="{StaticResource FontCommon}" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="15" FontWeight="Bold"/>
+                                <Button x:Name="BtnAddNewCategoryGames"
+                                        FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
+                                        Style="{StaticResource MenuButtonStyle_Bars}"
+                                        Click="BtnAddNewCategoryGames_Click"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        MinHeight="20" MinWidth="20"/>
+                            </Grid>
+
+                            <ListBox x:Name="GamesCategoriesList"
+                                     Style="{StaticResource ListBoxStyle}"
+                                     FontWeight="Medium"
+                                     SelectionChanged="GamesCategoriesList_Changed"
+                                     BorderThickness="0.5"
+                                     MinHeight="30">
+
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemBorder" 
+                                                            Background="{TemplateBinding Background}" 
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                            MinHeight="30">
+                                                        
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" 
+                                                                       Text="{Binding CategoryName}" 
+                                                                       VerticalAlignment="Center"/>
+
+                                                            <Button x:Name="BtnDeleteCategoryGames"
+                                                                    Grid.Column="1" 
+                                                                    Content="&#xf2ed;"
+                                                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid"
+                                                                    FontSize="12" Width="20"
+                                                                    Tag="{Binding}"
+                                                                    Click="BtnRemoveCategory_Click"
+                                                                    VerticalAlignment="Center">
+                                                                
+                                                                <Button.Style>
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_SidebarList}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            
+                                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" 
+                                                                                         Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding CategoryId}" Value="0">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Button.Style>
+                                                                
+                                                            </Button>
+                                                        </Grid>
+                                                        
+                                                    </Border>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                    
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListBox.Template>
+
+                            </ListBox>
+                        </StackPanel>
+
+                        <StackPanel x:Name="ToolsCategories" Margin="15,6,15,10">
+                            <Grid Margin="0,0,0,10">
+                                <TextBlock Text="Tools" Foreground="#DDF5F5F5" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           FontSize="15" FontWeight="Bold"/>
+                                <Button x:Name="BtnAddNewCategoryTools"
+                                        FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" Content="&#x2b;" 
+                                        Style="{StaticResource MenuButtonStyle_Bars}"
+                                        Click="BtnAddNewCategoryTools_Click"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        MinHeight="20" MinWidth="20"/>
+                            </Grid>
+
+                            <ListBox x:Name="ToolsCategoriesList"
+                                     Style="{StaticResource ListBoxStyle}"
+                                     SelectionChanged="ToolsCategoriesList_Changed"
+                                     FontWeight="Medium"
+                                     BorderThickness="0.5"
+                                     MinHeight="30">
+
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemBorder" 
+                                                            Background="{TemplateBinding Background}" 
+                                                            CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                            MinHeight="30">
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" 
+                                                                       Text="{Binding CategoryName}" 
+                                                                       VerticalAlignment="Center"/>
+
+                                                            <Button x:Name="BtnDeleteCategoryTools"
+                                                                    Grid.Column="1" 
+                                                                    Content="&#xf2ed;"
+                                                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free Solid" 
+                                                                    FontSize="12" Width="20"
+                                                                    Tag="{Binding}"
+                                                                    Click="BtnRemoveCategory_Click"
+                                                                    VerticalAlignment="Center">
+
+                                                                <Button.Style>
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_SidebarList}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+
+                                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" 
+                                                                                         Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding CategoryId}" Value="0">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                            
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Button.Style>
+
+                                                            </Button>
+                                                        </Grid>
+
+                                                    </Border>
+                                                    
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                    
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListBox.Template>
+
+                            </ListBox>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+
+        <Border x:Name="NoAppsAvailable" Visibility="Hidden"
+                Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                Height="50" Width="Auto" MaxWidth="600" Margin="0,100"
+                CornerRadius="5" BorderThickness="1">
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0019171f" Offset="0"/>
+                    <GradientStop Color="#0019171f" Offset="0.1"/>
+                    <GradientStop Color="#FF19171f" Offset="0.4"/>
+                    <GradientStop Color="#FF19171f" Offset="0.6"/>
+                    <GradientStop Color="#0019171f" Offset="0.9"/>
+                    <GradientStop Color="#0019171f" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#00342D47" Offset="0"/>
+                    <GradientStop Color="#00342D47" Offset="0.1"/>
+                    <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                    <GradientStop Color="#00342D47" Offset="0.9"/>
+                    <GradientStop Color="#00342D47" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <TextBlock Text="✖   No apps found" FontSize="14" FontWeight="Regular"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Foreground="#70F5F5F5"/>
+        </Border>
+
+    </Grid>
 </UserControl>
