@@ -8,7 +8,6 @@ ZennPlay Launcher is a lightweight, personalized launcher designed to bridge the
 
 - **Unified Library:** Manage your Games and Tools (emulators, modding utilities) in separate, dedicated tabs.
 - **Flexible Views:** Choose your style with Grid, Icons (WIP), or List view modes (WIP).
-- **The "Relics" System (WIP):** Don't just delete games; immortalize them. Relics keep your stats, commentary, and history even after the game is uninstalled.
 - **Advanced Personalization:**
   - **Profile System:** Multiple profiles with individual databases and password protection.
   - **Launcher Settings:** Custom startup behaviors, backdrop effects, and directory management.
@@ -22,8 +21,8 @@ ZennPlay Launcher is a lightweight, personalized launcher designed to bridge the
 
 - **Games:** Centralized hub for managing your game library. Supports sorting by Alphabetical, Most Launched, and more.
 - **Tools:** Dedicated space for non-game software like mod managers or emulators.
-- **Categories (WIP):** Organized sections to split your library by genre or project.
-- **Relics (WIP):** A digital trophy room for your gaming history.
+- **Library:** Organized sections to split your library by genre or project.
+- **Boards (WIP):** A dashboard center to view your game stats in one place.
 
 #### User Settings
 
@@ -36,13 +35,13 @@ ZennPlay Launcher is a lightweight, personalized launcher designed to bridge the
 
 ## Roadmap & Development Status
 
-Currently in v0.2.0-beta:
+Currently in v0.3.x-beta:
 
 - [X] Multi-profile support
 - [X] Basic Grid views
 - [X] Settings & Directory management
-- [ ] Categories Feature (Dynamic filtering)
-- [ ] Relics System
+- [X] Categories Feature (via "Library" tab)
+- [ ] Boards for user stats
 - [ ] Advanced Optimization Options
 - [ ] Enhanced UI Themes
 
