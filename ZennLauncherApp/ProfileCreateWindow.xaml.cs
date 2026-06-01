@@ -184,9 +184,21 @@ namespace ZennLauncherApp
 
                 if (isEditSuccessful)
                 {
-                    string appPath = Process.GetCurrentProcess().MainModule.FileName;
-                    Process.Start(appPath);
-                    System.Environment.Exit(0);
+                    MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                    SettingsWindow settings = Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault();
+
+                    if (settings != null)
+                    {
+                        var profileView = func.FindVisualChild<MyProfileSettingsView>(settings);
+
+                        if (profileView != null)
+                        {
+                            profileView.LoadProfileData();
+                        }
+                    }
+
+                    main.LoadProfileData();
+                    this.Close();
                 }
             }
             else

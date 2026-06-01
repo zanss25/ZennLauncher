@@ -40,7 +40,7 @@ namespace ZennLauncherApp
             }
         }
 
-        private void LoadProfileData()
+        public void LoadProfileData()
         {
             db.profileData = db.GetProfileData();
 
