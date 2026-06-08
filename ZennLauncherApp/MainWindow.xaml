@@ -74,7 +74,7 @@
             </Grid.Effect>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
-                        Margin="0,-39,5,1" Style="{StaticResource WindowControlButtonAreaStyle}">
+                        Margin="0,-39,5,0" Style="{StaticResource WindowControlButtonAreaStyle}">
 
                 <Button Content="—" Click="BtnMinimize_Click" Style="{StaticResource ControlButtonStyle}"
                         MinWidth="35" MinHeight="30" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -329,7 +329,8 @@
 
             </Border>
 
-            <ContentControl x:Name="ContentSlot" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <ContentControl x:Name="ContentSlot" Grid.Row="1" Grid.RowSpan="2" 
+                            Grid.Column="1" Grid.ColumnSpan="2"/>
 
             <Border Grid.Row="2" Grid.ColumnSpan="4" 
                     BorderThickness="0,0.9,0,0"
@@ -358,7 +359,7 @@
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                         Value="Maximized">
+                                         Value="Maximized">
                                 <Setter Property="Margin" Value="0,0,40,25"/>
                             </DataTrigger>
                         </Style.Triggers>

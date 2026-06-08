@@ -35,7 +35,7 @@
             <DockPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#00161616" Offset="1"/>
-                    <GradientStop Color="#FF342D47" Offset="0"/>
+                    <GradientStop Color="{StaticResource BarBackGradient}" Offset="0"/>
                 </LinearGradientBrush>
             </DockPanel.Background>
 
@@ -53,26 +53,31 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-                <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                        Grid.ColumnSpan="2" Grid.Row="2" MinWidth="200" Margin="0,10,0,0" 
-                        CornerRadius="6" BorderThickness="1">
+            <Border x:Name="DataGridContainer"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                    Grid.ColumnSpan="2" Grid.Row="2" MinWidth="200" Margin="0,10,0,0" 
+                    CornerRadius="6" BorderThickness="1"
+                    MouseDown="ContainerGrid_MouseDown" 
+                    MouseMove="ContainerGrid_MouseMove" 
+                    MouseUp="ContainerGrid_MouseUp">
 
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#7719171f" Offset="0"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#7719171f" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
 
-                    <Border.BorderBrush>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#CC342D47" Offset="0"/>
-                            <GradientStop Color="#CC342D47" Offset="0.1"/>
-                            <GradientStop Color="#DD453C5F" Offset="0.5"/>
-                            <GradientStop Color="#CC342D47" Offset="0.9"/>
-                            <GradientStop Color="#CC342D47" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.BorderBrush>
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#CC342D47" Offset="0"/>
+                        <GradientStop Color="#CC342D47" Offset="0.1"/>
+                        <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                        <GradientStop Color="#CC342D47" Offset="0.9"/>
+                        <GradientStop Color="#CC342D47" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
 
+                <Grid>
                     <DataGrid x:Name="AppsDataGrid" 
                               AutoGenerateColumns="False"
                               Background="Transparent"
@@ -132,6 +137,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            
                             <DataGridTextColumn Header="Title" 
                                                 Binding="{Binding AppTitle}" Width="300" />
                             <DataGridTextColumn Header="Category" 
@@ -145,68 +151,79 @@
 
                     </DataGrid>
 
-                </Border>
+                    <Canvas x:Name="SelectionCanvas" IsHitTestVisible="False" Grid.ColumnSpan="2" Grid.Row="2">
+                        <Rectangle x:Name="SelectionRect" 
+                                   Stroke="{StaticResource SelectionRectBorderBrush}" 
+                                   StrokeThickness="1" 
+                                   Fill="{StaticResource SelectionRectBrush}"
+                                   ClipToBounds="True"
+                                   Visibility="Collapsed"/>
+                    </Canvas>
+                </Grid>
+                    
+            </Border>
 
-                <Border VerticalAlignment="Top" 
-                        MinHeight="43" MaxHeight="100" Margin="0" CornerRadius="6" 
-                        Background="#CF372D51" BorderThickness="0.5" BorderBrush="#CC574D71" Grid.ColumnSpan="2">
+            <Border VerticalAlignment="Top" 
+                    MinHeight="43" MaxHeight="100" Margin="0" CornerRadius="6" 
+                    Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                    BorderBrush="{StaticResource BarBorderBrush}" Grid.ColumnSpan="2">
 
-                    <DockPanel>
+                <DockPanel>
 
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
                                     MinHeight="30" Margin="0,0">
                             
-                            <Button x:Name="BtnSidebarCollapse"
-                                    FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf03a;" 
-                                    FontSize="16" FontWeight="Light" Padding="0" Margin="10,5,0,5"
-                                    MinHeight="20" MinWidth="30" MaxWidth="40"
-                                    Click="BtnSidebarCollapse_Click">
+                        <Button x:Name="BtnSidebarCollapse"
+                                FontFamily="./Assets/Fonts/#Font Awesome 7 Free" Content="&#xf03a;" 
+                                FontSize="16" FontWeight="Light" Padding="0" Margin="10,5,0,5"
+                                MinHeight="20" MinWidth="30" MaxWidth="40"
+                                Click="BtnSidebarCollapse_Click">
 
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Bars}">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource MenuButtonStyle_Bars}">
 
+                                </Style>
+                            </Button.Style>
+
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
+                                MinHeight="30" Margin="0,0">
+                        <Grid>
+                            
+                            <TextBox x:Name="SearchBarApps" 
+                                     TextChanged="SearchBarApps_Changed" 
+                                     MinWidth="230"
+                                     MaxWidth="280"
+                                     VerticalContentAlignment="Center" 
+                                     MinHeight="30"
+                                     Margin="10,6,12,6" 
+                                     Padding="5,0,0,0"
+                                     Style="{StaticResource TextBoxStyle}"/>
+
+                            <TextBlock IsHitTestVisible="False" 
+                                       Text="🔍  Search games/tools"
+                                       FontFamily="{StaticResource FontCommon}"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="20,0,0,0" 
+                                       Foreground="#30FFFFFF">
+
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBarApps}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
-                                </Button.Style>
+                                </TextBlock.Style>
 
-                            </Button>
-                        </StackPanel>
-
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" 
-                                    MinHeight="30" Margin="0,0">
-                            <Grid>
-                            
-                            <TextBox  x:Name="SearchBarApps" 
-                                          TextChanged="SearchBarApps_Changed" 
-                                          MinWidth="230"
-                                          MaxWidth="280"
-                                          VerticalContentAlignment="Center" 
-                                          MinHeight="30"
-                                          Margin="10,6,12,6" 
-                                          Padding="5,0,0,0"
-                                          Style="{StaticResource TextBoxStyle}"/>
-
-                                <TextBlock IsHitTestVisible="False" 
-                                           Text="🔍  Search games/tools"
-                                           FontFamily="{StaticResource FontCommon}"
-                                           VerticalAlignment="Center" 
-                                           HorizontalAlignment="Left" 
-                                           Margin="20,0,0,0" 
-                                           Foreground="#30FFFFFF">
-
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=SearchBarApps}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-
-                                </TextBlock>
-                            </Grid>
-                        </StackPanel>
+                            </TextBlock>
+                        </Grid>
+                    </StackPanel>
 
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="1,0.5">
 
@@ -271,15 +288,16 @@
 
                     </StackPanel>
 
-                    </DockPanel>
-                </Border>
+                </DockPanel>
+            </Border>
 
         </Grid>
 
         <Border x:Name="SidebarCategoriesList"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
                 MinWidth="200" MaxWidth="200" Margin="22,15,0,15" CornerRadius="6" 
-                Background="#CF372D51" BorderBrush="#CC574D71" BorderThickness="0.5">
+                Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                BorderBrush="{StaticResource BarBorderBrush}">
 
             <Grid>
 
@@ -333,7 +351,8 @@
                     <StackPanel>
                         <StackPanel x:Name="GamesCategories" Margin="15,6,15,10">
                             <Grid Margin="0,0,0,10">
-                                <TextBlock Text="Games" Foreground="#DDF5F5F5" FontFamily="{StaticResource FontCommon}" 
+                                <TextBlock Text="Games" Foreground="{StaticResource TextCommonBrush}" 
+                                           FontFamily="{StaticResource FontCommon}" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Bold"/>
                                 <Button x:Name="BtnAddNewCategoryGames"
@@ -432,7 +451,7 @@
 
                         <StackPanel x:Name="ToolsCategories" Margin="15,6,15,10">
                             <Grid Margin="0,0,0,10">
-                                <TextBlock Text="Tools" Foreground="#DDF5F5F5" 
+                                <TextBlock Text="Tools" Foreground="{StaticResource TextCommonBrush}" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            FontFamily="{StaticResource FontCommon}"
                                            FontSize="15" FontWeight="Bold"/>
@@ -511,7 +530,8 @@
 
                                                         <Trigger Property="IsSelected" Value="True">
                                                             <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
-                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="Foreground" 
+                                                                    Value="{StaticResource TextCommonActiveBrighterBrush}"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                     

@@ -699,5 +699,84 @@ namespace ZennLauncherApp
                 isSidebarCollapsed = false;
             }
         }
+
+        private Point _startPoint;
+
+        private void ContainerGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                _startPoint = e.GetPosition(SelectionCanvas);
+
+                Canvas.SetLeft(SelectionRect, _startPoint.X);
+                Canvas.SetTop(SelectionRect, _startPoint.Y);
+                SelectionRect.Width = 0;
+                SelectionRect.Height = 0;
+                SelectionRect.Visibility = Visibility.Visible;
+
+                // Capture mouse supaya saat drag keluar area border, kotak tetap update
+                Mouse.Capture(DataGridContainer);
+            }
+        }
+
+        private void ContainerGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && SelectionRect.Visibility == Visibility.Visible)
+            {
+                Point currentPoint = e.GetPosition(SelectionCanvas);
+
+                // --- LOGIKA CLAMPING ---
+                // Batasi X agar tidak kurang dari 0 dan tidak lebih dari lebar Canvas
+                double clampedX = Math.Max(0, Math.Min(currentPoint.X, SelectionCanvas.ActualWidth));
+
+                // Batasi Y agar tidak kurang dari 0 dan tidak lebih dari tinggi Canvas
+                double clampedY = Math.Max(0, Math.Min(currentPoint.Y, SelectionCanvas.ActualHeight));
+
+                // Hitung posisi dan ukuran berdasarkan titik yang sudah dibatasi
+                double x = Math.Min(_startPoint.X, clampedX);
+                double y = Math.Min(_startPoint.Y, clampedY);
+                double width = Math.Abs(clampedX - _startPoint.X);
+                double height = Math.Abs(clampedY - _startPoint.Y);
+
+                // Update visual kotak
+                Canvas.SetLeft(SelectionRect, x);
+                Canvas.SetTop(SelectionRect, y);
+                SelectionRect.Width = width;
+                SelectionRect.Height = height;
+
+                ApplySelectionToDataGrid(new Rect(x, y, width, height));
+            }
+        }
+
+        private void ContainerGrid_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SelectionRect.Visibility = Visibility.Collapsed;
+            Mouse.Capture(null);
+        }
+
+        private void ApplySelectionToDataGrid(Rect selectionBounds)
+        {
+            // Bersihkan seleksi lama jika tidak tekan tombol Ctrl
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl))
+                AppsDataGrid.SelectedItems.Clear();
+
+            foreach (var item in AppsDataGrid.Items)
+            {
+                var container = AppsDataGrid.ItemContainerGenerator.ContainerFromItem(item) as FrameworkElement;
+                if (container != null)
+                {
+                    // Ambil posisi item terhadap Canvas
+                    Point pos = container.TranslatePoint(new Point(0, 0), SelectionCanvas);
+                    Rect itemRect = new Rect(pos, new Size(container.ActualWidth, container.ActualHeight));
+
+                    // Jika kotak seleksi menabrak item
+                    if (selectionBounds.IntersectsWith(itemRect))
+                    {
+                        AppsDataGrid.SelectedItems.Add(item);
+                    }
+                }
+            }
+        }
+
     }
 }

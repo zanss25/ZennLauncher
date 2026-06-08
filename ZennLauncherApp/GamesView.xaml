@@ -152,7 +152,8 @@
             <DockPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#00161616" Offset="1"/>
-                    <GradientStop Color="#FF342D47" Offset="0"/>
+                    <GradientStop Color="{StaticResource BarBackGradient}" 
+                                  Offset="0"/>
                 </LinearGradientBrush>
             </DockPanel.Background>
 
@@ -160,7 +161,8 @@
 
         <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" 
                 MinHeight="43" MaxHeight="100" Margin="32,18,32,10" CornerRadius="6" 
-                Background="#CF372D51" BorderThickness="0.5" BorderBrush="#CC574D71">
+                Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                BorderBrush="{StaticResource BarBorderBrush}">
 
             <DockPanel>
 

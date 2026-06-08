@@ -10,23 +10,30 @@
     <Color x:Key="TitleColor">#7FC9B5FF</Color>
     <Color x:Key="BorderColor_A">#FF2A243B</Color>
     <Color x:Key="BorderColor_B">#FF2E2741</Color>
-    <Color x:Key="TitleBackgroundA">#FF2A243B</Color>
-    <Color x:Key="TitleBackgroundB">#FF2E2741</Color>
+    <Color x:Key="TitleBackgroundA">#FF2D223E</Color>
+    <Color x:Key="TitleBackgroundB">#FF312544</Color>
 
     <!-- Backgrounds -->
     <Color x:Key="WindowBackground_1">#FF1A1420</Color>
     <Color x:Key="WindowBackground_2A">#FF221A2D</Color>
     <Color x:Key="WindowBackground_2B">#FF251A39</Color>
     <Color x:Key="WindowBackground_3">#F22B1E45</Color>
+    
+    <!-- GameView/ToolView Bars -->
+    <Color x:Key="BarBackGradient">#FF362B49</Color>
+    <Color x:Key="BarBackground">#CF372D51</Color>
+    <Color x:Key="BarBorder">#CC574D71</Color>
 
     <!-- Texts -->
     <Color x:Key="TextColorCommon">#AAF5F5F5</Color>
     <Color x:Key="TextColorCommonBrighter">#DDF5F5F5</Color>
     <Color x:Key="TextColorCommonActive">#FFF5F5F5</Color>
+    <Color x:Key="TextColorCommonActiveBrighter">#FFFFFFFF</Color>
     <Color x:Key="TextColorPressed">#AAF5F5F5</Color>
     <Color x:Key="TextColorDisabled">#DDF5F5F5</Color>
     <Color x:Key="TextColorWindow">#A89A8FB9</Color>
     <Color x:Key="TextColorWindowBrighter">#FF9A8FB9</Color>
+    <Color x:Key="TextListBoxItem">#99FFFFFF</Color>
 
     <!-- TextBoxes -->
     <Color x:Key="TextBoxBackground">#FF272237</Color>
@@ -38,6 +45,11 @@
     <Color x:Key="TextBoxBorderActive">#FF937BD1</Color>
 
     <!-- Buttons -->
+    <Color x:Key="BtnControlHover">#AA3D3454</Color>
+    <Color x:Key="BtnControlPressed">#803D3454</Color>
+    <Color x:Key="BtnControlBorderHover">#00000000</Color>
+    <Color x:Key="BtnControlBorderPressed">#00000000</Color>
+
     <Color x:Key="BtnPrimary_A">#DFF49348</Color>
     <Color x:Key="BtnPrimary_B">#DFEB6337</Color>
     <Color x:Key="BtnPrimaryHover_A">#FFF49348</Color>
@@ -58,13 +70,20 @@
     <Color x:Key="BtnSecondaryBorderHover">#AA594D7B</Color>
     <Color x:Key="BtnSecondaryBorderPressed">#FF594D7B</Color>
 
+    <Color x:Key="BtnTertiary">#FF353144</Color>
+    <Color x:Key="BtnTertiaryHover">#FF584f72</Color>
+    <Color x:Key="BtnTertiaryPressed">#FF221E2C</Color>
+    <Color x:Key="BtnTertiaryBorder">#00FFFFFF</Color>
+    <Color x:Key="BtnTertiaryBorderHover">#AA594D7B</Color>
+    <Color x:Key="BtnTertiaryBorderPressed">#FF221E2C</Color>
+
     <Color x:Key="BtnPopup">#00FFFFFF</Color>
     <Color x:Key="BtnPopupHover">#666A59A0</Color>
     <Color x:Key="BtnPopupPressed">#446A59A0</Color>
     <Color x:Key="BtnPopupBorder">#00FFFFFF</Color>
     <Color x:Key="BtnPopupBorderHover">#80594D7B</Color>
     <Color x:Key="BtnPopupBorderPressed">#FF594D7B</Color>
-
+    
     <Color x:Key="BtnCommon">#FF221E2F</Color>
     <Color x:Key="BtnCommonHover">#AA3D3454</Color>
     <Color x:Key="BtnCommonPressed">#FF221E2C</Color>
@@ -74,19 +93,85 @@
 
     <Color x:Key="BtnDisabled">#20F0DFF5</Color>
     <Color x:Key="BtnDisabledBorder">#00FFFFFF</Color>
+    
+    <!-- Toggle Buttons -->
+    <Color x:Key="ToggleBtnCommonPressed">#BB211739</Color>
+    <Color x:Key="ToggleBtnCommonBorderPressed">#FF594D7B</Color>
+    
+    <!-- Hyperlink -->
+    <Color x:Key="HyperlinkCommon">#A89A8FB9</Color>
+    <Color x:Key="HyperlinkCommonHover">#EE9A8FB9</Color>
+
+    <!-- Checkbox -->
+    <Color x:Key="CheckBoxCommon">#FF18161F</Color>
+    <Color x:Key="CheckBoxCommonHover">#66EB6337</Color>
+    <Color x:Key="CheckBoxCommonPressed">#33EB6337</Color>
+    <Color x:Key="CheckBoxCommonActive">#33EB6337</Color>
+    <Color x:Key="CheckBoxCommonBorder">#FF594D7B</Color>
+    <Color x:Key="CheckBoxCommonBorderHover">#DDEE8952</Color>
+    <Color x:Key="CheckBoxCommonBorderPressed">#DDEE8952</Color>
+    <Color x:Key="CheckBoxCommonBorderActive">#DDEE8952</Color>
+    <Color x:Key="CheckBoxMark">White</Color>
 
     <!-- Popups -->
     <Color x:Key="PopupBackground">#F02B2245</Color>
     <Color x:Key="PopupBorder">#FF594D7B</Color>
     
+    <!-- Combo Boxes -->
+    <Color x:Key="ComboBoxCommon">#35A896DD</Color>
+    <Color x:Key="ComboBoxCommonHover">#AB6A59A0</Color>
+    <Color x:Key="ComboBoxCommonPressed">#CC2B2245</Color>
+    <Color x:Key="ComboBoxCommonActive">#BB211739</Color>
+    <Color x:Key="ComboBoxCommonBorder">#60A896DD</Color>
+    <Color x:Key="ComboBoxCommonBorderHover">#60A896DD</Color>
+    <Color x:Key="ComboBoxCommonBorderPressed">#FF594D7B</Color>
+    <Color x:Key="ComboBoxCommonBorderActive">#FF594D7B</Color>
+
     <!-- ListBoxes -->
     <Color x:Key="ListBoxBackground">#66111111</Color>
     <Color x:Key="ListBoxBorder">#66C9B5FF</Color>
     <Color x:Key="ListBoxItemBackgroundHover">#6B4B3E68</Color>
     <Color x:Key="ListBoxItemBorderSelected">#BB9083B3</Color>
-    
+
+    <!-- Scroll Bar -->
+    <Color x:Key="ScrollBarCommon">#AA4C4168</Color>
+    <Color x:Key="ScrollBarCommonHover">#FF4C4168</Color>
+    <Color x:Key="ScrollBarCommonPressed">#FF514673</Color>
+    <Color x:Key="ScrollBarCommonBorder">#FF4C4168</Color>
+    <Color x:Key="ScrollBarCommonBorderHover">#FF4C4168</Color>
+    <Color x:Key="ScrollBarCommonBorderPressed">#FF4C4168</Color>
+
+    <!-- Data Grid Header -->
+    <Color x:Key="DataGridCommonHeader">#FF221E2C</Color>
+    <Color x:Key="DataGridCommonHeaderHover">#3B4B3E68</Color>
+    <Color x:Key="DataGridCommonHeaderPressed">#3B4B3E68</Color>
+    <Color x:Key="DataGridCommonHeaderBorder">#FF594D7B</Color>
+
+    <!-- Data Grid Body -->
+    <Color x:Key="DataGridCommonRowHover">#DD272237</Color>
+    <Color x:Key="DataGridCommonRowActive">#DD302945</Color>
+    <Color x:Key="DataGridCommonRowBorderHover">#00000000</Color>
+    <Color x:Key="DataGridCommonRowBorderActive">#BB9083B3</Color>
+
     <!-- Borders (Line Separation) -->
     <Color x:Key="BorderCommon">#22FFFFFF</Color>
+    
+    <!-- Icon / Profile Avatar -->
+    <Color x:Key="IconAndAvatarBorder">#70594D7B</Color>
+
+    <!-- Cover Grids & CoverGrid Buttons -->
+    <Color x:Key="CoverGridBackground_A">#FF342C49</Color>
+    <Color x:Key="CoverGridBackground_B">#FF403659</Color>
+    <Color x:Key="CoverButtonBorder_A">#FF221E2F</Color>
+    <Color x:Key="CoverButtonBorder_B">#FF221E2F</Color>
+    <Color x:Key="CoverButtonBorderHover_A">#FFA46FCD</Color>
+    <Color x:Key="CoverButtonBorderHover_B">#FFA58FCD</Color>
+    <Color x:Key="CoverButtonBorderPressed_A">#00000000</Color>
+    <Color x:Key="CoverButtonBorderPressed_B">#00000000</Color>
+    
+    <!-- Miscellanious -->
+    <Color x:Key="SelectionRect">#33937BD1</Color>
+    <Color x:Key="SelectionRectBorder">#FF937BD1</Color>
 
     <!-- ============================================================
          BRUSHES (Solid & Gradients)
@@ -115,13 +200,20 @@
 
     <SolidColorBrush x:Key="WindowBackgroundBrush_3" Color="{StaticResource WindowBackground_3}"/>
 
+    <!-- GameView/ToolView Bar Brushes-->
+    <SolidColorBrush x:Key="BarBackgroundBrush" Color="{StaticResource BarBackground}"/>
+    <SolidColorBrush x:Key="BarBorderBrush" Color="{StaticResource BarBorder}"/>
+    
     <!-- Text Brushes -->
     <SolidColorBrush x:Key="TextCommonBrush" Color="{StaticResource TextColorCommon}"/>
+    <SolidColorBrush x:Key="TextCommonBrighterBrush" Color="{StaticResource TextColorCommonBrighter}"/>
     <SolidColorBrush x:Key="TextCommonActiveBrush" Color="{StaticResource TextColorCommonActive}"/>
+    <SolidColorBrush x:Key="TextCommonActiveBrighterBrush" Color="{StaticResource TextColorCommonActiveBrighter}"/>
     <SolidColorBrush x:Key="TextCommonPressedBrush" Color="{StaticResource TextColorPressed}"/>
     <SolidColorBrush x:Key="TextCommonDisabledBrush" Color="{StaticResource TextColorDisabled}"/>
     <SolidColorBrush x:Key="TextWindowBrush" Color="{StaticResource TextColorWindow}"/>
     <SolidColorBrush x:Key="TextWindowBrighterBrush" Color="{StaticResource TextColorWindowBrighter}"/>
+    <SolidColorBrush x:Key="TextListBoxItemBrush" Color="{StaticResource TextListBoxItem}"/>
 
     <!-- TextBox Brushes -->
     <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource TextBoxBackground}"/>
@@ -131,6 +223,12 @@
     <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource TextBoxBorder}"/>
     <SolidColorBrush x:Key="TextBoxBorderHoverBrush" Color="{StaticResource TextBoxBorderHover}"/>
     <SolidColorBrush x:Key="TextBoxBorderActiveBrush" Color="{StaticResource TextBoxBorderActive}"/>
+
+    <!-- Control Button Brushes -->
+    <SolidColorBrush x:Key="BtnControlHoverBrush" Color="{StaticResource BtnControlHover}"/>
+    <SolidColorBrush x:Key="BtnControlPressedBrush" Color="{StaticResource BtnControlPressed}"/>
+    <SolidColorBrush x:Key="BtnControlBorderHoverBrush" Color="{StaticResource BtnControlBorderHover}"/>
+    <SolidColorBrush x:Key="BtnControlBorderPressedBrush" Color="{StaticResource BtnControlBorderPressed}"/>
 
     <!-- Primary Button Border Brushes -->
     <LinearGradientBrush x:Key="BtnPrimaryBorderBrush" StartPoint="0,0" EndPoint="1,1">
@@ -148,13 +246,21 @@
         <GradientStop Color="{StaticResource BtnPrimaryBorderPressed_B}" Offset="1"/>
     </LinearGradientBrush>
 
-    <!-- Seondary Button Brushes -->
+    <!-- Secondary Button Brushes -->
     <SolidColorBrush x:Key="BtnSecondaryBrush" Color="{StaticResource BtnSecondary}"/>
     <SolidColorBrush x:Key="BtnSecondaryHoverBrush" Color="{StaticResource BtnSecondaryHover}"/>
     <SolidColorBrush x:Key="BtnSecondaryPressedBrush" Color="{StaticResource BtnSecondaryPressed}"/>
     <SolidColorBrush x:Key="BtnSecondaryBorderBrush" Color="{StaticResource BtnSecondaryBorder}"/>
     <SolidColorBrush x:Key="BtnSecondaryBorderHoverBrush" Color="{StaticResource BtnSecondaryBorderHover}"/>
     <SolidColorBrush x:Key="BtnSecondaryBorderPressedBrush" Color="{StaticResource BtnSecondaryBorderPressed}"/>
+
+    <!-- Tertiary Button Brushes -->
+    <SolidColorBrush x:Key="BtnTertiaryBrush" Color="{StaticResource BtnTertiary}"/>
+    <SolidColorBrush x:Key="BtnTertiaryHoverBrush" Color="{StaticResource BtnTertiaryHover}"/>
+    <SolidColorBrush x:Key="BtnTertiaryPressedBrush" Color="{StaticResource BtnTertiaryPressed}"/>
+    <SolidColorBrush x:Key="BtnTertiaryBorderBrush" Color="{StaticResource BtnTertiaryBorder}"/>
+    <SolidColorBrush x:Key="BtnTertiaryBorderHoverBrush" Color="{StaticResource BtnTertiaryBorderHover}"/>
+    <SolidColorBrush x:Key="BtnTertiaryBorderPressedBrush" Color="{StaticResource BtnTertiaryBorderPressed}"/>
 
     <!-- Popup Button Brushes -->
     <SolidColorBrush x:Key="BtnPopupBrush" Color="{StaticResource BtnPopup}"/>
@@ -172,13 +278,42 @@
     <SolidColorBrush x:Key="BtnCommonBorderHoverBrush" Color="{StaticResource BtnCommonBorderHover}"/>
     <SolidColorBrush x:Key="BtnCommonBorderPressedBrush" Color="{StaticResource BtnCommonBorderPressed}"/>
 
-    <!-- Disabled State -->
+    <!-- Common Toggle Button Brushes -->
+    <SolidColorBrush x:Key="ToggleBtnCommonPressedBrush" Color="{StaticResource ToggleBtnCommonPressed}"/>
+    <SolidColorBrush x:Key="ToggleBtnCommonBorderPressedBrush" Color="{StaticResource ToggleBtnCommonBorderPressed}"/>
+
+    <!-- Buttons Disabled State -->
     <SolidColorBrush x:Key="BtnDisabledBrush" Color="{StaticResource BtnDisabled}"/>
     <SolidColorBrush x:Key="BtnDisabledBorderBrush" Color="{StaticResource BtnDisabledBorder}"/>
+
+    <!-- Hyperlink Brushes -->
+    <SolidColorBrush x:Key="HyperlinkCommonBrush" Color="{StaticResource HyperlinkCommon}"/>
+    <SolidColorBrush x:Key="HyperlinkCommonHoverBrush" Color="{StaticResource HyperlinkCommonHover}"/>
+
+    <!-- Checkbox Brushes -->
+    <SolidColorBrush x:Key="CheckBoxCommonBrush" Color="{StaticResource CheckBoxCommon}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonHoverBrush" Color="{StaticResource CheckBoxCommonHover}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonPressedBrush" Color="{StaticResource CheckBoxCommonPressed}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonActiveBrush" Color="{StaticResource CheckBoxCommonActive}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonBorderBrush" Color="{StaticResource CheckBoxCommonBorder}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonBorderHoverBrush" Color="{StaticResource CheckBoxCommonBorderHover}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonBorderPressedBrush" Color="{StaticResource CheckBoxCommonBorderPressed}"/>
+    <SolidColorBrush x:Key="CheckBoxCommonBorderActiveBrush" Color="{StaticResource CheckBoxCommonBorderActive}"/>
+    <SolidColorBrush x:Key="CheckBoxMarkBrush" Color="{StaticResource CheckBoxMark}"/>
 
     <!-- Popup Brushes -->
     <SolidColorBrush x:Key="PopupBackgroundBrush" Color="{StaticResource PopupBackground}"/>
     <SolidColorBrush x:Key="PopupBorderBrush" Color="{StaticResource PopupBorder}"/>
+
+    <!-- Combo Box Brushes -->
+    <SolidColorBrush x:Key="ComboBoxCommonBrush" Color="{StaticResource ComboBoxCommon}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonHoverBrush" Color="{StaticResource ComboBoxCommonHover}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonPressedBrush" Color="{StaticResource ComboBoxCommonPressed}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonActiveBrush" Color="{StaticResource ComboBoxCommonActive}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonBorderBrush" Color="{StaticResource ComboBoxCommonBorder}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonBorderHoverBrush" Color="{StaticResource ComboBoxCommonBorderHover}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonBorderPressedBrush" Color="{StaticResource ComboBoxCommonBorderPressed}"/>
+    <SolidColorBrush x:Key="ComboBoxCommonBorderActiveBrush" Color="{StaticResource ComboBoxCommonBorderActive}"/>
 
     <!-- ListBox Brushes -->
     <SolidColorBrush x:Key="ListBoxBackgroundBrush" Color="{StaticResource ListBoxBackground}"/>
@@ -186,14 +321,50 @@
     <SolidColorBrush x:Key="ListBoxItemBackgroundHoverBrush" Color="{StaticResource ListBoxItemBackgroundHover}"/>
     <SolidColorBrush x:Key="ListBoxItemBorderSelectedBrush" Color="{StaticResource ListBoxItemBorderSelected}"/>
 
+    <!-- Scroll Bar Brushes -->
+    <SolidColorBrush x:Key="ScrollBarCommonBrush" Color="{StaticResource ScrollBarCommon}"/>
+    <SolidColorBrush x:Key="ScrollBarCommonHoverBrush" Color="{StaticResource ScrollBarCommonHover}"/>
+    <SolidColorBrush x:Key="ScrollBarCommonPressedBrush" Color="{StaticResource ScrollBarCommonPressed}"/>
+    <SolidColorBrush x:Key="ScrollBarCommonBorderBrush" Color="{StaticResource ScrollBarCommonBorder}"/>
+    <SolidColorBrush x:Key="ScrollBarCommonBorderHoverBrush" Color="{StaticResource ScrollBarCommonBorderHover}"/>
+    <SolidColorBrush x:Key="ScrollBarCommonBorderPressedBrush" Color="{StaticResource ScrollBarCommonBorderPressed}"/>
+
+    <!-- Data Grid Headers Brushes -->
+    <SolidColorBrush x:Key="DataGridCommonHeaderBrush" Color="{StaticResource DataGridCommonHeader}"/>
+    <SolidColorBrush x:Key="DataGridCommonHeaderHoverBrush" Color="{StaticResource DataGridCommonHeaderHover}"/>
+    <SolidColorBrush x:Key="DataGridCommonHeaderPressedBrush" Color="{StaticResource DataGridCommonHeaderPressed}"/>
+    <SolidColorBrush x:Key="DataGridCommonHeaderBorderBrush" Color="{StaticResource DataGridCommonHeaderBorder}"/>
+
+    <!-- Data Grid Bodies Brushes -->
+    <SolidColorBrush x:Key="DataGridCommonRowHoverBrush" Color="{StaticResource DataGridCommonRowHover}"/>
+    <SolidColorBrush x:Key="DataGridCommonRowActiveBrush" Color="{StaticResource DataGridCommonRowActive}"/>
+    <SolidColorBrush x:Key="DataGridCommonRowBorderHoverBrush" Color="{StaticResource DataGridCommonRowBorderHover}"/>
+    <SolidColorBrush x:Key="DataGridCommonRowBorderActiveBrush" Color="{StaticResource DataGridCommonRowBorderActive}"/>
+
     <!-- Border (Line Separation) Brushes -->
     <SolidColorBrush x:Key="BorderCommonBrush" Color="{StaticResource BorderCommon}"/>
 
-    <!-- Cover Grid Brushes -->
+    <!-- Icon / Profile Avatar Brushes -->
+    <SolidColorBrush x:Key="IconAndAvatarBorderBrush" Color="{StaticResource IconAndAvatarBorder}"/>
+    
+    <!-- Cover Grid Button Brushes -->
+    <SolidColorBrush x:Key="CoverGridBackgroundBrush_A" Color="{StaticResource CoverGridBackground_A}"/>
+    <SolidColorBrush x:Key="CoverGridBackgroundBrush_B" Color="{StaticResource CoverGridBackground_B}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderBrush_A" Color="{StaticResource CoverButtonBorder_A}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderBrush_B" Color="{StaticResource CoverButtonBorder_B}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderHoverBrush_A" Color="{StaticResource CoverButtonBorderHover_A}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderHoverBrush_B" Color="{StaticResource CoverButtonBorderHover_B}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderPressedBrush_A" Color="{StaticResource CoverButtonBorderPressed_A}"/>
+    <SolidColorBrush x:Key="CoverButtonBorderPressedBrush_B" Color="{StaticResource CoverButtonBorderPressed_B}"/>
+
     <LinearGradientBrush x:Key="CoverGridBrush" EndPoint="0,0" StartPoint="1,1">
-        <GradientStop Color="#FF342C49"/>
-        <GradientStop Color="#FF342C49" Offset="1"/>
-        <GradientStop Color="#FF403659" Offset="0.5"/>
+        <GradientStop Color="{StaticResource CoverGridBackground_A}"/>
+        <GradientStop Color="{StaticResource CoverGridBackground_A}" Offset="1"/>
+        <GradientStop Color="{StaticResource CoverGridBackground_B}" Offset="0.5"/>
     </LinearGradientBrush>
 
+    <!-- Miscellanious Brushes -->
+    <SolidColorBrush x:Key="SelectionRectBrush" Color="{StaticResource SelectionRect}"/>
+    <SolidColorBrush x:Key="SelectionRectBorderBrush" Color="{StaticResource SelectionRectBorder}"/>
+    
 </ResourceDictionary>
