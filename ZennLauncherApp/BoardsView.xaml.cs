@@ -36,6 +36,7 @@ namespace ZennLauncherApp
 
             LoadMostPlayedData();
             LoadMostRatedData();
+            LoadStatsData();
         }
 
         private void LoadMostPlayedData()
@@ -162,6 +163,58 @@ namespace ZennLauncherApp
             }
 
             FavoritesRanks.ItemsSource = rankingList;
+        }
+
+        private void LoadStatsData()
+        {
+            List<StatsItem> statsList = new List<StatsItem>();
+
+            for (int i = 1; i > 0; i--)
+            {
+                statsList.Add(new StatsItem
+                {
+                    StatName = "played_games",
+                    StatDisplay = "Played Games",
+                    StatValue = "23"
+                });
+
+                statsList.Add(new StatsItem
+                {
+                    StatName = "unplayed_games",
+                    StatDisplay = "Unplayed Games",
+                    StatValue = "7"
+                });
+
+                statsList.Add(new StatsItem
+                {
+                    StatName = "total_games",
+                    StatDisplay = "Total Games",
+                    StatValue = "30"
+                });
+
+                statsList.Add(new StatsItem
+                {
+                    StatName = "total_tools",
+                    StatDisplay = "Total Tools",
+                    StatValue = "14"
+                });
+
+                statsList.Add(new StatsItem
+                {
+                    StatName = "games_total_launch",
+                    StatDisplay = "Total Launch (Game)",
+                    StatValue = "257"
+                });
+
+                statsList.Add(new StatsItem
+                {
+                    StatName = "tools_total_launch",
+                    StatDisplay = "Total Launch (Tool)",
+                    StatValue = "85"
+                });
+            }
+
+            StatsData.ItemsSource = statsList;
         }
 
         private void GamesCategoriesList_SelectionChanged(object sender, SelectionChangedEventArgs e)

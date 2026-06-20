@@ -233,6 +233,7 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SortCriterion.cs" />
+    <Compile Include="StatsItem.cs" />
     <Compile Include="TabModel.cs" />
     <Compile Include="ToolPropertiesWindow.xaml.cs">
       <DependentUpon>ToolPropertiesWindow.xaml</DependentUpon>

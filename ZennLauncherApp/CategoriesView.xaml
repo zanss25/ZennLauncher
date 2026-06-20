@@ -41,7 +41,7 @@
 
         </DockPanel>
 
-        <Grid Margin="22,16,22,14" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+        <Grid Margin="32,18" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -141,9 +141,9 @@
                             <DataGridTextColumn Header="Title" 
                                                 Binding="{Binding AppTitle}" Width="300" />
                             <DataGridTextColumn Header="Category" 
-                                                Binding="{Binding AppCategoryName}" Width="100" />
+                                                Binding="{Binding AppCategoryName}" Width="150" />
                             <DataGridTextColumn Header="Last Launched" 
-                                                Binding="{Binding AppLastLaunched}" Width="130"/>
+                                                Binding="{Binding AppLastLaunched}" Width="150"/>
                             <DataGridTextColumn Header="Target" 
                                                 Binding="{Binding AppTarget}" Width="Auto"/>
 
@@ -295,7 +295,7 @@
 
         <Border x:Name="SidebarCategoriesList"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
-                MinWidth="200" MaxWidth="200" Margin="22,15,0,15" CornerRadius="6" 
+                MinWidth="200" MaxWidth="200" Margin="22,18,-15,15" CornerRadius="6" 
                 Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
                 BorderBrush="{StaticResource BarBorderBrush}">
 
