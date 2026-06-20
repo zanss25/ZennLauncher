@@ -1,4 +1,4 @@
-# **ZennPlay**
+# **Zenn Launcher**
 
 **Your Personal Unified Hub for Games and Tools.**
 
