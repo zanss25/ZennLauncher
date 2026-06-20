@@ -85,17 +85,17 @@
 														  Style="{StaticResource ContextMenuItemStyle_Primary}"
 														  TextBlock.FontWeight="DemiBold"/>
                                                 
-												<MenuItem Header="Edit Properties"
-                                                          Click="MenuItemEdit_Click"
-                                                          Tag="{Binding}"
-                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
-
 												<MenuItem Header="Open File Location"
                                                           Click="MenuOpenDir_Click"
                                                           Tag="{Binding}"
                                                           Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
-												<Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
+                                                <MenuItem Header="Tool Properties"
+														  Click="MenuItemEdit_Click"
+														  Tag="{Binding}"
+														  Style="{StaticResource ContextMenuItemStyle_Common}"/>
+
+                                                <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
 												<MenuItem Header="Delete Tool"
                                                           Click="MenuItemDelete_Click"

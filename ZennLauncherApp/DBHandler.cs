@@ -631,6 +631,7 @@ namespace ZennLauncherApp
                 cmd.ExecuteNonQuery();
             }
         }
+
         public void DeleteProfile(int id)
         {
             using (var connection = new SqliteConnection(ConnectionGlobal))

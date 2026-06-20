@@ -85,19 +85,19 @@
                                                           Tag="{Binding}"
                                                           Style="{StaticResource ContextMenuItemStyle_Primary}"
                                                           TextBlock.FontWeight="DemiBold"/>
-                                                
-                                                <MenuItem x:Name="MenuItemEdit"
-                                                          Header="Edit Properties" 
-                                                          Click="MenuItemEdit_Click"
-                                                          Tag="{Binding}"
-                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
-
+                                             
                                                 <MenuItem x:Name="MenuOpenDir"
                                                           Header="Open File Location" 
                                                           Click="MenuOpenDir_Click"
                                                           Tag="{Binding}"
                                                           Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
+                                                <MenuItem x:Name="MenuItemEdit"
+                                                          Header="Game Properties" 
+                                                          Click="MenuItemEdit_Click"
+                                                          Tag="{Binding}"
+                                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+                                                
                                                 <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
                                                 <MenuItem x:Name="MenuItemDelete"

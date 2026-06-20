@@ -13,18 +13,14 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0"
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.ColumnSpan="10" Grid.Row="0"
                    MinHeight="70" MaxHeight="100" Margin="0,-2,0,0" IsHitTestVisible="False">
 
             <DockPanel.Effect>
@@ -40,194 +36,667 @@
 
         </DockPanel>
 
-        <Grid Margin="22,16,0,14" Grid.Column="0" Grid.RowSpan="3">
+        <ScrollViewer x:Name="ContentViewer" Grid.Row="0" Grid.Column="0"
+                      VerticalScrollBarVisibility="Auto">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" 
+                       BasedOn="{StaticResource SimpleScrollBarEdge}"/>
+            </ScrollViewer.Resources>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Margin="50,0,50,50">
 
-            <Border x:Name="SidebarA"
-                    VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" 
-                    MinWidth="200" MaxWidth="200" Margin="0" CornerRadius="6" 
-                    MinHeight="43" MaxHeight="100" BorderThickness="0.5"
-                    Background="{StaticResource BarBackgroundBrush}"  
-                    BorderBrush="{StaticResource BarBorderBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                <DockPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <TextBlock FontFamily="{StaticResource FontPrimary}" 
-                       Text="Stats" FontSize="18"
-                       Foreground="{StaticResource TextCommonBrush}" 
-                       VerticalAlignment="Center"
-                       Margin="15,0" />
+                <Grid Grid.ColumnSpan="3" Grid.Row="0" MinHeight="50">
 
-                </DockPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            </Border>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            <Border x:Name="BoardA"
-                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                    Grid.ColumnSpan="2" Grid.Row="1" MinWidth="200" Margin="0,10,0,0" 
-                    CornerRadius="6" BorderThickness="1">
+                    <Border x:Name="ProfileAvatar" 
+                            Width="70" 
+                            Height="70" 
+                            BorderBrush="#70594D7B" 
+                            BorderThickness="2"
+                            CornerRadius="5"
+                            Grid.Column="0" Grid.Row="0"
+                            Margin="20"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                        <Border.Background>
+                            <ImageBrush>
+                                <ImageBrush.ImageSource>
+                                    <Binding Path="ProfileId"  
+                                             Converter="{StaticResource ProfileImgConv}"
+                                             ConverterParameter="110">
+                                        <Binding.TargetNullValue>
+                                            <BitmapImage UriSource="/default_avatar.jpg"
+                                                         DecodePixelWidth="110"
+                                                         CacheOption="OnLoad"/>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+                    </Border>
 
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#7719171f" Offset="0"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#CC342D47" Offset="0"/>
-                        <GradientStop Color="#CC342D47" Offset="0.1"/>
-                        <GradientStop Color="#DD453C5F" Offset="0.5"/>
-                        <GradientStop Color="#CC342D47" Offset="0.9"/>
-                        <GradientStop Color="#CC342D47" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
-
-            </Border>
-
-        </Grid>
-
-        <Grid Margin="14,16,0,14" Grid.Column="1" Grid.RowSpan="3">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Border VerticalAlignment="Top" 
-                    MinHeight="43" MaxHeight="100" Margin="0" CornerRadius="6" 
-                    Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
-                    BorderBrush="{StaticResource BarBorderBrush}" Grid.ColumnSpan="2">
-
-                <DockPanel>
-
-                    <TextBlock FontFamily="{StaticResource FontPrimary}" 
-                               Text="Most Played" FontSize="18"
-                               Foreground="{StaticResource TextCommonBrush}" 
+                    <TextBlock Text="{Binding ProfileName}"
+                               Grid.Column="1" Grid.Row="0"
+                               HorizontalAlignment="Left"
                                VerticalAlignment="Center"
-                               Margin="15,0" />
+                               Style="{StaticResource SettingsTitleText}"/>
 
-                </DockPanel>
-            </Border>
+                    <TextBlock Text="Played 23 games since the last 5 months"
+                               Margin="12"
+                               Grid.Column="2" Grid.Row="0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               FontFamily="{StaticResource FontCommon}"
+                               FontSize="15" FontWeight="DemiBold"
+                               Foreground="{StaticResource TextWindowBrighterBrush}"/>
+                    
+                </Grid>
 
-            <Border x:Name="BoardBA"
-                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                    Grid.ColumnSpan="2" Grid.Row="1" MinWidth="200" Margin="0,10,0,0" 
-                    CornerRadius="6" BorderThickness="1">
+                <Grid Margin="0,0,0,0" Grid.Column="0" Grid.Row="1"
+                      Grid.RowSpan="3" MinWidth="200"
+                      Visibility="Collapsed">
 
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#7719171f" Offset="0"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#CC342D47" Offset="0"/>
-                        <GradientStop Color="#CC342D47" Offset="0.1"/>
-                        <GradientStop Color="#DD453C5F" Offset="0.5"/>
-                        <GradientStop Color="#CC342D47" Offset="0.9"/>
-                        <GradientStop Color="#CC342D47" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            </Border>
+                    <Border x:Name="SidebarCategoriesList"
+                            VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.RowSpan="3" 
+                            MinWidth="200" MaxWidth="200" Margin="0" CornerRadius="6" 
+                            Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                            BorderBrush="{StaticResource BarBorderBrush}">
 
-            <Border x:Name="BoardBB"
-                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                    Grid.ColumnSpan="2" Grid.Row="2" MinWidth="200" Margin="0,10,0,0" 
-                    CornerRadius="6" BorderThickness="1">
+                        <Grid>
 
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#7719171f" Offset="0"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#CC342D47" Offset="0"/>
-                        <GradientStop Color="#CC342D47" Offset="0.1"/>
-                        <GradientStop Color="#DD453C5F" Offset="0.5"/>
-                        <GradientStop Color="#CC342D47" Offset="0.9"/>
-                        <GradientStop Color="#CC342D47" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
+                            <Grid Grid.Row="0">
 
-            </Border>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox  x:Name="SearchBarCategories" Grid.Column="0"
+                                          TextChanged="SearchBarCategories_TextChanged"
+                                          VerticalContentAlignment="Center"
+                                          MinHeight="30"
+                                          Margin="8,6,8,6" 
+                                          Padding="5,0,0,0"
+                                          Style="{StaticResource TextBoxStyle}"/>
 
-        </Grid>
+                                <TextBlock x:Name="SearchBarCategoriesTextOverlay"
+                                           IsHitTestVisible="False" Grid.Column="0"
+                                           Text="🔍  Search categories"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left" 
+                                           Margin="20,0,0,0" 
+                                           Foreground="#30FFFFFF">
 
-        <Grid Margin="14,16,22,14" Grid.Column="3" Grid.RowSpan="3">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=SearchBarCategories}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                                </TextBlock>
+                            </Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
 
-            <Border x:Name="SidebarC"
-                    VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" 
-                    MinWidth="200" MaxWidth="200" Margin="0" CornerRadius="6" 
-                    MinHeight="43" MaxHeight="100" BorderThickness="0.5"
-                    Background="{StaticResource BarBackgroundBrush}"  
-                    BorderBrush="{StaticResource BarBorderBrush}">
+                                <ScrollViewer.Resources>
+                                    <Style TargetType="ScrollBar" BasedOn="{StaticResource SimpleScrollBar}"/>
+                                </ScrollViewer.Resources>
 
-                <DockPanel>
+                                <StackPanel>
+                                    <StackPanel x:Name="GamesCategories" Margin="15,6,15,10">
+                                        <Grid Margin="0,0,0,10">
+                                            <TextBlock Text="Games" Foreground="{StaticResource TextCommonBrush}" 
+                                                       FontFamily="{StaticResource FontCommon}" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                       FontSize="15" FontWeight="Bold"/>
+                                        </Grid>
 
-                    <TextBlock FontFamily="{StaticResource FontPrimary}" 
-               Text="Boards" FontSize="18"
-               Foreground="{StaticResource TextCommonBrush}" 
-               VerticalAlignment="Center"
-               Margin="15,0" />
+                                        <ListBox x:Name="GamesCategoriesList"
+                                                 Style="{StaticResource ListBoxStyle}"
+                                                 FontWeight="Medium"
+                                                 SelectionChanged="GamesCategoriesList_SelectionChanged"
+                                                 BorderThickness="0.5"
+                                                 MinHeight="30">
 
-                </DockPanel>
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListBoxItem">
+                                                                <Border x:Name="ItemBorder" 
+                                                                        Background="{TemplateBinding Background}" 
+                                                                        CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                                        MinHeight="30">
 
-            </Border>
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*"/>
+                                                                            <ColumnDefinition Width="Auto"/>
+                                                                        </Grid.ColumnDefinitions>
 
-            <Border x:Name="BoardC"
-            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-            Grid.ColumnSpan="2" Grid.Row="1" MinWidth="200" Margin="0,10,0,0" 
-            CornerRadius="6" BorderThickness="1">
+                                                                        <TextBlock Grid.Column="0" 
+                                                                                   Text="{Binding CategoryName}" 
+                                                                                   VerticalAlignment="Center"/>
+                                                                    </Grid>
 
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#7719171f" Offset="0"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+                                                                </Border>
 
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#CC342D47" Offset="0"/>
-                        <GradientStop Color="#CC342D47" Offset="0.1"/>
-                        <GradientStop Color="#DD453C5F" Offset="0.5"/>
-                        <GradientStop Color="#CC342D47" Offset="0.9"/>
-                        <GradientStop Color="#CC342D47" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                                    </Trigger>
 
-            </Border>
+                                                                    <Trigger Property="IsSelected" Value="True">
+                                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                                        <Setter Property="Foreground" Value="White"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
 
-        </Grid>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+
+                                            <ListBox.Template>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <ItemsPresenter />
+                                                </ControlTemplate>
+                                            </ListBox.Template>
+
+                                        </ListBox>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="ToolsCategories" Margin="15,6,15,10">
+                                        <Grid Margin="0,0,0,10">
+                                            <TextBlock Text="Tools" Foreground="{StaticResource TextCommonBrush}" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                       FontFamily="{StaticResource FontCommon}"
+                                                       FontSize="15" FontWeight="Bold"/>
+                                        </Grid>
+
+                                        <ListBox x:Name="ToolsCategoriesList"
+                                                 Style="{StaticResource ListBoxStyle}"
+                                                 SelectionChanged="ToolsCategoriesList_SelectionChanged"
+                                                 FontWeight="Medium"
+                                                 BorderThickness="0.5"
+                                                 MinHeight="30">
+
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyleC}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListBoxItem">
+                                                                <Border x:Name="ItemBorder" 
+                                                                        Background="{TemplateBinding Background}" 
+                                                                        CornerRadius="4" Margin="0,1" Padding="10,5"
+                                                                        MinHeight="30">
+
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*"/>
+                                                                            <ColumnDefinition Width="Auto"/>
+                                                                        </Grid.ColumnDefinitions>
+
+                                                                        <TextBlock Grid.Column="0" 
+                                                                                   Text="{Binding CategoryName}" 
+                                                                                   VerticalAlignment="Center"/>
+                                                                    </Grid>
+
+                                                                </Border>
+
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#22FFFFFF"/>
+                                                                    </Trigger>
+
+                                                                    <Trigger Property="IsSelected" Value="True">
+                                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#6B9083B3"/>
+                                                                        <Setter Property="Foreground" 
+                                                            Value="{StaticResource TextCommonActiveBrighterBrush}"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+
+                                            <ListBox.Template>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <ItemsPresenter />
+                                                </ControlTemplate>
+                                            </ListBox.Template>
+
+                                        </ListBox>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </ScrollViewer>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+
+                <Grid Margin="0,0,0,0" Grid.Column="1" Grid.Row="1"
+                      Grid.RowSpan="3"
+                      MaxWidth="950">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border VerticalAlignment="Top" 
+                            MinHeight="43" MaxHeight="100" Margin="0" CornerRadius="6" 
+                            Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                            BorderBrush="{StaticResource BarBorderBrush}" 
+                            Grid.Row="0" Grid.ColumnSpan="2">
+
+                        <DockPanel>
+
+                            <TextBlock FontFamily="{StaticResource FontPrimary}" 
+                                       Text="Most Played" FontSize="18"
+                                       Foreground="{StaticResource TextCommonBrush}" 
+                                       VerticalAlignment="Center"
+                                       Margin="15,0" />
+
+                        </DockPanel>
+                    </Border>
+
+                    <Border x:Name="BoardBA"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                            Grid.ColumnSpan="2" Grid.Row="1" MinWidth="200" Height="Auto" 
+                            Margin="0,10,0,0" CornerRadius="6" BorderThickness="1">
+
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#7719171f" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#CC342D47" Offset="0"/>
+                                <GradientStop Color="#CC342D47" Offset="0.1"/>
+                                <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                                <GradientStop Color="#CC342D47" Offset="0.9"/>
+                                <GradientStop Color="#CC342D47" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+
+                        <Grid Margin="20">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Viewbox Grid.Column="0" 
+                                     Grid.Row="0" 
+                                     Stretch="Uniform" 
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Top">
+
+                                <Border x:Name="MostPlayedCover"
+                                        Width="150" 
+                                        Height="225"
+                                        Margin="0"
+                                        Background="{StaticResource CoverGridBrush}"
+                                        BorderBrush="#70594D7B"
+                                        BorderThickness="1">
+
+                                    <Image x:Name="MostPlayedIcon"
+                                           Width="92" 
+                                           Height="92" />
+                                    
+                                </Border>
+                            </Viewbox>
+
+                            <StackPanel Orientation="Vertical" 
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        Margin="20,0,0,0">
+
+                                <TextBlock x:Name="MostPlayedTitle"
+                                           Margin="0,5"
+                                           Text="No games played"
+                                           Foreground="{StaticResource TextCommonBrighterBrush}"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           FontWeight="Bold"
+                                           FontSize="18"
+                                           TextWrapping="Wrap"/>
+
+                                <TextBlock x:Name="MostPlayedCount"
+                                           Margin="0,2"
+                                           Text=""
+                                           Foreground="{StaticResource TextWindowBrighterBrush}"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           FontWeight="Regular"
+                                           FontSize="13"
+                                           TextWrapping="Wrap"/>
+
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                        Grid.Row="0"
+                                        Margin="0">
+
+                                <ListBox x:Name="MostPlayedRanks" Background="Transparent" BorderThickness="0"
+                                         IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border Grid.Column="0" Padding="10" Height="45" Width="45">
+                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Text="{Binding RankNumber}" 
+                                                               Foreground="{StaticResource TextWindowBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="DemiBold" FontSize="12"/>
+                                                </Border>
+
+                                                <Grid Grid.Column="1" Margin="0,0,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Grid.Row="0" Margin="0,5,0,0"
+                                                               Text="{Binding AppTitle}" 
+                                                               Foreground="{StaticResource TextCommonBrighterBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="DemiBold" FontSize="12" 
+                                                               TextWrapping="Wrap"/>
+                                                    <TextBlock Grid.Row="1" Margin="0,5,0,0"
+                                                               Text="{Binding RankValue, StringFormat='Play count: {0}'}" 
+                                                               Foreground="{StaticResource TextWindowBrighterBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="Regular" FontSize="11" 
+                                                               TextWrapping="Wrap"/>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border VerticalAlignment="Top" 
+                            MinHeight="43" MaxHeight="100" Margin="0,12,0,0" CornerRadius="6" 
+                            Background="{StaticResource BarBackgroundBrush}" BorderThickness="0.5" 
+                            BorderBrush="{StaticResource BarBorderBrush}" 
+                            Grid.Row="2" Grid.ColumnSpan="2">
+
+                        <DockPanel>
+
+                            <TextBlock FontFamily="{StaticResource FontPrimary}" 
+                                       Text="Top Rated" FontSize="18"
+                                       Foreground="{StaticResource TextCommonBrush}" 
+                                       VerticalAlignment="Center"
+                                       Margin="15,0" />
+
+                        </DockPanel>
+                    </Border>
+
+                    <Border x:Name="BoardBB"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                            Grid.ColumnSpan="2" Grid.Row="3" MinWidth="200" Margin="0,10,0,0" 
+                            CornerRadius="6" BorderThickness="1">
+
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#7719171f" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#CC342D47" Offset="0"/>
+                                <GradientStop Color="#CC342D47" Offset="0.1"/>
+                                <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                                <GradientStop Color="#CC342D47" Offset="0.9"/>
+                                <GradientStop Color="#CC342D47" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+
+                        <Grid Margin="20">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Viewbox Grid.Column="0" 
+                                     Grid.Row="0" 
+                                     Stretch="Uniform" 
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Top">
+
+                                <Border x:Name="MostFavoriteCover"
+                                        Width="150" 
+                                        Height="225"
+                                        Margin="0"
+                                        Background="{StaticResource CoverGridBrush}"
+                                        BorderBrush="#70594D7B"
+                                        BorderThickness="1">
+
+                                    <Image x:Name="MostFavoriteIcon"
+                                           Width="92" 
+                                           Height="92" />
+                                    
+                                </Border>
+                            </Viewbox>
+
+                            <StackPanel Orientation="Vertical" 
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        Margin="20,0">
+
+                                <TextBlock x:Name="MostFavoriteTitle"
+                                           Margin="0,5,0,0"
+                                           Text="No games rated"
+                                           Foreground="{StaticResource TextCommonBrighterBrush}"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           FontWeight="Bold"
+                                           FontSize="18"
+                                           TextWrapping="Wrap"/>
+
+                                <TextBlock x:Name="MostFavoriteRating"
+                                           Margin="0,5,0,0"
+                                           Text=""
+                                           Foreground="{StaticResource TextWindowBrighterBrush}"
+                                           FontFamily="{StaticResource FontCommon}"
+                                           FontWeight="Regular"
+                                           FontSize="13"
+                                           TextWrapping="Wrap"/>
+
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                        Grid.Row="0"
+                                        Margin="0">
+
+                                <ListBox x:Name="FavoritesRanks" Background="Transparent" BorderThickness="0"
+                                         IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border Grid.Column="0" Padding="10" Height="45" Width="45">
+                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Text="{Binding RankNumber}" 
+                                                               Foreground="{StaticResource TextWindowBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="DemiBold" FontSize="12"/>
+                                                </Border>
+
+                                                <Grid Grid.Column="1" Margin="0,0,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Grid.Row="0" Margin="0,5"
+                                                               Text="{Binding AppTitle}" 
+                                                               Foreground="{StaticResource TextCommonBrighterBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="DemiBold" FontSize="12" 
+                                                               TextWrapping="Wrap"/>
+                                                    <TextBlock Grid.Row="1" Margin="0,2"
+                                                               Text="{Binding RankValue, StringFormat='User rating: {0}'}" 
+                                                               Foreground="{StaticResource TextWindowBrighterBrush}"
+                                                               FontFamily="{StaticResource FontCommon}"
+                                                               FontWeight="Regular" FontSize="11" 
+                                                               TextWrapping="Wrap"/>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                    </Border>
+
+                </Grid>
+
+                <Grid Margin="14,0,0,0" Grid.Column="3" Grid.Row="1" 
+                      Grid.RowSpan="3">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border x:Name="SidebarC"
+                            VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            MinWidth="200" MaxWidth="250" Margin="0" CornerRadius="6" 
+                            MinHeight="43" MaxHeight="100" BorderThickness="0.5"
+                            Background="{StaticResource BarBackgroundBrush}"  
+                            BorderBrush="{StaticResource BarBorderBrush}">
+
+                        <DockPanel>
+
+                            <TextBlock FontFamily="{StaticResource FontPrimary}" 
+                                       Text="Stats" FontSize="18"
+                                       Foreground="{StaticResource TextCommonBrush}" 
+                                       VerticalAlignment="Center"
+                                       Margin="15,0" />
+
+                        </DockPanel>
+
+                    </Border>
+
+                    <Border x:Name="BoardC"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                            Grid.ColumnSpan="2" Grid.Row="1" MinWidth="240" Margin="0,10,0,0" 
+                            CornerRadius="6" BorderThickness="1">
+
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#7719171f" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#CC342D47" Offset="0"/>
+                                <GradientStop Color="#CC342D47" Offset="0.1"/>
+                                <GradientStop Color="#DD453C5F" Offset="0.5"/>
+                                <GradientStop Color="#CC342D47" Offset="0.9"/>
+                                <GradientStop Color="#CC342D47" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

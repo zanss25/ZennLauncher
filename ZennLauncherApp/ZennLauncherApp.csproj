@@ -195,6 +195,7 @@
     <Compile Include="GamePropertiesWindow.xaml.cs">
       <DependentUpon>GamePropertiesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameRankingItem.cs" />
     <Compile Include="GeneralSettings.xaml.cs">
       <DependentUpon>GeneralSettings.xaml</DependentUpon>
     </Compile>
