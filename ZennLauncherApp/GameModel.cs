@@ -26,7 +26,6 @@ namespace ZennLauncherApp
 
         // -- Interface Mapping --
         public int AppId => GameId;
-        public string AppIconPath => GameIconPath;
         public string AppTitle => GameTitle;
         public string AppDesc => GameSubtitle;
         public int AppCategoryId => GameCategoryId;
@@ -34,6 +33,8 @@ namespace ZennLauncherApp
         public string AppLastLaunched => GameLastLaunched;
         public string AppTarget => GameTarget;
         public string AppLaunchOptions => GameLaunchOptions;
+        public string AppIconPath => GameIconPath;
+        public string AppCoverPath => GameCoverPath;
         public string TargetTable => "games";
     }
 

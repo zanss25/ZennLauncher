@@ -9,7 +9,6 @@ namespace ZennLauncherApp
     public interface IAppItem
     {
         int AppId { get; }
-        string AppIconPath { get; }
         string AppTitle { get; }
         string AppDesc { get; }
         int AppCategoryId { get; }
@@ -17,6 +16,8 @@ namespace ZennLauncherApp
         string AppLastLaunched { get; }
         string AppTarget {  get; }
         string AppLaunchOptions { get; }
+        string AppIconPath { get; }
+        string AppCoverPath { get; }
         string TargetTable { get; }
     }
 }

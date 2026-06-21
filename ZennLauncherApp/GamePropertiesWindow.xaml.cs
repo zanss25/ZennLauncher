@@ -31,10 +31,10 @@ namespace ZennLauncherApp
         string _gameIconPath;
         string _gameCoverPath;
 
-        private readonly GameModel _existingGame;
+        private readonly IAppItem _existingGame;
         private readonly bool _isEditMode = false;
 
-        public GamePropertiesWindow(GameModel game = null)
+        public GamePropertiesWindow(IAppItem game = null)
         {
             InitializeComponent();
 
@@ -56,14 +56,14 @@ namespace ZennLauncherApp
 
         private void FillDataToFields()
         {
-            InputGameTitle.Text = _existingGame.GameTitle;
-            InputGameSubtitle.Text = _existingGame.GameSubtitle;
-            InputGameTarget.Text = _existingGame.GameTarget;
+            InputGameTitle.Text = _existingGame.AppTitle;
+            InputGameSubtitle.Text = _existingGame.AppDesc;
+            InputGameTarget.Text = _existingGame.AppTarget;
             InputGameStartIn.Text = System.IO.Path.GetDirectoryName(InputGameTarget.Text);
-            InputGameLaunchOptions.Text = _existingGame.GameLaunchOptions;
+            InputGameLaunchOptions.Text = _existingGame.AppLaunchOptions;
 
-            _gameIconPath = _existingGame.GameIconPath;
-            _gameCoverPath = _existingGame.GameCoverPath;
+            _gameIconPath = _existingGame.AppIconPath;
+            _gameCoverPath = _existingGame.AppCoverPath;
 
             string extension = System.IO.Path.GetExtension(_gameIconPath).ToLower();
             if (extension == ".png" || extension == ".jpg")
@@ -338,7 +338,7 @@ namespace ZennLauncherApp
                                 start_in=@start_in, launch_options=@launch_options, 
                                 cover_path=@cover_path, icon_path=@icon_path 
                                 WHERE id=@id";
-                        args.Add("@id", _existingGame.GameId);
+                        args.Add("@id", _existingGame.AppId);
                     } else
                     {
                         return;

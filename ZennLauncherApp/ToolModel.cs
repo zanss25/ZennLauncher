@@ -24,7 +24,6 @@ namespace ZennLauncherApp
 
         // -- Interface Mapping --
         public int AppId => ToolId;
-        public string AppIconPath => ToolIconPath;
         public string AppTitle => ToolTitle;
         public string AppDesc => ToolDesc;
         public int AppCategoryId => ToolCategoryId;
@@ -32,6 +31,8 @@ namespace ZennLauncherApp
         public string AppLastLaunched => ToolLastLaunched;
         public string AppTarget => ToolTarget;
         public string AppLaunchOptions => ToolLaunchOptions;
+        public string AppIconPath => ToolIconPath;
+        public string AppCoverPath => ToolCoverPath;
         public string TargetTable => "tools";
     }
 }

@@ -114,6 +114,12 @@
                                           Tag="{Binding}"
                                           Style="{StaticResource ContextMenuItemStyle_Common}"/>
 
+                                <MenuItem x:Name="MenuItemEdit"
+                                          Header="App Properties" 
+                                          Click="MenuItemEdit_Click"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ContextMenuItemStyle_Common}"/>
+
                                 <Separator Style="{StaticResource ContextMenuSeparatorStyle}"/>
 
                                 <MenuItem x:Name="MenuItemDelete"

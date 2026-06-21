@@ -496,16 +496,26 @@ namespace ZennLauncherApp
             int currentSectionId = AppCurrentSectionChecker();
             string appType = (currentSectionId == 1) ? "Game" : "Tool";
 
-            if (AppsDataGrid.SelectedItems.Count > 1)
+            if (AppsDataGrid.SelectedItems.Count < 1)
             {
                 MenuItemLaunch.Visibility = Visibility.Collapsed;
                 MenuItemOpenDir.Visibility = Visibility.Collapsed;
+                MenuItemEdit.Visibility = Visibility.Collapsed;
+                MenuItemDelete.Visibility = Visibility.Collapsed;
+            }
+            else if (AppsDataGrid.SelectedItems.Count > 1)
+            {
+                MenuItemLaunch.Visibility = Visibility.Collapsed;
+                MenuItemOpenDir.Visibility = Visibility.Collapsed;
+                MenuItemEdit.Visibility = Visibility.Collapsed;
                 MenuItemDelete.Header = $"Remove Selected {appType}s ({AppsDataGrid.SelectedItems.Count})";
             }
             else
             {
                 MenuItemLaunch.Visibility = Visibility.Visible;
                 MenuItemOpenDir.Visibility = Visibility.Visible;
+                MenuItemEdit.Visibility = Visibility.Visible;
+                MenuItemEdit.Header = $"{appType} Properties";
                 MenuItemDelete.Header = $"Remove {appType}";
             }
         }
@@ -593,7 +603,7 @@ namespace ZennLauncherApp
         private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
-            var app = menuItem.DataContext as IAppItem;
+            var app = AppsDataGrid.SelectedItem as IAppItem;
 
             int currentSectionId = AppCurrentSectionChecker();
             LaunchApp(app, currentSectionId);
@@ -604,10 +614,10 @@ namespace ZennLauncherApp
             MenuItem menuItem = sender as MenuItem;
             if (menuItem == null) return;
 
-            var app = menuItem.DataContext as IAppItem;
+            var app = AppsDataGrid.SelectedItem as IAppItem;
             if (app == null)
             {
-                var contextMenu = menuItem.Parent as ContextMenu;
+                var contextMenu = menuItem?.Parent as ContextMenu;
                 var target = contextMenu?.PlacementTarget as FrameworkElement;
                 app = target?.DataContext as IAppItem;
             }
@@ -637,6 +647,37 @@ namespace ZennLauncherApp
                                     MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
+        {
+            int currentSectionId = AppCurrentSectionChecker();
+            var menuItem = sender as MenuItem;
+            var app = AppsDataGrid.SelectedItem as IAppItem;
+
+            Main.EnableBlurAndOverlay();
+
+            if (currentSectionId == 1)
+            {
+                
+                GamePropertiesWindow edit = new GamePropertiesWindow(app);
+                
+                if (edit.ShowDialog() == true)
+                {
+                    ApplyFilters(currentSectionId);
+                }
+            }
+            else
+            {
+                ToolPropertiesWindow edit = new ToolPropertiesWindow(app);
+
+                if (edit.ShowDialog() == true)
+                {
+                    ApplyFilters(currentSectionId);
+                }
+            }
+
+            Main.DisableBlurAndOverlay();
         }
 
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)

@@ -31,10 +31,10 @@ namespace ZennLauncherApp
         string _toolIconPath;
         string _toolCoverPath;
 
-        private ToolModel _existingTool;
+        private IAppItem _existingTool;
         private bool _isEditMode = false;
 
-        public ToolPropertiesWindow(ToolModel tool = null)
+        public ToolPropertiesWindow(IAppItem tool = null)
         {
             InitializeComponent();
 
@@ -54,14 +54,14 @@ namespace ZennLauncherApp
 
         private void FillDataToFields()
         {
-            InputToolTitle.Text = _existingTool.ToolTitle;
-            InputToolDesc.Text = _existingTool.ToolDesc;
-            InputToolTarget.Text = _existingTool.ToolTarget;
+            InputToolTitle.Text = _existingTool.AppTitle;
+            InputToolDesc.Text = _existingTool.AppDesc;
+            InputToolTarget.Text = _existingTool.AppTarget;
             InputToolStartIn.Text = System.IO.Path.GetDirectoryName(InputToolTarget.Text);
-            InputToolLaunchOptions.Text = _existingTool.ToolLaunchOptions;
+            InputToolLaunchOptions.Text = _existingTool.AppLaunchOptions;
 
-            _toolIconPath = _existingTool.ToolIconPath;
-            _toolCoverPath = _existingTool.ToolCoverPath;
+            _toolIconPath = _existingTool.AppIconPath;
+            _toolCoverPath = _existingTool.AppCoverPath;
 
             if (!string.IsNullOrEmpty(_toolIconPath))
             {
@@ -341,7 +341,7 @@ namespace ZennLauncherApp
                             cover_path=@cover_path, icon_path=@icon_path 
                             WHERE id=@id";
 
-                        args.Add("@id", _existingTool.ToolId);
+                        args.Add("@id", _existingTool.AppId);
                     }
                     else
                     {
