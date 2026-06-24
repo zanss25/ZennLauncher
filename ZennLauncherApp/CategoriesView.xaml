@@ -5,12 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZennLauncherApp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
 
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="NavigationCommands.Refresh"/>
+    </UserControl.InputBindings>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="NavigationCommands.Refresh" Executed="RefreshCommand_Executed"/>
+    </UserControl.CommandBindings>
+    
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -92,7 +101,8 @@
                               ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                               CellStyle="{StaticResource DataGridCellStyle}"
                               RowStyle="{StaticResource DataGridRowStyle}"
-                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick">
+                              MouseDoubleClick="AppsDataGrid_MouseDoubleClick"
+                              ContextMenuOpening="AppsDataGrid_ContextMenuOpening">
 
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource SimpleScrollBar}"/>

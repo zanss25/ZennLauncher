@@ -37,6 +37,8 @@ namespace ZennLauncherApp
         List<CategoryModel> masterToolsCategories = new List<CategoryModel>();
 
         private bool isSidebarCollapsed = true;
+        private int currentSectionId = 1;
+
         public CategoriesView()
         {
             InitializeComponent();
@@ -53,6 +55,12 @@ namespace ZennLauncherApp
             BtnAddNewToCategory.Checked += BtnAddNewToCategory_Checked;
 
             SidebarCategoriesList.Visibility = Visibility.Collapsed;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshAppsList();
+            ApplyFilters(currentSectionId);
         }
 
         public void LoadDefaultCategories()
@@ -160,7 +168,9 @@ namespace ZennLauncherApp
                 ToolsCategoriesList.SelectedIndex = -1;
 
                 AppsDataGrid.ItemsSource = null;
+                RefreshAppsList();
                 ApplyFilters(1);
+                currentSectionId = 1;
             }
         }
 
@@ -171,7 +181,9 @@ namespace ZennLauncherApp
                 GamesCategoriesList.SelectedIndex = -1;
 
                 AppsDataGrid.ItemsSource = null;
+                RefreshAppsList();
                 ApplyFilters(2);
+                currentSectionId = 2;
             }
         }
 
@@ -214,6 +226,12 @@ namespace ZennLauncherApp
             //NoAppsAvailable.Visibility = filteredData.Any() ? Visibility.Hidden : Visibility.Visible;
         }
 
+        public void RefreshAppsList()
+        {
+            allGamesList = db.GetAllGames();
+            allToolsList = db.GetAllTools();
+        }
+
         private void BtnAddNewCategoryGames_Click(object sender, RoutedEventArgs e)
         {
             AddNewCategory(1);
@@ -224,7 +242,7 @@ namespace ZennLauncherApp
             AddNewCategory(2);
         }
 
-        private void AddNewCategory(int currentSectionId)
+        private void AddNewCategory(int currentSectionId_)
         {
             InputBoxPopup inputA = new InputBoxPopup("Enter Category Name", 
                                                     "Enter your new category name", 
@@ -242,7 +260,7 @@ namespace ZennLauncherApp
                 var args_cc = new Dictionary<string, object>()
                 {
                     { "@name", inputName },
-                    { "@section_id", currentSectionId }
+                    { "@section_id", currentSectionId_ }
                 };
 
                 int result = db.ExecuteScalar<int>(db.ConnectionProfile, query_cc, args_cc);
@@ -286,7 +304,7 @@ namespace ZennLauncherApp
                 {
                     { "@new_name", newName },
                     { "@new_desc", newDesc },
-                    { "@section_id", currentSectionId }
+                    { "@section_id", currentSectionId_ }
                 };
 
                 try
@@ -300,8 +318,8 @@ namespace ZennLauncherApp
                 }
 
                 AppsDataGrid.ItemsSource = null;
-                LoadCategoriesList(currentSectionId);
-                ApplyFilters(currentSectionId);
+                LoadCategoriesList(currentSectionId_);
+                ApplyFilters(currentSectionId_);
             }
             else
             {
@@ -435,10 +453,8 @@ namespace ZennLauncherApp
                         allToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = targetCategoryId;
                 }
 
-                allGamesList = db.GetAllGames();
-                allToolsList = db.GetAllTools();
-
                 int sectionId = AppCurrentSectionChecker();
+                RefreshAppsList();
                 ApplyFilters(sectionId);
 
                 BtnAddNewToCategory.IsChecked = false;
@@ -469,10 +485,8 @@ namespace ZennLauncherApp
                     allToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = 0;
              }
 
-             allGamesList = db.GetAllGames();
-             allToolsList = db.GetAllTools();
-
             int sectionId = AppCurrentSectionChecker();
+            RefreshAppsList();
             ApplyFilters(sectionId);
         }
 
@@ -496,18 +510,12 @@ namespace ZennLauncherApp
             int currentSectionId = AppCurrentSectionChecker();
             string appType = (currentSectionId == 1) ? "Game" : "Tool";
 
-            if (AppsDataGrid.SelectedItems.Count < 1)
+           if (AppsDataGrid.SelectedItems.Count > 1)
             {
                 MenuItemLaunch.Visibility = Visibility.Collapsed;
                 MenuItemOpenDir.Visibility = Visibility.Collapsed;
                 MenuItemEdit.Visibility = Visibility.Collapsed;
-                MenuItemDelete.Visibility = Visibility.Collapsed;
-            }
-            else if (AppsDataGrid.SelectedItems.Count > 1)
-            {
-                MenuItemLaunch.Visibility = Visibility.Collapsed;
-                MenuItemOpenDir.Visibility = Visibility.Collapsed;
-                MenuItemEdit.Visibility = Visibility.Collapsed;
+                MenuItemDelete.Visibility = Visibility.Visible;
                 MenuItemDelete.Header = $"Remove Selected {appType}s ({AppsDataGrid.SelectedItems.Count})";
             }
             else
@@ -516,11 +524,12 @@ namespace ZennLauncherApp
                 MenuItemOpenDir.Visibility = Visibility.Visible;
                 MenuItemEdit.Visibility = Visibility.Visible;
                 MenuItemEdit.Header = $"{appType} Properties";
+                MenuItemDelete.Visibility = Visibility.Visible;
                 MenuItemDelete.Header = $"Remove {appType}";
             }
         }
 
-        private int AppCurrentSectionChecker()
+        public int AppCurrentSectionChecker()
         {
             int currentSectionId = 0;
             var app = AppsDataGrid.SelectedItem as IAppItem;
@@ -600,6 +609,15 @@ namespace ZennLauncherApp
             }
         }
 
+        private void AppsDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (AppsDataGrid.SelectedItem == null)
+            {
+                // Prevent context menu from appearing if AppsDataGrid.SelectedItem is null
+                e.Handled = true;
+            }
+        }
+
         private void MenuItemLaunch_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
@@ -664,7 +682,8 @@ namespace ZennLauncherApp
                 
                 if (edit.ShowDialog() == true)
                 {
-                    ApplyFilters(currentSectionId);
+                    RefreshAppsList();
+                    ApplyFilters(1);
                 }
             }
             else
@@ -673,7 +692,8 @@ namespace ZennLauncherApp
 
                 if (edit.ShowDialog() == true)
                 {
-                    ApplyFilters(currentSectionId);
+                    RefreshAppsList();
+                    ApplyFilters(2);
                 }
             }
 
@@ -819,5 +839,9 @@ namespace ZennLauncherApp
             }
         }
 
+        private void RefreshCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            RefreshAppsList();
+        }
     }
 }

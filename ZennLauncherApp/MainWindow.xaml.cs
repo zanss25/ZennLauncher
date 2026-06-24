@@ -39,6 +39,8 @@ namespace ZennLauncherApp
         private UserControl _cachedToolsView;
         private UserControl _cachedCategoriesView;
 
+        
+
         public MainWindow()
         {
             InitializeComponent();

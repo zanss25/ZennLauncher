@@ -431,6 +431,12 @@ namespace ZennLauncherApp
             }
         }
 
+        private void RefreshCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoadGamesList();
+            ApplyFilters();
+        }
+
     }
 }
 

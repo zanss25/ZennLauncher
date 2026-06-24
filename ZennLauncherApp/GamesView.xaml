@@ -11,6 +11,14 @@
 
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="NavigationCommands.Refresh"/>
+    </UserControl.InputBindings>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="NavigationCommands.Refresh" Executed="RefreshCommand_Executed"/>
+    </UserControl.CommandBindings>
+
     <Grid>
 
         <Grid.RowDefinitions>
