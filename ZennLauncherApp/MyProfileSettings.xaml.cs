@@ -236,7 +236,22 @@ namespace ZennLauncherApp
             var currentProfile = main.DataContext as ProfileDataModel;
 
             string profileDataPath = System.IO.Path.Combine(func.dataPath, currentProfile.ProfileId.ToString());
-            string backupPath = System.IO.Path.Combine(func.dataPath, "BACKUP", $"{currentProfile.ProfileId.ToString()}_{currentProfile.ProfileName}_bak.zip");
+            string backupDir = System.IO.Path.Combine(func.dataPath, "BACKUP");
+            string backupPath = System.IO.Path.Combine(backupDir, $"{currentProfile.ProfileId.ToString()}_{currentProfile.ProfileName}_bak.zip");
+
+            if (!Directory.Exists(backupDir))
+            {
+                try
+                {
+                    Directory.CreateDirectory(backupDir);
+                } 
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Backup Error",
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
 
             if (File.Exists(backupPath)) File.Delete(backupPath);
             try

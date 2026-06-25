@@ -28,21 +28,81 @@ namespace ZennLauncherApp
         List<GameModel> allGamesList = new List<GameModel>();
         List<ToolModel> allToolsList = new List<ToolModel>();
 
+        public List<StatsItem> statsList { get; set; }
+
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
         public BoardsView()
         {
+            statsList = new List<StatsItem>()
+            {
+                new StatsItem
+                {
+                    StatName = "PlayedGames",
+                    StatDisplay = "Played Games",
+                    CalculateValue = () => allGamesList.Count(g => g.GameLaunchTimes > 0).ToString()
+                },
+                new StatsItem
+                {
+                    StatName = "UnplayedGames",
+                    StatDisplay = "Unplayed Games",
+                    CalculateValue = () => allGamesList.Count(g => g.GameLaunchTimes <= 0).ToString()
+                },  
+                new StatsItem
+                {
+                    StatName = "TotalGames",
+                    StatDisplay = "Total Games",
+                    CalculateValue = () => allGamesList.Count().ToString()
+                },
+                new StatsItem
+                {
+                    StatName = "TotalTools",
+                    StatDisplay = "Total Tools",
+                    CalculateValue = () => allToolsList.Count().ToString()
+                },
+                new StatsItem
+                {
+                    StatName = "GamesTotalLaunch",
+                    StatDisplay = "Total Launch (Game)",
+                    CalculateValue = () => allGamesList.Sum(g => g.GameLaunchTimes).ToString()
+                },
+                new StatsItem
+                {
+                    StatName = "ToolsTotalLaunch",
+                    StatDisplay = "Total Launch (Tool)",
+                    CalculateValue = () => allToolsList.Sum(t => t.ToolLaunchTimes).ToString()
+                }
+            };
+
             InitializeComponent();
 
+            LoadGamesData();
             LoadMostPlayedData();
             LoadMostRatedData();
-            LoadStatsData();
+            LoadToolsData();
+            UpdateHeaderStats();
+
+            StatsDataListBox.ItemsSource = statsList;
+        }
+
+        public void RefreshStats()
+        {
+            this.DataContext = null;
+            this.DataContext = this;
+        }
+
+        private void LoadGamesData()
+        {
+            allGamesList = db.GetAllGames();
+
+            if (allGamesList == null)
+            {
+                allGamesList = new List<GameModel>();
+            }
         }
 
         private void LoadMostPlayedData()
         {
-            allGamesList = db.GetAllGames();
-
             if (allGamesList == null) return;
 
             var firstMostPlayed = allGamesList
@@ -104,8 +164,6 @@ namespace ZennLauncherApp
 
         private void LoadMostRatedData()
         {
-            allGamesList = db.GetAllGames();
-
             if (allGamesList == null) return;
 
             var firstTopRated = allGamesList
@@ -165,56 +223,62 @@ namespace ZennLauncherApp
             FavoritesRanks.ItemsSource = rankingList;
         }
 
-        private void LoadStatsData()
+        private void LoadToolsData()
         {
-            List<StatsItem> statsList = new List<StatsItem>();
+            allToolsList = db.GetAllTools();
 
-            for (int i = 1; i > 0; i--)
+            if (allToolsList == null)
             {
-                statsList.Add(new StatsItem
-                {
-                    StatName = "played_games",
-                    StatDisplay = "Played Games",
-                    StatValue = "23"
-                });
+                allToolsList = new List<ToolModel>();
+            }
+        }
 
-                statsList.Add(new StatsItem
-                {
-                    StatName = "unplayed_games",
-                    StatDisplay = "Unplayed Games",
-                    StatValue = "7"
-                });
+        private void UpdateHeaderStats()
+        {
+            if (allGamesList == null || !allGamesList.Any()) return;
 
-                statsList.Add(new StatsItem
-                {
-                    StatName = "total_games",
-                    StatDisplay = "Total Games",
-                    StatValue = "30"
-                });
+            int playedGamesCount = allGamesList.Count(g => g.GameLaunchTimes > 0);
 
-                statsList.Add(new StatsItem
-                {
-                    StatName = "total_tools",
-                    StatDisplay = "Total Tools",
-                    StatValue = "14"
-                });
+            var oldestLaunchGame = allGamesList
+                .Where(g => !string.IsNullOrEmpty(g.GameLastLaunched))
+                .Select(g => {
+                    bool success = DateTime.TryParse(g.GameLastLaunched, out DateTime parsedDate);
+                    return new { Success = success, Date = parsedDate };
+                })
+                .Where(x => x.Success)
+                .OrderBy(x => x.Date)
+                .FirstOrDefault();
 
-                statsList.Add(new StatsItem
-                {
-                    StatName = "games_total_launch",
-                    StatDisplay = "Total Launch (Game)",
-                    StatValue = "257"
-                });
+            string timeAgoText = "recently";
 
-                statsList.Add(new StatsItem
+            if (oldestLaunchGame != null)
+            {
+                DateTime oldestDate = oldestLaunchGame.Date;
+                DateTime now = DateTime.Now;
+
+                TimeSpan diff = now - oldestDate;
+
+                int totalMonths = (now.Year - oldestDate.Year) * 12 + now.Month - oldestDate.Month;
+
+                if (totalMonths >= 1)
                 {
-                    StatName = "tools_total_launch",
-                    StatDisplay = "Total Launch (Tool)",
-                    StatValue = "85"
-                });
+                    timeAgoText = $"{totalMonths} month{(totalMonths > 1 ? "s" : "")}";
+                }
+                else
+                {
+                    int totalDays = (int)diff.TotalDays;
+                    if (totalDays >= 1)
+                    {
+                        timeAgoText = $"{totalDays} day{(totalDays > 1 ? "s" : "")}";
+                    }
+                    else
+                    {
+                        timeAgoText = "a few hours";
+                    }
+                }
             }
 
-            StatsData.ItemsSource = statsList;
+            HeaderStatsText.Text = $"Played {playedGamesCount} games since the last {timeAgoText}";
         }
 
         private void GamesCategoriesList_SelectionChanged(object sender, SelectionChangedEventArgs e)

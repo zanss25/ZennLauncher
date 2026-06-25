@@ -103,7 +103,8 @@
                                VerticalAlignment="Center"
                                Style="{StaticResource SettingsTitleText}"/>
 
-                    <TextBlock Text="Played 23 games since the last 5 months"
+                    <TextBlock x:Name="HeaderStatsText"
+                               Text="Played 0 games since the last 0 days"
                                Margin="12"
                                Grid.Column="2" Grid.Row="0"
                                HorizontalAlignment="Right"
@@ -690,7 +691,7 @@
                         </Border.BorderBrush>
 
                         <Grid Margin="10">
-                            <ListBox x:Name="StatsData" Background="Transparent" BorderThickness="0"
+                            <ListBox x:Name="StatsDataListBox" Background="Transparent" BorderThickness="0"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      IsHitTestVisible="False" Margin="0,7,0,0">

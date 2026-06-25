@@ -31,8 +31,8 @@ namespace ZennLauncherApp
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 
-        public int build = 10400;
-        public string version = "0.4 Beta (Indev)";
+        public int build = 10401;
+        public string version = "0.4.0 Beta";
 
         public string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -68,7 +68,7 @@ namespace ZennLauncherApp
         public enum LaunchResult
         {
             Success,
-            CancelledByUser,  // UAC cancel atau user cancel
+            CancelledByUser,  // UAC cancel or user cancel
             Failed
         }
 
@@ -124,7 +124,7 @@ namespace ZennLauncherApp
             new TabModel
             {
                 ItemTag = "tools",
-                DisplayIcon = "\uf552;", //f7d9
+                DisplayIcon = "\uf552;",
                 DisplayName = "Tools",
                 TargetView = typeof(ToolsView)
             },

@@ -10,6 +10,7 @@ namespace ZennLauncherApp
     {
         public string StatName { get; set; }
         public string StatDisplay { get; set; }
-        public string StatValue { get; set; }
+        public Func<string> CalculateValue { get; set; }
+        public string StatValue => CalculateValue?.Invoke() ?? "0";
     }
 }

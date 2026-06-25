@@ -49,5 +49,5 @@ using System.Windows;
 //      Revision
 //
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 [assembly: NeutralResourcesLanguage("")]
