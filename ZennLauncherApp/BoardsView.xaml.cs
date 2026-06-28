@@ -25,9 +25,6 @@ namespace ZennLauncherApp
         private readonly DBHandler db = DBHandler.Instance;
         private readonly ConfigHandler cfg = ConfigHandler.Instance;
 
-        List<GameModel> allGamesList = new List<GameModel>();
-        List<ToolModel> allToolsList = new List<ToolModel>();
-
         public List<StatsItem> statsList { get; set; }
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
@@ -40,46 +37,48 @@ namespace ZennLauncherApp
                 {
                     StatName = "PlayedGames",
                     StatDisplay = "Played Games",
-                    CalculateValue = () => allGamesList.Count(g => g.GameLaunchTimes > 0).ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllGamesList.Count
+                                            (g => g.GameLaunchTimes > 0).ToString()
                 },
                 new StatsItem
                 {
                     StatName = "UnplayedGames",
                     StatDisplay = "Unplayed Games",
-                    CalculateValue = () => allGamesList.Count(g => g.GameLaunchTimes <= 0).ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllGamesList.Count
+                                            (g => g.GameLaunchTimes <= 0).ToString()
                 },  
                 new StatsItem
                 {
                     StatName = "TotalGames",
                     StatDisplay = "Total Games",
-                    CalculateValue = () => allGamesList.Count().ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllGamesList.Count().ToString()
                 },
                 new StatsItem
                 {
                     StatName = "TotalTools",
                     StatDisplay = "Total Tools",
-                    CalculateValue = () => allToolsList.Count().ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllToolsList.Count().ToString()
                 },
                 new StatsItem
                 {
                     StatName = "GamesTotalLaunch",
                     StatDisplay = "Total Launch (Game)",
-                    CalculateValue = () => allGamesList.Sum(g => g.GameLaunchTimes).ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllGamesList.Sum
+                                            (g => g.GameLaunchTimes).ToString()
                 },
                 new StatsItem
                 {
                     StatName = "ToolsTotalLaunch",
                     StatDisplay = "Total Launch (Tool)",
-                    CalculateValue = () => allToolsList.Sum(t => t.ToolLaunchTimes).ToString()
+                    CalculateValue = () => AppStateManager.Instance.AllToolsList.Sum
+                                            (t => t.ToolLaunchTimes).ToString()
                 }
             };
 
             InitializeComponent();
 
-            LoadGamesData();
             LoadMostPlayedData();
             LoadMostRatedData();
-            LoadToolsData();
             UpdateHeaderStats();
 
             StatsDataListBox.ItemsSource = statsList;
@@ -91,26 +90,16 @@ namespace ZennLauncherApp
             this.DataContext = this;
         }
 
-        private void LoadGamesData()
-        {
-            allGamesList = db.GetAllGames();
-
-            if (allGamesList == null)
-            {
-                allGamesList = new List<GameModel>();
-            }
-        }
-
         private void LoadMostPlayedData()
         {
-            if (allGamesList == null) return;
+            if (AppStateManager.Instance.AllGamesList == null) return;
 
-            var firstMostPlayed = allGamesList
+            var firstMostPlayed = AppStateManager.Instance.AllGamesList
                                    .Where(game => game.GameLaunchTimes > 0)
                                    .OrderByDescending(game => game.GameLaunchTimes)
                                    .FirstOrDefault();
 
-            var mostPlayedGames = allGamesList
+            var mostPlayedGames = AppStateManager.Instance.AllGamesList
                                  .Where(game => game.GameLaunchTimes > 0)
                                  .OrderByDescending(game => game.GameLaunchTimes)
                                  .Skip(1)
@@ -164,14 +153,14 @@ namespace ZennLauncherApp
 
         private void LoadMostRatedData()
         {
-            if (allGamesList == null) return;
+            if (AppStateManager.Instance.AllGamesList == null) return;
 
-            var firstTopRated = allGamesList
+            var firstTopRated = AppStateManager.Instance.AllGamesList
                                    .Where(game => game.GameUserRating > 0)
                                    .OrderByDescending(game => game.GameUserRating)
                                    .FirstOrDefault();
 
-            var topRatedGames = allGamesList
+            var topRatedGames = AppStateManager.Instance.AllGamesList
                                  .Where(game => game.GameUserRating > 0)
                                  .OrderByDescending(game => game.GameUserRating)
                                  .Skip(1)
@@ -223,23 +212,15 @@ namespace ZennLauncherApp
             FavoritesRanks.ItemsSource = rankingList;
         }
 
-        private void LoadToolsData()
-        {
-            allToolsList = db.GetAllTools();
-
-            if (allToolsList == null)
-            {
-                allToolsList = new List<ToolModel>();
-            }
-        }
-
         private void UpdateHeaderStats()
         {
-            if (allGamesList == null || !allGamesList.Any()) return;
+            if (AppStateManager.Instance.AllGamesList == null 
+                || !AppStateManager.Instance.AllGamesList.Any()) return;
 
-            int playedGamesCount = allGamesList.Count(g => g.GameLaunchTimes > 0);
+            int playedGamesCount = AppStateManager.Instance.AllGamesList.Count
+                                    (g => g.GameLaunchTimes > 0);
 
-            var oldestLaunchGame = allGamesList
+            var oldestLaunchGame = AppStateManager.Instance.AllGamesList
                 .Where(g => !string.IsNullOrEmpty(g.GameLastLaunched))
                 .Select(g => {
                     bool success = DateTime.TryParse(g.GameLastLaunched, out DateTime parsedDate);

@@ -30,9 +30,6 @@ namespace ZennLauncherApp
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-        List<GameModel> allGamesList = new List<GameModel>();
-        List<ToolModel> allToolsList = new List<ToolModel>();
-
         List<CategoryModel> masterGamesCategories = new List<CategoryModel>();
         List<CategoryModel> masterToolsCategories = new List<CategoryModel>();
 
@@ -42,9 +39,6 @@ namespace ZennLauncherApp
         public CategoriesView()
         {
             InitializeComponent();
-
-            allGamesList = db.GetAllGames();
-            allToolsList = db.GetAllTools();
 
             LoadDefaultCategories();
 
@@ -59,7 +53,7 @@ namespace ZennLauncherApp
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshAppsList();
+            AppStateManager.Instance.LoadAllData();
             ApplyFilters(currentSectionId);
         }
 
@@ -168,7 +162,7 @@ namespace ZennLauncherApp
                 ToolsCategoriesList.SelectedIndex = -1;
 
                 AppsDataGrid.ItemsSource = null;
-                RefreshAppsList();
+                AppStateManager.Instance.LoadAllData();
                 ApplyFilters(1);
                 currentSectionId = 1;
             }
@@ -181,7 +175,7 @@ namespace ZennLauncherApp
                 GamesCategoriesList.SelectedIndex = -1;
 
                 AppsDataGrid.ItemsSource = null;
-                RefreshAppsList();
+                AppStateManager.Instance.LoadAllData();
                 ApplyFilters(2);
                 currentSectionId = 2;
             }
@@ -203,8 +197,8 @@ namespace ZennLauncherApp
 
             // 1. Pilih sumber data
             IEnumerable<IAppItem> source = (sectionId == 1)
-                ? allGamesList?.Cast<IAppItem>()
-                : allToolsList?.Cast<IAppItem>();
+                ? AppStateManager.Instance.AllGamesList?.Cast<IAppItem>()
+                : AppStateManager.Instance.AllToolsList?.Cast<IAppItem>();
 
             if (source == null) return;
 
@@ -224,12 +218,6 @@ namespace ZennLauncherApp
             // 3. Update UI
             AppsDataGrid.ItemsSource = filteredData;
             //NoAppsAvailable.Visibility = filteredData.Any() ? Visibility.Hidden : Visibility.Visible;
-        }
-
-        public void RefreshAppsList()
-        {
-            allGamesList = db.GetAllGames();
-            allToolsList = db.GetAllTools();
         }
 
         private void BtnAddNewCategoryGames_Click(object sender, RoutedEventArgs e)
@@ -383,9 +371,7 @@ namespace ZennLauncherApp
                                    selectedCategory.CategorySectionName.ToLower());
 
                     LoadCategoriesList(selectedSectionId);
-
-                    allGamesList = db.GetAllGames();
-                    allToolsList = db.GetAllTools();
+                    AppStateManager.Instance.LoadAllData();
 
                     AppsDataGrid.ItemsSource = null;
                     ApplyFilters(selectedSectionId);
@@ -448,13 +434,13 @@ namespace ZennLauncherApp
 
                     // Update di List Internal (agar UI langsung berubah)
                     if (app.TargetTable == "games")
-                        allGamesList.FirstOrDefault(g => g.GameId == app.AppId).GameCategoryId = targetCategoryId;
+                        AppStateManager.Instance.AllGamesList.FirstOrDefault(g => g.GameId == app.AppId).GameCategoryId = targetCategoryId;
                     else
-                        allToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = targetCategoryId;
+                        AppStateManager.Instance.AllToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = targetCategoryId;
                 }
 
                 int sectionId = AppCurrentSectionChecker();
-                RefreshAppsList();
+                AppStateManager.Instance.LoadAllData();
                 ApplyFilters(sectionId);
 
                 BtnAddNewToCategory.IsChecked = false;
@@ -480,13 +466,13 @@ namespace ZennLauncherApp
                 db.UpdateAppCategory(app.AppId, app.TargetTable, 0);
 
                 if (app.TargetTable == "games")
-                    allGamesList.FirstOrDefault(g => g.GameId == app.AppId).GameCategoryId = 0;
+                    AppStateManager.Instance.AllGamesList.FirstOrDefault(g => g.GameId == app.AppId).GameCategoryId = 0;
                 else
-                    allToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = 0;
+                    AppStateManager.Instance.AllToolsList.FirstOrDefault(t => t.ToolId == app.AppId).ToolCategoryId = 0;
              }
 
             int sectionId = AppCurrentSectionChecker();
-            RefreshAppsList();
+            AppStateManager.Instance.LoadAllData();
             ApplyFilters(sectionId);
         }
 
@@ -682,7 +668,7 @@ namespace ZennLauncherApp
                 
                 if (edit.ShowDialog() == true)
                 {
-                    RefreshAppsList();
+                    AppStateManager.Instance.LoadAllData();
                     ApplyFilters(1);
                 }
             }
@@ -692,7 +678,7 @@ namespace ZennLauncherApp
 
                 if (edit.ShowDialog() == true)
                 {
-                    RefreshAppsList();
+                    AppStateManager.Instance.LoadAllData();
                     ApplyFilters(2);
                 }
             }
@@ -721,9 +707,7 @@ namespace ZennLauncherApp
                 foreach (var app in selectedApps)
                 {
                     db.DeleteApp(app.AppId, app.TargetTable);
-
-                    if (currentSectionId == 1) allGamesList.RemoveAll(g => g.GameId == app.AppId);
-                    else allToolsList.RemoveAll(t => t.ToolId == app.AppId);
+                    AppStateManager.Instance.LoadAllData();
                 }
 
                 ApplyFilters(currentSectionId);
@@ -841,7 +825,7 @@ namespace ZennLauncherApp
 
         private void RefreshCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            RefreshAppsList();
+            AppStateManager.Instance.LoadAllData();
         }
     }
 }

@@ -193,6 +193,7 @@
     <Compile Include="AdvancedSettings.xaml.cs">
       <DependentUpon>AdvancedSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppStateManager.cs" />
     <Compile Include="CategoriesSettings.xaml.cs">
       <DependentUpon>CategoriesSettings.xaml</DependentUpon>
     </Compile>
@@ -244,6 +245,7 @@
     <Compile Include="SortCriterion.cs" />
     <Compile Include="StatsItem.cs" />
     <Compile Include="StatsItemsList.cs" />
+    <Compile Include="SystemTrayManager.cs" />
     <Compile Include="TabModel.cs" />
     <Compile Include="ToolPropertiesWindow.xaml.cs">
       <DependentUpon>ToolPropertiesWindow.xaml</DependentUpon>

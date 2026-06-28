@@ -225,14 +225,15 @@
                                 </ToggleButton.Style>
                             </ToggleButton>
 
-                            <Popup IsOpen="{Binding IsChecked, ElementName=BtnProfileMenu}" 
-                                       PlacementTarget="{Binding ElementName=BtnProfileMenu}"
-                                       Placement="Top"
-                                       StaysOpen="False"
-                                       AllowsTransparency="True"
-                                       PopupAnimation="Fade"
-                                       HorizontalOffset="0"
-                                       VerticalOffset="-5">
+                            <Popup x:Name="ProfilePopup"
+                                   IsOpen="{Binding IsChecked, ElementName=BtnProfileMenu}" 
+                                   PlacementTarget="{Binding ElementName=BtnProfileMenu}"
+                                   Placement="Top"
+                                   StaysOpen="False"
+                                   AllowsTransparency="True"
+                                   PopupAnimation="Fade"
+                                   HorizontalOffset="0"
+                                   VerticalOffset="-5">
 
                                 <Border Background="{StaticResource PopupBackgroundBrush}" 
                                             CornerRadius="5" 

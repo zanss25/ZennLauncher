@@ -32,21 +32,42 @@ namespace ZennLauncherApp
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-        List<ToolModel> allToolsList = new List<ToolModel>();
         List<CategoryModel> allCategoriesList = new List<CategoryModel>();
 
         public ToolsView()
         {
             InitializeComponent();
-
-            LoadToolsList();
             LoadCategoriesList();
 
             ComboSortBy.ItemsSource = func.SortOptions;
             ComboSortBy.DisplayMemberPath = "DisplayName";
             ComboSortBy.SelectedIndex = 0;
 
+            this.Loaded += ToolsView_Loaded;
+        }
+
+        private async void ToolsView_Loaded(object sender, RoutedEventArgs e)
+        {
+            var categories = await Task.Run(() => db.GetAllCategories(1));
+
+            CategoryModel allCategory = new CategoryModel
+            {
+                CategoryId = 0,
+                CategoryName = "All Tools"
+            };
+
+            allCategoriesList = categories ?? new List<CategoryModel>();
+            allCategoriesList.Insert(0, allCategory);
+
+            ComboCategories.ItemsSource = allCategoriesList;
+            ComboCategories.DisplayMemberPath = "CategoryName";
+            ComboCategories.SelectedIndex = 0;
+
+            ContainerBtnApps.ItemsSource = AppStateManager.Instance.AllGamesList;
+
             LoadDefaultSortOptions();
+            AppStateManager.Instance.LoadAllData();
+            ApplyFilters();
         }
 
         private void LoadDefaultSortOptions()
@@ -78,21 +99,6 @@ namespace ZennLauncherApp
             else
             {
                 ComboSortBy.SelectedIndex = 0;
-            }
-        }
-
-        public void LoadToolsList(string _sortBy = "title", bool _ascending = true)
-        {
-
-            int _toolsCount = 0;
-            _toolsCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM tools");
-
-            if (_toolsCount > 0)
-            {
-                allToolsList = db.GetAllTools(_sortBy, _ascending);
-
-                ContainerBtnApps.ItemsSource = null;
-                ContainerBtnApps.ItemsSource = allToolsList;
             }
         }
 
@@ -239,7 +245,7 @@ namespace ZennLauncherApp
             ToolPropertiesWindow edit = new ToolPropertiesWindow(selectedTool);
             if (edit.ShowDialog() == true)
             {
-                LoadToolsList();
+                AppStateManager.Instance.LoadAllData();
                 ApplyFilters();
             }
 
@@ -302,8 +308,8 @@ namespace ZennLauncherApp
                 {
                     DBHandler db = DBHandler.Instance;
                     db.DeleteApp(selectedTool.ToolId, selectedTool.TargetTable);
-                    
-                    LoadToolsList();
+
+                    AppStateManager.Instance.LoadAllData();
                     ApplyFilters();
                 }
             }
@@ -328,7 +334,7 @@ namespace ZennLauncherApp
 
         public void ApplyFilters()
         {
-            if (allToolsList == null) return;
+            if (AppStateManager.Instance.AllToolsList == null) return;
 
             // --- 1. AMBIL INPUT ---
             var selectedCategory = ComboCategories.SelectedItem as CategoryModel;
@@ -341,7 +347,7 @@ namespace ZennLauncherApp
             bool asc = !(sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times");
 
             // --- 2. FILTERING (Kategori & Search) ---
-            var query = allToolsList.Where(tools =>
+            var query = AppStateManager.Instance.AllToolsList.Where(tools =>
             {
                 bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
                                      || tools.ToolCategoryId == selectedCategory.CategoryId;
@@ -408,7 +414,7 @@ namespace ZennLauncherApp
 
         private void RefreshCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            LoadToolsList();
+            AppStateManager.Instance.LoadAllData();
             ApplyFilters();
         }
 

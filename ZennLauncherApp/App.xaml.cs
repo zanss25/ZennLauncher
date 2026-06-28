@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Pipes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ZennLauncherApp
 {
@@ -23,31 +28,55 @@ namespace ZennLauncherApp
         public GlobalConfigModel CurrentGlobalCfg;
         public ProfileConfigModel CurrentProfileCfg;
 
+        public SystemTrayManager trayManager { get; set; }
+
         private static Mutex _mutex = null;
+
+        private const string appName = "ZennLauncherApp-29484735857748";
+        private const string PipeName = "ZennLauncherPipe-29484735857748";
+
+        // --- WIN32 API TO CALL EXISTING APP INSTANCE ---
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        // Konstanta perintah untuk ShowWindow utk memulihkan window dari minimize/tray
+        private const int SW_RESTORE = 9;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            const string appName = "ZennLauncherApp-29484735857748";
             bool createdNew;
 
-            // Mencoba mengambil kepemilikan Mutex
+            // Trying to take Mutex ownership
             _mutex = new Mutex(true, appName, out createdNew);
+
+            string targetCommand = "WAKE_UP";
+            if (e.Args.Length > 0)
+            {
+                string rawArg = e.Args[0];
+                string cleanArg = rawArg.TrimStart('-');
+
+                targetCommand = $"OPEN_TAB:{e.Args[0]}";
+            }
 
             if (!createdNew)
             {
-                MessageBox.Show("Zenn Launcher app is already running!",
-                                "Zenn Launcher",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Warning);
+                SendWakeUpCommand(targetCommand);
 
-                // Tutup instance yang baru
                 Application.Current.Shutdown();
                 return;
             }
 
             base.OnStartup(e);
+
+            StartPipeServer();
 
             db.GlobalDBInitialize();
             db.ProfileDBInitialize();
@@ -59,7 +88,78 @@ namespace ZennLauncherApp
 
             if (CheckIsKeepLoggedIn())
             {
-                LoadProfileData(); 
+                LoadProfileData();
+            }
+        }
+
+        // --- INSTANCE BARU: Memberikan informasi + perintah ---
+        private void SendWakeUpCommand(string command)
+        {
+            try
+            {
+                using (var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out))
+                {
+                    client.Connect(1000);
+                    using (var writer = new StreamWriter(client))
+                    {
+                        writer.Write(command);
+                        writer.Flush();
+                    }
+                }
+            }
+            catch { /* Instance pertama tidak merespon */ }
+        }
+
+        // --- INSTANCE LAMA: Mendengarkan informasi dari instance baru ---
+        private async void StartPipeServer()
+        {
+            while (true)
+            {
+                try
+                {
+                    using (var server = new NamedPipeServerStream(PipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous))
+                    {
+                        // Tunggu sampai ada instansi kedua yang mengetuk
+                        await server.WaitForConnectionAsync();
+
+                        using (var reader = new StreamReader(server))
+                        {
+                            string message = await reader.ReadToEndAsync();
+                            if (message == "WAKE_UP")
+                            {
+                                // Karena event ini berjalan di Thread latar belakang, 
+                                // kita wajib melempar perintah bangun ke UI Thread utama WPF
+                                Current.Dispatcher.Invoke(() =>
+                                {
+                                    trayManager.MaximizeFromTray();
+                                });
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // Antisipasi error crash pada server pipe, loop akan me-restart server otomatis
+                    await Task.Delay(1000);
+                }
+            }
+        }
+
+        private void ProcessIncomingCommand(string message)
+        {
+            trayManager.MaximizeFromTray();
+
+            MainWindow targetWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (targetWindow != null)
+            {
+                if (message.StartsWith("OPEN_TAB:"))
+                {
+                    // Ambil argumen setelah tanda titik dua (misal: "Tools" atau "Boards")
+                    string tabName = message.Substring("OPEN_TAB:".Length);
+
+                    // 3. Panggil fungsi publik yang ada di dalam MainWindow.xaml.cs kamu
+                    targetWindow.NavigateToTab(tabName);
+                }
             }
         }
 
@@ -82,6 +182,8 @@ namespace ZennLauncherApp
             {
                 if (!Current.Windows.OfType<ProfileSelectWindow>().Any())
                 {
+                    AppStateManager.Instance.TriggerLogout();
+
                     ProfileSelectWindow profile = new ProfileSelectWindow();
                     profile.Show();
                 }
@@ -126,6 +228,8 @@ namespace ZennLauncherApp
                 System.Windows.Forms.Application.Restart();
                 Current.Shutdown();
             }
+
+            AppStateManager.Instance.isLoggedIn = true;
             return true;
         }
 
@@ -154,12 +258,24 @@ namespace ZennLauncherApp
             if (isTokenMatch)
             {
                 CurrentProfileCfg = cfg.LoadProfileConfig();
+                AppStateManager.Instance.LoadAllData();
+                AppStateManager.Instance.isLoggedIn = true;        
+
                 MainWindow main = new MainWindow();
+
+                main.Loaded += (s, e) =>
+                {
+                    trayManager = new SystemTrayManager();
+                };
+
                 main.Show();
             }
             else
             {
                 Debug.WriteLine("DEBUG: Validasi Gagal, Lempar ke Login...");
+
+                AppStateManager.Instance.isLoggedIn = false;
+                AppStateManager.Instance.HideTrayAction?.Invoke();
 
                 if (!Current.Windows.OfType<ProfileSelectWindow>().Any())
                 {
@@ -168,5 +284,6 @@ namespace ZennLauncherApp
                 }
             }
         }
+
     }
 }

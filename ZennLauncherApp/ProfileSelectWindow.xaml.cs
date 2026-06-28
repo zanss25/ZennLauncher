@@ -167,10 +167,17 @@ namespace ZennLauncherApp
                 currentConfig.SessionToken = GlobalFunctions.SecurityHelper.Encrypt(newToken);
 
                 cfg.SaveGlobalConfig(currentConfig);
-
                 cfg.LoadProfileConfig();
+                AppStateManager.Instance.isLoggedIn = true;
 
                 MainWindow main = new MainWindow();
+
+                main.Loaded += (s, ev) =>
+                {
+                    var app = (App)Application.Current;
+                    app.trayManager = new SystemTrayManager();
+                };
+
                 main.Show();
                 this.Close();
             }

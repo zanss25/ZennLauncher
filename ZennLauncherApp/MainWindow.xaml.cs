@@ -143,13 +143,27 @@ namespace ZennLauncherApp
             this.WindowState = WindowState.Minimized;
         }
 
-        private void LinkProfileSettings_Click(object sender, RoutedEventArgs e)
+        public void OpenSettings(string targetSettingsTab = null)
         {
-            SettingsWindow settings = new SettingsWindow("myprofile");
+            SettingsWindow settings = new SettingsWindow(targetSettingsTab);
+
+            settings.OnSettingsApplied = () => {
+                RefreshCurrentTab();
+            };
 
             EnableBlurAndOverlay();
             settings.ShowDialog();
             DisableBlurAndOverlay();
+        }
+
+        private void LinkProfileSettings_Click(object sender, RoutedEventArgs e)
+        {
+            OpenSettings("myprofile");
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            OpenSettings("general");
         }
 
         private void BtnLogOut_Click(object sender, RoutedEventArgs e)
@@ -173,6 +187,8 @@ namespace ZennLauncherApp
                     };
 
                 db.ExecuteQuery(db.ConnectionGlobal, query_rs, args_rs);
+                AppStateManager.Instance.TriggerLogout();
+                ProfilePopup.IsOpen = false;
 
                 ProfileSelectWindow profiles = new ProfileSelectWindow();
                 profiles.Show();
@@ -182,20 +198,6 @@ namespace ZennLauncherApp
             {
                 Debug.WriteLine("Error Saving Config to JSON File: " + ex.Message);
             }
-        }
-
-        private void BtnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            int selectedTab = SidebarNavList.SelectedIndex;
-
-            SettingsWindow settings = new SettingsWindow();
-            settings.OnSettingsApplied = () => {
-                RefreshCurrentTab();
-            };
-
-            EnableBlurAndOverlay();
-            settings.ShowDialog();
-            DisableBlurAndOverlay();
         }
 
         private void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
@@ -231,7 +233,6 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList();
                         gview.ApplyFilters();
                     }
                 }
@@ -239,7 +240,6 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
-                        gview.LoadGamesList();
                         gview.ApplyFilters();
                     }
                 }
@@ -281,7 +281,6 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is ToolsView tview)
                     {
-                        tview.LoadToolsList();
                         tview.ApplyFilters();
                     }
                 }
@@ -289,7 +288,6 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is ToolsView tview)
                     {
-                        tview.LoadToolsList();
                         tview.ApplyFilters();
                     }
                 }
@@ -375,6 +373,20 @@ namespace ZennLauncherApp
             }
         }
 
+        public void NavigateToTab(string tabName)
+        {
+            if (string.IsNullOrEmpty(tabName)) return;
+
+            var targetTab = SidebarNavList.Items.Cast<TabModel>()
+                .FirstOrDefault(tab => tab.ItemTag != null &&
+                                       tab.ItemTag.Equals(tabName, StringComparison.OrdinalIgnoreCase));
+
+            if (targetTab != null)
+            {
+                SidebarNavList.SelectedItem = targetTab;
+            }
+        }
+
         public void EnableBlurAndOverlay()
         {
             if (MainGrid.Effect is BlurEffect blur)
@@ -435,5 +447,23 @@ namespace ZennLauncherApp
                 isSidebarCollapsed = false;
             }
         }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (AppStateManager.Instance.isLoggedIn)
+            {
+                // Cek apakah aplikasi mati karena Windows Shutdown atau karena user klik tombol 'X'
+                // Jika karena user klik 'X', batalkan proses close, lalu sembunyikan jendelanya
+                e.Cancel = true;
+
+                this.Hide();
+                base.OnClosing(e);
+            }
+            else
+            {
+                base.OnClosing(e);
+            }
+        }
+
     }
 }

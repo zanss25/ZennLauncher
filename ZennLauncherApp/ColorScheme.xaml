@@ -25,8 +25,8 @@
     <Color x:Key="BarBorder">#CC574D71</Color>
 
     <!-- Texts -->
-    <Color x:Key="TextColorCommon">#AAF5F5F5</Color>
-    <Color x:Key="TextColorCommonBrighter">#DDF5F5F5</Color>
+    <Color x:Key="TextColorCommon">#CCF5F5F5</Color>
+    <Color x:Key="TextColorCommonBrighter">#EEF5F5F5</Color>
     <Color x:Key="TextColorCommonActive">#FFF5F5F5</Color>
     <Color x:Key="TextColorCommonActiveBrighter">#FFFFFFFF</Color>
     <Color x:Key="TextColorPressed">#AAF5F5F5</Color>

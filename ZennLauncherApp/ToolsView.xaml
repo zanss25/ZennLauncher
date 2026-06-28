@@ -55,6 +55,7 @@
 
 			<TextBlock Text="✖   No tools found" FontSize="14" FontWeight="Regular"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="{StaticResource FontCommon}"
                        Foreground="#70F5F5F5"/>
 		</Border>
 

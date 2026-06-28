@@ -32,29 +32,23 @@ namespace ZennLauncherApp
 
         private MainWindow Main => Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-        List<GameModel> allGamesList = new List<GameModel>();
         List<CategoryModel> allCategoriesList = new List<CategoryModel>();
 
         public GamesView()
         {
             InitializeComponent();
+            LoadCategoriesList();
 
             ComboSortBy.ItemsSource = GlobalFunctions.Instance.SortOptions;
             ComboSortBy.DisplayMemberPath = "DisplayName";
             ComboSortBy.SelectedIndex = 0;
 
-            // Jangan load di constructor, pakai Loaded event
             this.Loaded += GamesView_Loaded;
         }
 
         private async void GamesView_Loaded(object sender, RoutedEventArgs e)
         {
-            // Jalankan DB query di background thread
-            var games = await Task.Run(() => db.GetAllGames("title", true));
             var categories = await Task.Run(() => db.GetAllCategories(1));
-
-            // Update UI di UI thread
-            allGamesList = games ?? new List<GameModel>();
 
             CategoryModel allCategory = new CategoryModel
             {
@@ -69,9 +63,10 @@ namespace ZennLauncherApp
             ComboCategories.DisplayMemberPath = "CategoryName";
             ComboCategories.SelectedIndex = 0;
 
-            ContainerBtnApps.ItemsSource = allGamesList;
+            ContainerBtnApps.ItemsSource = AppStateManager.Instance.AllGamesList;
 
             LoadDefaultSortOptions();
+            AppStateManager.Instance.LoadAllData();
             ApplyFilters();
         }
 
@@ -102,21 +97,6 @@ namespace ZennLauncherApp
             {
                 MessageBox.Show("Error: " +  ex, "GamesView Load Error", 
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        public void LoadGamesList(string _sortBy = "title", bool _ascending = true)
-        {
-
-            int _gamesCount = 0;
-            _gamesCount = db.ExecuteScalar<int>(db.ConnectionProfile, "SELECT COUNT(*) FROM games");
-
-            if (_gamesCount > 0)
-            {
-                allGamesList = db.GetAllGames(_sortBy, _ascending);
-
-                ContainerBtnApps.ItemsSource = null;
-                ContainerBtnApps.ItemsSource = allGamesList;
             }
         }
 
@@ -195,7 +175,7 @@ namespace ZennLauncherApp
             if (result != LaunchResult.Success)
                 return;
 
-            db.UpdateAppAtLaunch(launchedApp, 1);
+            AppStateManager.Instance.UpdateAppData(launchedApp, 1);
 
             var launchAction = ((App)Application.Current).CurrentProfileCfg.General.GamesLaunchAction;
             bool shiftHeld = Keyboard.IsKeyDown(Key.LeftShift);
@@ -264,7 +244,7 @@ namespace ZennLauncherApp
             GamePropertiesWindow edit = new GamePropertiesWindow(selectedGame);
             if (edit.ShowDialog() == true)
             {
-                LoadGamesList();
+                AppStateManager.Instance.LoadAllData();
                 ApplyFilters();
             }
 
@@ -326,9 +306,10 @@ namespace ZennLauncherApp
                 {
                     DBHandler db = DBHandler.Instance;
                     db.DeleteApp(selectedGame.GameId, selectedGame.TargetTable);
+                    AppStateManager.Instance.AllGamesList.Remove(selectedGame);
                     Main.DisableBlurAndOverlay();
 
-                    LoadGamesList();
+                    AppStateManager.Instance.LoadAllData();
                     ApplyFilters();
                 }
             }
@@ -353,7 +334,7 @@ namespace ZennLauncherApp
 
         public void ApplyFilters()
         {
-            if (allGamesList == null) return;
+            if (AppStateManager.Instance.AllGamesList == null) return;
 
             // --- 1. AMBIL INPUT ---
             var selectedCategory = ComboCategories.SelectedItem as CategoryModel;
@@ -366,7 +347,7 @@ namespace ZennLauncherApp
             bool asc = !(sortBy == "id" || sortBy == "last_launched" || sortBy == "launch_times");
 
             // --- 2. FILTERING (Kategori & Search) ---
-            var query = allGamesList.Where(game =>
+            var query = AppStateManager.Instance.AllGamesList.Where(game =>
             {
                 bool matchCategory = (selectedCategory == null || selectedCategory.CategoryId == 0)
                                      || game.GameCategoryId == selectedCategory.CategoryId;
@@ -433,7 +414,7 @@ namespace ZennLauncherApp
 
         private void RefreshCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            LoadGamesList();
+            AppStateManager.Instance.LoadAllData();
             ApplyFilters();
         }
 
