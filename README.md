@@ -35,7 +35,7 @@ ZennPlay Launcher is a lightweight, personalized launcher designed to bridge the
 
 ## Roadmap & Development Status
 
-Currently in v0.3.x-beta:
+Currently in v0.4.x-beta:
 
 - [X] Multi-profile support
 - [X] Basic Grid views
@@ -45,4 +45,3 @@ Currently in v0.3.x-beta:
 - [ ] Advanced Optimization Options
 - [ ] Enhanced UI Themes
 
-**Note:** ZennPlay started as a way to organize a messy collection of games from various platforms and game-oriented utilities into one convenient place. It is built with a focus on freedom and keeping your gaming history alive.
