@@ -41,7 +41,7 @@ Currently in v0.3.x-beta:
 - [X] Basic Grid views
 - [X] Settings & Directory management
 - [X] Categories Feature (via "Library" tab)
-- [ ] Boards for user stats
+- [X] Boards for user stats
 - [ ] Advanced Optimization Options
 - [ ] Enhanced UI Themes
 
