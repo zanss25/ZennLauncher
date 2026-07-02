@@ -89,15 +89,16 @@ namespace ZennLauncherApp
                 ComboToolsLaunch.SelectedIndex = 2;
             }
 
-            // Start on Windows Login
-            if (((App)Application.Current).CurrentProfileCfg.General.StartOnWindows == true)
+            // Hide to Tray
+            if (((App)Application.Current).CurrentProfileCfg.General.CloseToTray == true)
             {
-                CheckBoxStartupOnWindows.IsChecked = true;
+                CheckBoxCloseToTray.IsChecked = true;
             }
             else
             {
-                CheckBoxStartupOnWindows.IsChecked = false;
+                CheckBoxCloseToTray.IsChecked = false;
             }
+
         }
 
         public void ComboDefaultStartingTab_Changed(object sender, EventArgs e)
@@ -182,22 +183,10 @@ namespace ZennLauncherApp
             }
         }
 
-        public void CheckBoxStartupOnWindows_Click(object sender, EventArgs e)
+        private void CheckBoxCloseToTray_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckBoxStartupOnWindows.IsChecked == true)
-            {
-                ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows = true;
-                
-            }
-            if (CheckBoxStartupOnWindows.IsChecked != true)
-            {
-                ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows = false;
-            }
-
-            Debug.WriteLine("StartOnWIndows: " + 
-                            ((App)Application.Current).CurrentProfileCfg.General.StartOnWindows);
+            ((App)Application.Current).CurrentProfileCfg.General.CloseToTray = (CheckBoxCloseToTray.IsChecked == true);
             OnSettingChanged?.Invoke();
         }
-
     }
 }

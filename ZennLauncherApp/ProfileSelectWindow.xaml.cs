@@ -168,17 +168,21 @@ namespace ZennLauncherApp
 
                 cfg.SaveGlobalConfig(currentConfig);
                 cfg.LoadProfileConfig();
+                AppStateManager.Instance.LoadAllData();
                 AppStateManager.Instance.isLoggedIn = true;
 
                 MainWindow main = new MainWindow();
-
-                main.Loaded += (s, ev) =>
+                if (((App)Application.Current).launchedFromStartup)
                 {
-                    var app = (App)Application.Current;
-                    app.trayManager = new SystemTrayManager();
-                };
+                    ((App)Application.Current).trayManager = new SystemTrayManager();
+                    main.Hide();
+                }
+                else
+                {
+                    main.Loaded += (s, ev) => { ((App)Application.Current).trayManager = new SystemTrayManager(); };
+                    main.Show();
+                }
 
-                main.Show();
                 this.Close();
             }
             catch (Exception ex)

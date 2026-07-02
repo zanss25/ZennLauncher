@@ -31,8 +31,8 @@ namespace ZennLauncherApp
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, string lpIconPath, ref ushort lpiIcon);
 
-        public int build = 10401;
-        public string version = "0.4.0 Beta";
+        public int build = 10411;
+        public string version = "0.4.1 Beta";
 
         public string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -63,6 +63,22 @@ namespace ZennLauncherApp
             }
             return null;
 
+        }
+
+        public static void EnsureAppStartupRegistration()
+        {
+            string runKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
+            string appName = "ZennLauncher";
+
+            string appExecutablePath = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
+            string startupValue = $"\"{appExecutablePath}\" -hidden";
+
+            bool success = RegistryHelper.SaveSetting(runKeyPath, appName, startupValue);
+
+            if (success)
+            {
+                Debug.WriteLine("[Registry] Startup otomatis dipastikan aktif via RegistryHelper.");
+            }
         }
 
         public enum LaunchResult

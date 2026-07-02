@@ -121,7 +121,7 @@ namespace ZennLauncherApp
                 BtnApply.IsEnabled = false;
 
                 var Main = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w is MainWindow) as MainWindow;
-                Main.EnableBlurAndOverlay();
+                Main?.EnableBlurAndOverlay();
             }
             catch (Exception ex)
             {

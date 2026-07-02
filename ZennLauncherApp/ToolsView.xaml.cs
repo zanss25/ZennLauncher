@@ -184,7 +184,7 @@ namespace ZennLauncherApp
 
             if (launchAction == ProfileGeneralSettings.LaunchActions.HideLauncher && !shiftHeld)
             {
-                Application.Current.MainWindow.Hide();
+                Application.Current.MainWindow.WindowState = WindowState.Minimized;
 
                 int rootId = func.runningProcess.Id;
 
@@ -212,7 +212,22 @@ namespace ZennLauncherApp
                         }
                     }
 
-                    this.Dispatcher.Invoke(() => Application.Current.MainWindow.Show());
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        var mainWin = Application.Current.MainWindow;
+                        if (mainWin != null)
+                        {
+                            if (mainWin.WindowState == WindowState.Minimized)
+                            {
+                                mainWin.WindowState = WindowState.Normal;
+                            }
+
+                            mainWin.Show();
+                            mainWin.Activate();
+                            mainWin.Topmost = true;
+                            mainWin.Topmost = false;
+                        }
+                    });
                 });
             }
             else if (launchAction == ProfileGeneralSettings.LaunchActions.CloseLauncher && !shiftHeld)

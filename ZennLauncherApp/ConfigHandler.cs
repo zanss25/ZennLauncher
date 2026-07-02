@@ -131,9 +131,6 @@ namespace ZennLauncherApp
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = JsonSerializer.Serialize(profileData, options);
 
-            jsonString = jsonString.Replace("\"Interface\":", "\n  \"Interface\":");
-            jsonString = jsonString.Replace("\"Folders\":", "\n  \"Folders\":");
-
             File.WriteAllText(ProfileConfigPath(), jsonString);
         }
 
@@ -151,9 +148,6 @@ namespace ZennLauncherApp
                 };
 
                 string jsonString = JsonSerializer.Serialize(defaultProfileConfig, options);
-
-                jsonString = jsonString.Replace("\"Interface\":", "\n  \"Interface\":");
-                jsonString = jsonString.Replace("\"Folders\":", "\n  \"Folders\":");
 
                 File.WriteAllText(profileConfigPath, jsonString);
 

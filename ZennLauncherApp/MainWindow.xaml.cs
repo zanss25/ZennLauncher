@@ -450,7 +450,8 @@ namespace ZennLauncherApp
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (AppStateManager.Instance.isLoggedIn)
+            var app = (App)Application.Current;
+            if (AppStateManager.Instance.isLoggedIn && app.CurrentProfileCfg.General.CloseToTray == true)
             {
                 // Cek apakah aplikasi mati karena Windows Shutdown atau karena user klik tombol 'X'
                 // Jika karena user klik 'X', batalkan proses close, lalu sembunyikan jendelanya

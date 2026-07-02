@@ -48,6 +48,8 @@ namespace ZennLauncherApp
         // Konstanta perintah untuk ShowWindow utk memulihkan window dari minimize/tray
         private const int SW_RESTORE = 9;
 
+        public bool launchedFromStartup = false;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -86,9 +88,14 @@ namespace ZennLauncherApp
             cfg.CreateDefaultCfg();
             CurrentGlobalCfg = cfg.LoadGlobalConfig();
 
+            if (e.Args.Length > 0 && e.Args[0] == "-hidden")
+            {
+                launchedFromStartup = true;
+            }
+
             if (CheckIsKeepLoggedIn())
             {
-                LoadProfileData();
+                LoadProfileAndLaunch();
             }
         }
 
@@ -233,7 +240,7 @@ namespace ZennLauncherApp
             return true;
         }
 
-        public void LoadProfileData()
+        public void LoadProfileAndLaunch()
         {
             int _activeProfileId = CurrentGlobalCfg.ActiveProfile;
             string _encryptedTokenFromConfig = CurrentGlobalCfg.SessionToken;
@@ -259,16 +266,20 @@ namespace ZennLauncherApp
             {
                 CurrentProfileCfg = cfg.LoadProfileConfig();
                 AppStateManager.Instance.LoadAllData();
-                AppStateManager.Instance.isLoggedIn = true;        
+                AppStateManager.Instance.isLoggedIn = true;
+                GlobalFunctions.EnsureAppStartupRegistration();
 
                 MainWindow main = new MainWindow();
-
-                main.Loaded += (s, e) =>
+                if (launchedFromStartup)
                 {
                     trayManager = new SystemTrayManager();
-                };
-
-                main.Show();
+                    main.Hide();
+                }
+                else
+                {
+                    main.Loaded += (s, e) => { trayManager = new SystemTrayManager(); };
+                    main.Show();
+                }
             }
             else
             {

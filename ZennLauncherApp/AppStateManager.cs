@@ -15,7 +15,10 @@ namespace ZennLauncherApp
             new Lazy<AppStateManager>(() => new AppStateManager());
         public static AppStateManager Instance => _lazyInstance.Value;
 
+        // State values:
         public bool isLoggedIn = true;
+        public bool enableTrayHide;
+
         public ObservableCollection<GameModel> AllGamesList { get; private set; } = new ObservableCollection<GameModel>();
         public ObservableCollection<ToolModel> AllToolsList { get; private set; } = new ObservableCollection<ToolModel>();
 
