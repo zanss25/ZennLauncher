@@ -233,6 +233,7 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
+                        RefreshCurrentTab();
                         gview.ApplyFilters();
                     }
                 }
@@ -240,6 +241,7 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is GamesView gview)
                     {
+                        RefreshCurrentTab();
                         gview.ApplyFilters();
                     }
                 }
@@ -281,6 +283,7 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is ToolsView tview)
                     {
+                        RefreshCurrentTab();
                         tview.ApplyFilters();
                     }
                 }
@@ -288,6 +291,7 @@ namespace ZennLauncherApp
                 {
                     if (ContentSlot.Content is ToolsView tview)
                     {
+                        RefreshCurrentTab();
                         tview.ApplyFilters();
                     }
                 }

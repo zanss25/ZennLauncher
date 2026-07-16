@@ -222,8 +222,8 @@
                                       SelectionChanged="ComboToolsLaunch_Changed"
                                       HorizontalAlignment="Right">
 
-                                <ComboBoxItem Content="Hide to Background" Tag="HideLauncher"/>
-                                <ComboBoxItem Content="Close the Launcher" Tag="CloseLauncher"/>
+                                <ComboBoxItem Content="Minimize Launcher" Tag="HideLauncher"/>
+                                <ComboBoxItem Content="Close Launcher" Tag="CloseLauncher"/>
                                 <ComboBoxItem Content="Keep Launcher Open" Tag="DoNothing"/>
 
                                 <ComboBox.ItemContainerStyle>
