@@ -95,6 +95,100 @@
                         </Grid>
                     </Border>
 
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                        <Grid HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Blur Intensity" Grid.Column="0" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource OptionNameText}"/>
+
+                            <TextBlock Text="Set the blur intensity of the background overlay  (default: 20)" 
+                                       Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
+
+                            <TextBox x:Name="InputBlurIntensity"
+                                     MinWidth="125" Grid.Column="2"
+                                     MinHeight="30" Padding="10,8"
+                                     PreviewTextInput="NumberValidationTextBox"
+                                     DataObject.Pasting="NumberPasteValidationTextBox"
+                                     LostFocus="InputBlurIntensity_LostFocus"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     HorizontalAlignment="Right">
+
+                                
+                                
+                            </TextBox>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                        <Grid HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Dim Color" Grid.Column="0" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource OptionNameText}"/>
+
+                            <TextBlock Text="Set the dim color of the background overlay  (default: '080808')" 
+                                       Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
+
+                            <TextBox x:Name="InputDimColor"
+                                     MinWidth="125" Grid.Column="2"
+                                     MinHeight="30" Padding="10,8"
+                                     LostFocus="InputDimColor_LostFocus"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     HorizontalAlignment="Right">
+                                
+                                
+
+                            </TextBox>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,13">
+                        <Grid HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Dim Intensity" Grid.Column="0" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource OptionNameText}"/>
+
+                            <TextBlock Text="Set the dim intensity of the background overlay  (default: 25)" 
+                                       Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Margin="15,0" Style="{StaticResource OptionDescText}"/>
+
+                            <TextBox x:Name="InputDimIntensity"
+                                     MinWidth="125" Grid.Column="2"
+                                     MinHeight="30" Padding="10,8"
+                                     PreviewTextInput="NumberValidationTextBox"
+                                     DataObject.Pasting="NumberPasteValidationTextBox"
+                                     LostFocus="InputDimIntensity_LostFocus"
+                                     Style="{StaticResource TextBoxStyleB}"
+                                     HorizontalAlignment="Right">
+
+
+
+                            </TextBox>
+                        </Grid>
+                    </Border>
+
                 </ItemsControl>
             </StackPanel>
         </ScrollViewer>

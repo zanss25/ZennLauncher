@@ -393,32 +393,41 @@ namespace ZennLauncherApp
 
         public void EnableBlurAndOverlay()
         {
+            var app = (App)Application.Current;
             if (MainGrid.Effect is BlurEffect blur)
             {
-                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                if (app.CurrentProfileCfg.Interface.DialogOverlay
                   == ProfileInterfaceSettings.DialogOverlayModes.DimWithBlur)
                 {
-                    blur.Radius = 20;
+                    int opacityPercent = app.CurrentProfileCfg.Interface.DimIntensity;
+                    double opacityDecimal = (double)opacityPercent / 100;
+
+                    blur.Radius = app.CurrentProfileCfg.Interface.BlurIntensity;
 
                     var converter = new BrushConverter();
-                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#30080808");
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#" + app.CurrentProfileCfg.Interface.DimColor);
+                    BlackOverlay.Opacity = opacityDecimal;
                 }
 
-                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                if (app.CurrentProfileCfg.Interface.DialogOverlay
                   == ProfileInterfaceSettings.DialogOverlayModes.DimOnly)
                 {
+                    int opacityPercent = app.CurrentProfileCfg.Interface.DimIntensity;
+                    double opacityDecimal = (double)opacityPercent / 100;
+
                     blur.Radius = 0;
 
                     var converter = new BrushConverter();
-                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#60080808");
+                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#" + app.CurrentProfileCfg.Interface.DimColor);
+                    BlackOverlay.Opacity = opacityDecimal;
                 }
-                if (((App)Application.Current).CurrentProfileCfg.Interface.DialogOverlay
+                if (app.CurrentProfileCfg.Interface.DialogOverlay
                   == ProfileInterfaceSettings.DialogOverlayModes.None)
                 {
                     blur.Radius = 0;
 
                     var converter = new BrushConverter();
-                    BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+                    BlackOverlay.Opacity = 0;
                 }
             }
         }
@@ -430,7 +439,7 @@ namespace ZennLauncherApp
                 blurAfter.Radius = 0;
 
                 var converter = new BrushConverter();
-                BlackOverlay.Background = (Brush)converter.ConvertFromString("#00000000");
+                BlackOverlay.Opacity = 0;
             }
         }
 

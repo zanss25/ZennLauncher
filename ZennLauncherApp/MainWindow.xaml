@@ -445,8 +445,8 @@
                 </Border.Background>
             </Border>
 
-            <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#00000000"
-                    Margin="0,-39,0,-10" IsHitTestVisible="False"/>
+            <Border x:Name="BlackOverlay" Grid.ColumnSpan="4" Grid.RowSpan="3" Background="#000000"
+                    Opacity="0" Margin="0,-39,0,-10" IsHitTestVisible="False"/>
             
         </Grid>
     </Border>

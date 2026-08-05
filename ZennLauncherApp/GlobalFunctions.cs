@@ -221,13 +221,6 @@ namespace ZennLauncherApp
 
             new TabModel
             {
-                ItemTag = "categories",
-                DisplayName = "Categories",
-                TargetView = typeof(CategoriesSettingsView)
-            },
-
-            new TabModel
-            {
                 ItemTag = "advanced",
                 DisplayName = "Advanced",
                 TargetView = typeof(AdvancedSettingsView)

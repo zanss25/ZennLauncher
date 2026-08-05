@@ -81,6 +81,7 @@
 
                             <TextBox x:Name="InputGamesDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     LostFocus="InputGamesDefaultDir_LostFocus"
                                      Style="{StaticResource TextBoxStyleB}"
                                      Padding="5,0,0,0"/> 
 
@@ -137,6 +138,7 @@
 
                             <TextBox x:Name="InputToolsDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     LostFocus="InputToolsDefaultDir_LostFocus"
                                      Style="{StaticResource TextBoxStyleB}"
                                      Padding="5,0,0,0"/>
 
@@ -193,6 +195,7 @@
 
                             <TextBox x:Name="InputIconsDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     LostFocus="InputIconsDefaultDir_LostFocus"
                                      Style="{StaticResource TextBoxStyleB}"
                                      Padding="5,0,0,0"/>
                             <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
@@ -248,6 +251,7 @@
 
                             <TextBox x:Name="InputCoversDefaultDir"
                                      MinWidth="125" Grid.ColumnSpan="2" Grid.Row="2"
+                                     LostFocus="InputCoversDefaultDir_LostFocus"
                                      Style="{StaticResource TextBoxStyleB}"
                                      Padding="5,0,0,0"/>
 

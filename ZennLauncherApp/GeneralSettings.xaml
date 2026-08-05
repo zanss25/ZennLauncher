@@ -103,7 +103,7 @@
                                        VerticalAlignment="Center" 
                                        Style="{StaticResource OptionNameText}"/>
 
-                            <TextBlock Text="Set games default sorting method (e.g., Alphabetical)" Grid.Column="1"
+                            <TextBlock Text="Set games default sorting method  (e.g., Alphabetical)" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Margin="15,0" Style="{StaticResource OptionDescText}"/>
 
@@ -138,7 +138,7 @@
                                        VerticalAlignment="Center" 
                                        Style="{StaticResource OptionNameText}"/>
 
-                            <TextBlock Text="Set tools default sorting method (e.g., Alphabetical)" Grid.Column="1"
+                            <TextBlock Text="Set tools default sorting method  (e.g., Alphabetical)" Grid.Column="1"
                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Margin="15,0" Style="{StaticResource OptionDescText}"/>
 

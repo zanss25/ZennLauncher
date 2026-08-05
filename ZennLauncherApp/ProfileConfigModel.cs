@@ -56,9 +56,9 @@ namespace ZennLauncherApp
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public DialogOverlayModes DialogOverlay { get; set; } = DialogOverlayModes.DimWithBlur;
 
-        public int BlurIntensity { get; set; } = 0;         // 0-100 percent
-        public string DimColor { get; set; } = "000000";    // in hex color
-        public int DimIntensity { get; set; } = 0;          // 0-100 percent
+        public int BlurIntensity { get; set; } = 20;         // 0-100 percent
+        public string DimColor { get; set; } = "080808";    // in hex color
+        public int DimIntensity { get; set; } = 25;          // 0-100 percent
     }
 
     public partial class ProfileFoldersSettings
